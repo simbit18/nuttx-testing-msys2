@@ -12,6 +12,10 @@ on:
 jobs:
   nuttx-arm-msys2:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        boards: [msys2]
     defaults:
       run:
         shell: msys2 {0}
@@ -61,4 +65,11 @@ jobs:
          path: apps
          fetch-depth: 1
       - name: Checkout nuttx repo tags
-        run: git -C apps fetch --tags   
+        run: git -C apps fetch --tags
+        
+      - name: Run Builds
+        run: |
+          echo "::add-matcher::nuttx/.github/gcc.json"
+          ## export ARTIFACTDIR=`pwd`/buildartifacts
+          cd nuttx/tools/ci
+          ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
