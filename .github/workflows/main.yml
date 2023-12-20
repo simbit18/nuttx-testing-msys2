@@ -10,7 +10,7 @@ on:
       - '.github/workflows/main.yml'
 
 jobs:
-  nuttx-arm-msys2:
+  msys2:
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -67,7 +67,14 @@ jobs:
          fetch-depth: 1
      ## - name: Checkout nuttx repo tags
      ##   run: git -C apps fetch --tags
-        
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v3
+        env:
+          cache-name: ${{ runner.os }}-cache-tools
+        with:
+          path: ./tools
+          key: ${{ runner.os }}-tools-${{ hashFiles('./nuttx/tools/ci/cibuild.sh') }}  
       - name: Run Builds
         run: |
           echo "::add-matcher::nuttx/.github/gcc.json"
