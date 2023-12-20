@@ -29,6 +29,8 @@ jobs:
             base-devel
             gcc
             gperf
+            automake
+            autoconf
             git
             python3
             ncurses-devel
@@ -40,7 +42,6 @@ jobs:
             ninja
             python-pip 
             vim
-            curl
         
       - name: pip3 install
         run: |
@@ -55,8 +56,8 @@ jobs:
          ref: simbit18-ci
          path: nuttx
          fetch-depth: 1
-      - name: Checkout nuttx repo tags  
-        run: git -C nuttx fetch --tags
+     ## - name: Checkout nuttx repo tags  
+     ##   run: git -C nuttx fetch --tags
         
       - uses: actions/checkout@v4
         with:
@@ -64,8 +65,8 @@ jobs:
          ref: simbit18-ci
          path: apps
          fetch-depth: 1
-      - name: Checkout nuttx repo tags
-        run: git -C apps fetch --tags
+     ## - name: Checkout nuttx repo tags
+     ##   run: git -C apps fetch --tags
         
       - name: Run Builds
         run: |
