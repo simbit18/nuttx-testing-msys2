@@ -17,24 +17,6 @@ jobs:
         shell: msys2 {0}
     steps:
       - uses: actions/checkout@v4
-        with:
-         repository: simbit18/nuttx
-         ref: simbit18-ci
-         path: nuttx
-         fetch-depth: 1
-      - name: Checkout nuttx repo tags  
-        run: git -C nuttx fetch --tags
-        
-      - uses: actions/checkout@v4
-        with:
-         repository: simbit18/nuttx-apps
-         ref: simbit18-ci
-         path: apps
-         fetch-depth: 1
-      - name: Checkout nuttx repo tags
-        run: git -C apps fetch --tags
-        
-      - uses: actions/checkout@v4
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MSYS
@@ -61,3 +43,22 @@ jobs:
           echo 'pip3 install'
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+          
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with:
+         repository: simbit18/nuttx
+         ref: simbit18-ci
+         path: nuttx
+         fetch-depth: 1
+      - name: Checkout nuttx repo tags  
+        run: git -C nuttx fetch --tags
+        
+      - uses: actions/checkout@v4
+        with:
+         repository: simbit18/nuttx-apps
+         ref: simbit18-ci
+         path: apps
+         fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C apps fetch --tags   
