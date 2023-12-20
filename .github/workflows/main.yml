@@ -1,0 +1,45 @@
+name: Build MSYS2
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: write
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/main.yml'
+
+jobs:
+  nuttx-arm-msys2:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            zlib-devel
+            cmake
+            ninja
+            python-pip 
+            vim
+            curl
+        
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
