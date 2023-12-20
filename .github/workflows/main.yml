@@ -16,6 +16,27 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
+      - name: Checkout nuttx repo
+      - uses: actions/checkout@v4
+        with:
+         repository: simbit18/nuttx
+         ref: simbit18-ci
+         path: nuttx
+         fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C nuttx fetch --tags
+
+      - name: Checkout apps repo
+      - uses: actions/checkout@v4
+        with:
+         repository: simbit18/nuttx-apps
+         ref: simbit18-ci
+         path: apps
+         fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C apps fetch --tags
+        
+      - name: Checkout msys2
       - uses: actions/checkout@v4
       - uses: msys2/setup-msys2@v2
         with:
