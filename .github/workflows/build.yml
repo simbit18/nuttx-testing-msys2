@@ -19,8 +19,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  Fetch-Source:
-    runs-on: ubuntu-latest
   msys2:
     runs-on: windows-latest
     defaults:
