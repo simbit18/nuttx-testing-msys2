@@ -16,7 +16,6 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-      - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
         with:
          repository: simbit18/nuttx
