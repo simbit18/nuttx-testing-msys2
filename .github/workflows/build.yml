@@ -11,11 +11,10 @@
 # limitations under the License.
 #
 name: Build
-
-on:
+on: 
   workflow_dispatch:
   push:
-   paths:
+    paths:
       - '.github/workflows/build.yml'
   
 jobs:
