@@ -23,7 +23,6 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-      - run: git config --global core.autocrlf false
       - name: Checkout nuttx repo
       - uses: actions/checkout@v4
       with:
