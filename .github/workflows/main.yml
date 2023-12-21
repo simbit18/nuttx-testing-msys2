@@ -80,4 +80,5 @@ jobs:
           echo "::add-matcher::nuttx/.github/gcc.json"
           ## export ARTIFACTDIR=`pwd`/buildartifacts
           cd nuttx/tools/ci
-          ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
+          ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -g -i -c -R testlist/${{matrix.boards}}.dat
