@@ -13,13 +13,16 @@
 name: Build MSYS2 2
 
 permissions:
-  ## Allow publishing of GitHub Release
-  contents: write
+  contents: read
 on: 
   workflow_dispatch:
   push:
     paths:
       - '.github/workflows/build2.yml'
+      
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   Fetch-Source:
@@ -61,7 +64,9 @@ jobs:
         with:
           name: source-bundle
           path: sources.tar.gz
+
   msys2:
+    needs: Fetch-Source
     runs-on: windows-latest
     strategy:
       fail-fast: false
