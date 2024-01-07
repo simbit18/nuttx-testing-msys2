@@ -122,9 +122,11 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
+          git config --global --add safe.directory /github/workspace/sources/nuttx
+          git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
           ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
-          ./cibuild.sh -g -i -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -g -i -A -R testlist/${{matrix.boards}}.dat
 
 
       - uses: actions/upload-artifact@v3
