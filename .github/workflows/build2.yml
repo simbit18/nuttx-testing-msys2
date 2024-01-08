@@ -105,7 +105,7 @@ jobs:
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
-      - run: git config --global core.autocrlf false
+      ## - run: git config --global core.autocrlf false
       - name: Download Source Artifact
         uses: actions/download-artifact@v3
         with:
