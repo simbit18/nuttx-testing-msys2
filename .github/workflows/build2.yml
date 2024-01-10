@@ -35,16 +35,16 @@ jobs:
           OS_REF=""
           APPS_REF=""
 
-          # REF="refs/heads/simbit18-ci2"
-          REF="refs/heads/master"
+          REF="refs/heads/simbit18-ci2"
+          # REF="refs/heads/master"
           echo "Working with ref: $REF"
 
       - name: Checkout nuttx repo
         uses: actions/checkout@v4
         with:
           repository: simbit18/nuttx
-          # ref: simbit18-ci2
-          ref:  master
+          ref: simbit18-ci2
+          # ref:  master
           path: sources/nuttx
           fetch-depth: 1
       - name: Checkout nuttx repo tags
@@ -54,8 +54,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: simbit18/nuttx-apps
-          # ref: simbit18-ci2
-          ref: master
+          ref: simbit18-ci2
+          # ref: master
           path: sources/apps
           fetch-depth: 1
 
@@ -74,7 +74,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        boards: [msys2]
+        boards: [msys2-01]
     defaults:
       run:
         shell: msys2 {0}
