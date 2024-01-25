@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Build MSYS2 2
+name: Build MSYS2 3
 
 permissions:
   contents: read
