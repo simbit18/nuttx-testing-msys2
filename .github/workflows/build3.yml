@@ -74,7 +74,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        boards: [msys2, msys2-01]
+        boards: [msys2, msys2-01, msys2-01]
     defaults:
       run:
         shell: msys2 {0}
