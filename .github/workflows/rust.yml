@@ -56,9 +56,10 @@ jobs:
           ## Show the GCC version
           gcc -v
           ls -a ../../
-          ## cp -f ../../fix/1030/Config.mk tools/Config.mk
-          ## cp -f ../../fix/1030/Make.defs boards/sim/sim/sim/scripts/Make.defs
-          ## cp -f ../../fix/1030/defconfig boards/sim/sim/sim/configs/nsh/defconfig
-          ## cp -f ../../fix/1030/up_hostmisc.c arch/sim/src/sim/up_hostmisc.c
+          cp -f ../../rust/rust.sh rust-tools/rust.sh
+          cd rust-tools
+          ls -a
+          ./rust.sh
+          ls -a
           
          
