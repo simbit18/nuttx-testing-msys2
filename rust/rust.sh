@@ -93,7 +93,7 @@ function rust {
     # export CARGO_HOME=${tools}/rust/bin
     export CARGO_HOME=${tools}/rust/cargo
     export RUSTUP_HOME=${tools}/rust/rustup
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -v -y --default-host x86_64-pc-windows-gnu --no-modify-path
     $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi
     $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
     # Install Rust and targets supported from NuttX
@@ -122,4 +122,4 @@ main() {
 }
 
 
-main "$@" || exit 1
+main
