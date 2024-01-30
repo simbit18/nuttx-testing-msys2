@@ -1,0 +1,63 @@
+name: Rust MSYS2
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: write
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/rust.yml'
+
+jobs:
+  nuttx-msys2:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            zlib-devel
+            cmake
+            ninja
+            python-pip 
+            vim
+            curl
+        
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+
+      - name: Build
+        run: |
+          echo 'Build'
+
+          ## Move to nuttx
+          cd nuttxspace/nuttx
+          ls -a
+
+          ## Show the GCC version
+          gcc -v
+          ls -a ../../
+          ## cp -f ../../fix/1030/Config.mk tools/Config.mk
+          ## cp -f ../../fix/1030/Make.defs boards/sim/sim/sim/scripts/Make.defs
+          ## cp -f ../../fix/1030/defconfig boards/sim/sim/sim/configs/nsh/defconfig
+          ## cp -f ../../fix/1030/up_hostmisc.c arch/sim/src/sim/up_hostmisc.c
+          
+         
