@@ -142,7 +142,7 @@ main() {
     echo "no curl or wget ?" # to be used in error message of need_cmd
   fi
   rust2
-  pip install --upgrade pip
+  pip3 install --upgrade setuptools pip
   pip3 install --root-user-action=ignore --no-cache-dir esptool
 }
 
