@@ -26,7 +26,7 @@ jobs:
             gcc
             gperf
             git
-            python-devel
+            python3
             ncurses-devel
             unzip
             zip
@@ -45,7 +45,7 @@ jobs:
         run: |
           echo 'pip3 install'
           uname
-          pip3 install --root-user-action=ignore --no-cache-dir setuptools wheel cryptography pyelftools cxxfilt kconfiglib
+          pip3 install --root-user-action=ignore --no-cache-dir setuptools wheel pyelftools cxxfilt kconfiglib
 
       - name: Build
         run: |
