@@ -33,6 +33,7 @@ jobs:
             tio
             libffi-devel
             zlib-devel
+            openssl
             cmake
             ninja
             python-pip 
