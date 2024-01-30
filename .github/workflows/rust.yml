@@ -10,7 +10,7 @@ on:
       - '.github/workflows/rust.yml'
 
 jobs:
-  nuttx-msys2:
+  rust-msys2:
     runs-on: windows-latest
     defaults:
       run:
