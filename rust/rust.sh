@@ -107,7 +107,7 @@ function rust {
 }
 
 function rust2 {
-  add_path "${tools}"/rust/bin
+  add_path "${tools}"/rust/cargo/bin
 
   if ! type rustc &> /dev/null; then
     mkdir -p "${tools}"/rust
@@ -124,7 +124,8 @@ function rust2 {
   #&& $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi \
   # && $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
   fi
-  ls -a
+  ls -a ${tools}/rust
+  ls -a ${tools}/rust/cargo
   command rustc --version
 }
 
