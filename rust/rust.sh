@@ -126,6 +126,8 @@ function rust2 {
   fi
   ls -a ${tools}/rust
   ls -a ${tools}/rust/cargo
+  ls -a ${tools}/rust/cargo/bin
+  ls -a ${tools}/rust/rustup
   command rustc --version
 }
 
@@ -140,6 +142,8 @@ main() {
     echo "no curl or wget ?" # to be used in error message of need_cmd
   fi
   rust2
+  
+  pip3 install --root-user-action=ignore --no-cache-dir esptool
 }
 
 
