@@ -93,7 +93,7 @@ function rust {
     # export CARGO_HOME=${tools}/rust/bin
     export CARGO_HOME=${tools}/rust/cargo
     export RUSTUP_HOME=${tools}/rust/rustup
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s --default-host x86_64-pc-windows-gnu --no-modify-path -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi
     $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
     # Install Rust and targets supported from NuttX
@@ -106,7 +106,27 @@ function rust {
   command rustc --version
 }
 
+function rust2 {
+  add_path "${tools}"/rust/bin
 
+  if ! type rustc &> /dev/null; then
+    mkdir -p "${tools}"/rust
+    # Currently Debian installed rustc doesn't support 2021 edition.
+    # export CARGO_HOME=${tools}/rust/bin
+    export CARGO_HOME=${tools}/rust/cargo
+    export RUSTUP_HOME=${tools}/rust/rustup
+    ./rustup-init.exe -y --default-host x86_64-pc-windows-gnu --no-modify-path
+    $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi
+    $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
+    # Install Rust and targets supported from NuttX
+
+  #&& curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+  #&& $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi \
+  # && $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
+  fi
+  ls -a
+  command rustc --version
+}
 
 main() {
   mkdir -p "${tools}"
@@ -118,7 +138,7 @@ main() {
   else
     echo "no curl or wget ?" # to be used in error message of need_cmd
   fi
-  rust
+  rust2
 }
 
 
