@@ -113,7 +113,8 @@ main() {
   fi
   rust
   
-  pip3 install --root-user-action=ignore --no-cache-dir cffi pyOpenSSL wheel cryptography  esptool==4.5.1
+  pip3 install --root-user-action=ignore --no-cache-dir cffi pyOpenSSL wheel cryptography
+  # esptool==4.5.1
 
 }
 main
