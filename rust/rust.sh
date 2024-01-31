@@ -145,4 +145,5 @@ main() {
   
   pip3 install --root-user-action=ignore --no-cache-dir pyOpenSSL wheel cryptography  esptool
 
+}
 main
