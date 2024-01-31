@@ -114,7 +114,7 @@ jobs:
         run: |
           echo 'pip3 install'
           uname
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+          pip3 install pyelftools cxxfilt kconfiglib
           
       - name: Download Source Artifact
         uses: actions/download-artifact@v3
