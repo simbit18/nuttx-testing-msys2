@@ -1,0 +1,219 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Build MSYS2_Cygwin
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/cygwin.yml'
+      
+concurrency:
+  group: build-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+
+          REF="refs/heads/simbit18-new"
+          # REF="refs/heads/master"
+          echo "Working with ref: $REF"
+
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx
+          ref: simbit18-new
+          # ref:  master
+          path: sources/nuttx
+          fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+
+      - name: Checkout apps repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-apps
+          ref: simbit18-new
+          # ref: master
+          path: sources/apps
+          fetch-depth: 1
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v3
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+  Cygwin:
+    needs: Fetch-Source
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        boards: [msys2]
+    defaults:
+      run:
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
+    steps:
+        # checkout action uses the native git (we can avoid this messing up line
+        # endings, but this could still be dangerous e.g if we need symlinks in the
+        # repo)
+      - run: git config --global core.autocrlf input
+      - uses: actions/checkout@v4
+        # install cygwin and build tools
+      - name: Install Cygwin
+        uses: cygwin/cygwin-install-action@master
+        with:
+          platform: x86_64
+          packages: >-
+            make
+            gcc-core
+            gcc-g++
+            flex
+            git
+            bison
+            byacc
+            gdb
+            unzip
+            awk
+            automake-1.15
+            autoconf
+            wget
+            xxd
+            libmpc-devel
+            libncurses-devel
+            libmpfr-devel
+            zlib-devel
+            patch
+            python3
+            cmake
+            ninja
+            python-pip
+        
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt esptool kconfiglib
+          
+      ## - run: git config --global core.autocrlf false
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+        
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+        
+      - name: Run Builds
+        run: |
+          echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          export ARTIFACTDIR=`pwd`/buildartifacts
+          git config --global --add safe.directory /github/workspace/sources/nuttx
+          git config --global --add safe.directory /github/workspace/sources/apps
+          cd sources/nuttx/tools/ci
+          ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -c -i -A -C -R testlist/${{matrix.boards}}.dat
+
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cygwin-builds
+          path: buildartifacts/
+        continue-on-error: true
+  msys2:
+    needs: Fetch-Source
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        boards: [msys2]
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            automake
+            autoconf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            zlib-devel
+            cmake
+            ninja
+            python-pip 
+            vim
+        
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt esptool kconfiglib
+          
+      ## - run: git config --global core.autocrlf false
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+        
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+        
+      - name: Run Builds
+        run: |
+          echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          export ARTIFACTDIR=`pwd`/buildartifacts
+          git config --global --add safe.directory /github/workspace/sources/nuttx
+          git config --global --add safe.directory /github/workspace/sources/apps
+          cd sources/nuttx/tools/ci
+          ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -g -i -A -C -R testlist/${{matrix.boards}}.dat
+
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: msys2-builds
+          path: buildartifacts/
+        continue-on-error: true
