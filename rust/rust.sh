@@ -84,50 +84,20 @@ check_cmd() {
     command -v "$1" > /dev/null 2>&1
 }
 
+
 function rust {
-  add_path "${tools}"/rust/bin
-
-  if ! type rustc &> /dev/null; then
-    mkdir -p "${tools}"/rust
-    # Currently Debian installed rustc doesn't support 2021 edition.
-    # export CARGO_HOME=${tools}/rust/bin
-    export CARGO_HOME=${tools}/rust/cargo
-    export RUSTUP_HOME=${tools}/rust/rustup
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi
-    $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
-    # Install Rust and targets supported from NuttX
-
-  #&& curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-  #&& $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi \
-  # && $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
-  fi
-  ls -a
-  command rustc --version
-}
-
-function rust2 {
   add_path "${tools}"/rust/cargo/bin
-
+  # Configuring the PATH environment variable
+  export CARGO_HOME=${tools}/rust/cargo
+  export RUSTUP_HOME=${tools}/rust/rustup
   if ! type rustc &> /dev/null; then
     mkdir -p "${tools}"/rust
-    # Currently Debian installed rustc doesn't support 2021 edition.
-    # export CARGO_HOME=${tools}/rust/bin
-    export CARGO_HOME=${tools}/rust/cargo
-    export RUSTUP_HOME=${tools}/rust/rustup
+    # Install Rust target x86_64-pc-windows-gnu
     ./rustup-init.exe -y --default-host x86_64-pc-windows-gnu --no-modify-path
+    # Install targets supported from NuttX
     $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi
     $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
-    # Install Rust and targets supported from NuttX
-
-  #&& curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-  #&& $CARGO_HOME/bin/rustup target add thumbv6m-none-eabi \
-  # && $CARGO_HOME/bin/rustup target add thumbv7m-none-eabi
   fi
-  ls -a ${tools}/rust
-  ls -a ${tools}/rust/cargo
-  ls -a ${tools}/rust/cargo/bin
-  ls -a ${tools}/rust/rustup
   command rustc --version
 }
 
@@ -141,7 +111,7 @@ main() {
   else
     echo "no curl or wget ?" # to be used in error message of need_cmd
   fi
-  rust2
+  rust
   
   pip3 install --root-user-action=ignore --no-cache-dir cffi pyOpenSSL wheel cryptography  esptool==4.5.1
 
