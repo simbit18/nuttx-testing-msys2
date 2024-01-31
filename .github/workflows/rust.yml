@@ -20,7 +20,7 @@ jobs:
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MSYS
-          update: true
+          update: false
           install: >-
             base-devel
             gcc
@@ -40,12 +40,13 @@ jobs:
             python-pip 
             vim
             curl
-        
+
       - name: pip3 install
         run: |
           echo 'pip3 install'
           uname
-          pip3 install --root-user-action=ignore --no-cache-dir setuptools wheel pyelftools cxxfilt kconfiglib
+          pip3 install --upgrade pip
+          pip3 install --root-user-action=ignore --no-cache-dir setuptools pyOpenSSL wheel numpy cryptography pyelftools cxxfilt kconfiglib
 
       - name: Build
         run: |
@@ -64,5 +65,4 @@ jobs:
           ls -a
           ./rust.sh
           ls -a
-          
-         
+
