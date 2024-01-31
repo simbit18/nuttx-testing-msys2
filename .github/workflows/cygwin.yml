@@ -74,9 +74,6 @@ jobs:
       fail-fast: false
       matrix:
         boards: [msys2]
-    defaults:
-      run:
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
     steps:
         # checkout action uses the native git (we can avoid this messing up line
         # endings, but this could still be dangerous e.g if we need symlinks in the
@@ -117,9 +114,8 @@ jobs:
         run: |
           echo 'pip3 install'
           uname
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt esptool kconfiglib
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
-      ## - run: git config --global core.autocrlf false
       - name: Download Source Artifact
         uses: actions/download-artifact@v3
         with:
@@ -186,7 +182,7 @@ jobs:
         run: |
           echo 'pip3 install'
           uname
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt esptool kconfiglib
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
       ## - run: git config --global core.autocrlf false
       - name: Download Source Artifact
