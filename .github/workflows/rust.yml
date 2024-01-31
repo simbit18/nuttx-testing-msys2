@@ -46,7 +46,7 @@ jobs:
           echo 'pip3 install'
           uname
           pip3 install --upgrade pip
-          pip3 install --root-user-action=ignore --no-cache-dir setuptools pyOpenSSL wheel pyelftools cxxfilt kconfiglib
+          pip3 install --root-user-action=ignore --no-cache-dir setuptools pyelftools cxxfilt kconfiglib
 
       - name: Build
         run: |

@@ -143,6 +143,6 @@ main() {
   fi
   rust2
   
-  pip3 install --root-user-action=ignore --no-cache-dir cryptography esptool
+  pip3 install --root-user-action=ignore --no-cache-dir pyOpenSSL wheel cryptography  esptool
 
 main
