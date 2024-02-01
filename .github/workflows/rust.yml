@@ -32,6 +32,7 @@ jobs:
             zip
             tio
             libffi-devel
+            libcrypt-devel
             zlib-devel
             openssl-devel
             pkg-config
