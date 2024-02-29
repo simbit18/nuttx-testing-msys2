@@ -29,8 +29,12 @@ jobs:
         run: |
           ## system_profiler SPSoftwareDataType
           bash --version
-          gcc -v
-          xcodebuild -version
+          uname -a
+          dnf -y install @development-tools @rpm-development-tools
+          dnf -y install mesa-libGL-devel mesa-libGLU-devel
+          dnf -y install copr-cli make gcc-c++
+          dnf -y install perl
+          dnf -y upgrade git
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
