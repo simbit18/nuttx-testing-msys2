@@ -30,6 +30,8 @@ jobs:
           ## system_profiler SPSoftwareDataType
           bash --version
           uname -a
+          which bison
+          which flock
           dnf list installed
           # dnf -y install @development-tools @rpm-development-tools
           # dnf -y install mesa-libGL-devel mesa-libGLU-devel
