@@ -42,8 +42,8 @@ jobs:
                  expat-devel gcc-c++ g++ picocom uboot-tools util-linux
           dnf -y upgrade git
           dnf list installed
-          which bison
-          which flock
+          sudo which bison
+          sudo which flock
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
