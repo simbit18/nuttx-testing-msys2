@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Build MSYS2 Linux
+name: Build Master Linux
 
 permissions:
   contents: read
