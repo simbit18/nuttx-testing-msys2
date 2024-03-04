@@ -63,10 +63,10 @@ jobs:
           name: source-bundle
           path: sources.tar.gz
 
-  fedora:
-    needs: diff
+  #fedora:
+    #needs: diff
     # uses: ./.github/workflows/ci_fedora.yml
-    secrets: inherit
-    with:
+    #secrets: inherit
+    #with:
       # ref_name: ${{ inputs.ref_name }}
-      package_names: ${{ needs.diff.outputs.package_names }}
+      #package_names: ${{ needs.diff.outputs.package_names }}
