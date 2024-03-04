@@ -67,9 +67,9 @@ jobs:
 
           
   fedora:
-    uses: $GITHUB_WORKSPACE/.github/workflows/ci_fedora.yml@main
+    uses: ./.github/workflows/ci_fedora.yml
     permissions:
-      contents: read
+      contents: none
       
   # macos:
   #  uses: ./.github/workflows/macos.yml
