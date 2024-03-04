@@ -14,8 +14,6 @@ name: Fedora
 
 permissions:
   contents: read
-on:
-  workflow_call:
 jobs:
   build_fedora:
      # Containers must run in Linux based operating systems  
