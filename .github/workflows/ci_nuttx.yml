@@ -19,6 +19,9 @@ on:
   push:
    paths:
       - '.github/workflows/ci_nuttx.yml'
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  cancel-in-progress: true      
 
 jobs:
   Fetch-Source:
