@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/23.yml'
+      - '.github/workflows/ci_nuttx.yml'
   workflow_call:
     inputs:
       ref_name:
