@@ -1,4 +1,15 @@
-
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
 name: NuttXCI
 permissions:
@@ -10,19 +21,64 @@ on:
       - '.github/workflows/nuttxci.yml'
 
 jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # REF="refs/heads/simbit18-platforms"
+          REF="refs/heads/simbit18-20240221"
+          # REF="refs/heads/master"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx
+          # ref: simbit18-platforms
+          ref: simbit18-20240221
+          # ref:  master
+          path: sources/nuttx
+          fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+
+      - name: Checkout apps repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-apps
+          # ref: simbit18-platforms
+          ref: simbit18-20240221 
+          # ref: master
+          path: sources/apps
+          fetch-depth: 1
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+
+          
   fedora:
     uses: ./.github/workflows/fedora.yml
     permissions:
       contents: write
       
-  macos:
-    uses: ./.github/workflows/macos.yml
-    permissions:
-      contents: write
+  # macos:
+  #  uses: ./.github/workflows/macos.yml
+  #  permissions:
+  #    contents: write
       
-  window:
-    uses: ./.github/workflows/windows.yml
-    permissions:
-      contents: write
+  # window:
+  #  uses: ./.github/workflows/windows.yml
+  #  permissions:
+  #    contents: write
 
   
