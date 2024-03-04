@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
   push:
    paths:
-      - '.github/workflows/nuttxci.yml'
+      - '.github/workflows/ci_nuttx.yml'
 
 jobs:
   Fetch-Source:
@@ -67,7 +67,7 @@ jobs:
 
           
   fedora:
-    uses: ./.github/workflows/fedora.yml
+    uses: ./.github/workflows/ci_fedora.yml
     permissions:
       contents: write
       
