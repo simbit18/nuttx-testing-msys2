@@ -10,17 +10,19 @@ on:
       - '.github/workflows/nuttxci.yml'
 
 jobs:
+  linux:
+    uses: ./.github/workflows/linux.yml
+    permissions:
+      contents: write
+      
+  macos:
+    uses: ./.github/workflows/macos.yml
+    permissions:
+      contents: write
+      
   window:
     uses: ./.github/workflows/windows.yml
     permissions:
       contents: write
 
-  macos:
-    uses: ./.github/workflows/macos.yml
-    permissions:
-      contents: write
-
-  linux:
-    uses: ./.github/workflows/linux.yml
-    permissions:
-      contents: write
+  
