@@ -10,7 +10,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Fedora
+name: CI Fedora
+on:
+  workflow_call:
 
 permissions:
   contents: read
@@ -20,7 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
-    needs: Fetch-Source
     steps:
       - name: System Information
         run: |
