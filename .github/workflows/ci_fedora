@@ -18,11 +18,11 @@ permissions:
   contents: read
 jobs:
   build_fedora:
-     # Containers must run in Linux based operating systems  
+    needs: Fetch-Source
+    # Containers must run in Linux based operating systems  
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
-    needs: Fetch-Source
     steps:
       - name: System Information
         run: |
