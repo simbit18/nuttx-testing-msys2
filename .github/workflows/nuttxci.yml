@@ -1,12 +1,13 @@
 
 
 name: NuttXCI
+permissions:
+  contents: read
 on:
+  workflow_dispatch:
   push:
-    paths-ignore: ['**/*.md']
-  pull_request:
-    branches: [main]
-    paths-ignore: ['**/*.md']
+   paths:
+      - '.github/workflows/nuttxci.yml'
 
 jobs:
   windows:
