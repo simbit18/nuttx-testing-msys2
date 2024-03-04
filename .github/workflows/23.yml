@@ -1,5 +1,7 @@
-name: 23
+name: First
 
+permissions:
+  contents: read
 on:
   workflow_dispatch:
   push:
@@ -23,8 +25,8 @@ jobs:
     name: List Updated Packages
     timeout-minutes: 20
     runs-on: ubuntu-latest
-    outputs:
-      package_names: ${{ steps.changes.outputs.package_names }}
+    # outputs:
+    #  package_names: ${{ steps.changes.outputs.package_names }}
     steps:
       - name: Determine Target Branches
         id: gittargets
@@ -36,6 +38,7 @@ jobs:
           # master
           REF="refs/heads/main"
           echo "Working with ref: $REF"
+      - name: Checkout nuttx repo    
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
