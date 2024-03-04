@@ -1,7 +1,10 @@
 name: 23
 
 on:
+  workflow_dispatch:
   push:
+    paths:
+      - '.github/workflows/msys2_alpine.yml'
   workflow_call:
     inputs:
       ref_name:
