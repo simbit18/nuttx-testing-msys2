@@ -48,14 +48,14 @@ jobs:
           ref: simbit18-20240221 
           path: sources/apps
           fetch-depth: 2
-       - name: Tar sources
-         run: tar zcf sources.tar.gz sources
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
 
-       - name: Archive Source Bundle
-         uses: actions/upload-artifact@v4
-         with:
-           name: source-bundle
-           path: sources.tar.gz
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
 
   fedora:
     needs: diff
