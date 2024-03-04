@@ -67,6 +67,7 @@ jobs:
 
           
   fedora:
+    needs: Fetch-Source
     uses: ./.github/workflows/ci_fedora.yml
     permissions:
       contents: write
