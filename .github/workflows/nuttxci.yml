@@ -10,8 +10,8 @@ on:
       - '.github/workflows/nuttxci.yml'
 
 jobs:
-  linux:
-    uses: ./.github/workflows/linux.yml
+  fedora:
+    uses: ./.github/workflows/fedora.yml
     permissions:
       contents: write
       
