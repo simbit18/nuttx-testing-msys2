@@ -54,7 +54,7 @@ jobs:
           ref: simbit18-20240221 
           # ref: master
           path: sources/apps
-          fetch-depth: 1
+          fetch-depth: 2
 
       - name: Tar sources
         run: tar zcf sources.tar.gz sources
