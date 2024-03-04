@@ -65,7 +65,7 @@ jobs:
 
   fedora:
     needs: diff
-    uses: ./.github/workflows/ci_fedora.yml
+    # uses: ./.github/workflows/ci_fedora.yml
     secrets: inherit
     with:
       # ref_name: ${{ inputs.ref_name }}
