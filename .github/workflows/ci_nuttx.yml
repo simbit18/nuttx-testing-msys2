@@ -72,7 +72,7 @@ jobs:
   fedora:
     uses: ./.github/workflows/ci_fedora.yml
     permissions:
-      contents: read
+      contents: write
     
      
       
