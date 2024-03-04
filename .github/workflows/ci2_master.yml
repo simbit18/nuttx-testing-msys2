@@ -22,6 +22,8 @@ on:
   push:
     paths-ignore:
       - 'Documentation/**'
+    paths:
+      - '.github/workflows/ci2_master.yml'
 
 permissions:
   contents: read
