@@ -1,0 +1,66 @@
+name: 23
+
+on:
+  push:
+  workflow_call:
+    inputs:
+      ref_name:
+        type: string
+        required: true
+      base_ref:
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  diff:
+    name: List Updated Packages
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    outputs:
+      package_names: ${{ steps.changes.outputs.package_names }}
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # REF="refs/heads/simbit18-platforms"
+          # master
+          REF="refs/heads/main"
+          echo "Working with ref: $REF"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          repository: simbit18/nuttx
+          ref: simbit18-20240221
+          path: sources/nuttx
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+      - name: Checkout apps repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-apps
+          ref: simbit18-20240221 
+          path: sources/apps
+          fetch-depth: 2
+       - name: Tar sources
+         run: tar zcf sources.tar.gz sources
+
+       - name: Archive Source Bundle
+         uses: actions/upload-artifact@v4
+         with:
+           name: source-bundle
+           path: sources.tar.gz
+
+  fedora:
+    needs: diff
+    uses: ./.github/workflows/ci_fedora.yml
+    secrets: inherit
+    with:
+      ref_name: ${{ inputs.ref_name }}
+      package_names: ${{ needs.diff.outputs.package_names }}
