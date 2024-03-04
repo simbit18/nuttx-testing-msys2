@@ -14,16 +14,15 @@ name: Fedora
 
 permissions:
   contents: read
-on: 
-  workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/ci_fedora.yml'
-
+on:
+  workflow_call:
 jobs:
   build_fedora:
-    container: fedora:latest
+     # Containers must run in Linux based operating systems  
     runs-on: ubuntu-latest
+    # Docker Hub image that `container-job` executes in
+    container: fedora:latest
+    needs: Fetch-Source
     steps:
       - name: System Information
         run: |
