@@ -21,7 +21,7 @@ jobs:
 
   diff:
     name: List Updated Packages
-    timeout-minutes: 15
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     outputs:
       package_names: ${{ steps.changes.outputs.package_names }}
