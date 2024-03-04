@@ -10,7 +10,7 @@ on:
       - '.github/workflows/nuttxci.yml'
 
 jobs:
-  windows:
+  window:
     uses: ./.github/workflows/windows.yml
     permissions:
       contents: write
