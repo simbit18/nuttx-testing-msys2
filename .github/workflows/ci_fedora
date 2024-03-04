@@ -13,12 +13,20 @@
 name: CI Fedora
 on:
   workflow_call:
+    inputs:
+      ref_name:
+        type: string
+      package_names:
+        type: string
+        required: true
+    outputs:
+      release:
+        value: "false"
 
 permissions:
   contents: read
 jobs:
   build_fedora:
-    needs: Fetch-Source
     # Containers must run in Linux based operating systems  
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
