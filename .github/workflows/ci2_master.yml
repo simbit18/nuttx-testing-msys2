@@ -20,8 +20,6 @@ on:
       
   workflow_dispatch:    
   push:
-    paths-ignore:
-      - 'Documentation/**'
     paths:
       - '.github/workflows/ci2_master.yml'
 
