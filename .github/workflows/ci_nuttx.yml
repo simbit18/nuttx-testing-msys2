@@ -31,6 +31,7 @@ concurrency:
 
 jobs:
    FetchNuttX:
+     fetch-depth: 1
      uses: ./.github/workflows/ci_fetch.yml
      permissions:
        contents: write
