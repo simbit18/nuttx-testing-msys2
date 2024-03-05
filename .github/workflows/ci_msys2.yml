@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: CI Fedora
+name: CI Build MSYS2
 on:
   workflow_call:
     inputs:
@@ -27,7 +27,7 @@ permissions:
   contents: read
 jobs:
   build_msys2:
-    needs: Fetch-Source
+    # needs: Fetch-Source
     runs-on: windows-latest
     strategy:
       fail-fast: false
