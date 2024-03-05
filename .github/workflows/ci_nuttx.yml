@@ -33,7 +33,7 @@ jobs:
    NuttX:
      uses: ./.github/workflows/ci_fetch.yml
      permissions:
-       contents: write
+       contents: read
 
   # fedora:
     # needs: Fetch-Source
@@ -42,16 +42,4 @@ jobs:
     # with:
       # ref_name: ${{ inputs.ref_name }}
       # package_names: ${{ needs.diff.outputs.package_names }}
-
-
-
-  # macos:
-  #  uses: ./.github/workflows/macos.yml
-  #  permissions:
-  #    contents: write
-      
-  # window:
-  #  uses: ./.github/workflows/windows.yml
-  #  permissions:
-  #    contents: write
 
