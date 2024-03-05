@@ -26,6 +26,16 @@ on:
 permissions:
   contents: read
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.setVariables.outputs.matrix }}
+    steps:
+      - id: setVariables
+        run: |
+          echo "::set-output name=matrix::$input"
+        env:
+          input: ${{ inputs.package_names }}
   build_Docker:
     runs-on: ubuntu-latest
     env:
@@ -33,7 +43,7 @@ jobs:
 
     strategy:
       matrix:
-        boards: [${{inputs.package_names }}]
+        boards: ${{fromJson(needs.setup.outputs.matrix)}}
 
     steps:
       - name: Download Source Artifact
