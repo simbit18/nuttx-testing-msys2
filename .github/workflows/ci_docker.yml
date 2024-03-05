@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        boards: [msys2]
+        boards: [${{inputs.package_names }}]
 
     steps:
       - name: Download Source Artifact

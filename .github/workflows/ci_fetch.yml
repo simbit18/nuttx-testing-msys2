@@ -83,36 +83,27 @@ jobs:
     secrets: inherit
     with:
       ref_name: ${{ inputs.ref_name }}
-      package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-  fedora:
-    needs: Fetch-Source
-    uses: ./.github/workflows/ci_fedora.yml
-    secrets: inherit
-    with:
-      ref_name: ${{ inputs.ref_name }}
-      package_names: ${{ needs.Fetch-Source.outputs.output1 }}
+      package_names: ${{ msys2 }}
+  # fedora:
+    # needs: Fetch-Source
+    # uses: ./.github/workflows/ci_fedora.yml
+    # secrets: inherit
+    # with:
+      # ref_name: ${{ inputs.ref_name }}
+      # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
       
-  msys2:
-    needs: Fetch-Source
-    uses: ./.github/workflows/ci_msys2.yml
-    secrets: inherit
-    with:
-      ref_name: ${{ inputs.ref_name }}
-      package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-  macos:
-    needs: Fetch-Source
-    uses: ./.github/workflows/ci_macos.yml
-    secrets: inherit
-    with:
-      ref_name: ${{ inputs.ref_name }}
-      package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-
+  # msys2:
+    # needs: Fetch-Source
+    # uses: ./.github/workflows/ci_msys2.yml
+    # secrets: inherit
+    # with:
+      # ref_name: ${{ inputs.ref_name }}
+      # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
   # macos:
-  #  uses: ./.github/workflows/macos.yml
-  #  permissions:
-  #    contents: write
-      
-  # window:
-  #  uses: ./.github/workflows/windows.yml
-  #  permissions:
-  #    contents: write
+    # needs: Fetch-Source
+    # uses: ./.github/workflows/ci_macos.yml
+    # secrets: inherit
+    # with:
+      # ref_name: ${{ inputs.ref_name }}
+      # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
+
