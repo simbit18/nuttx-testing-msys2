@@ -73,7 +73,7 @@ jobs:
           name: source-bundle
           path: sources.tar.gz
       - name: Output artifact ID
-        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
+        run:  echo 'Artifact ID is ${{ steps.gittargets.outputs.artifact-id }}'
 
   fedora:
     needs: Fetch-Source
