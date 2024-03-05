@@ -84,9 +84,6 @@ jobs:
     with:
       ref_name: ${{ inputs.ref_name }}
       package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-      run: echo "Artifact ID from previous job is $package_names"
-
-
 
   # macos:
   #  uses: ./.github/workflows/macos.yml
