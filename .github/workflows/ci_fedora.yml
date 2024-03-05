@@ -32,7 +32,7 @@ jobs:
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
     steps:
-        
+      - name: Output artifact ID
         run: echo "Artifact ID from previous job is $package_names"
       - name: System Information
         run: |
