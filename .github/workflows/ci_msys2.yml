@@ -26,7 +26,7 @@ on:
 permissions:
   contents: read
 jobs:
-  build_msys2:
+  build_MSYS2:
     # needs: Fetch-Source
     runs-on: windows-latest
     strategy:

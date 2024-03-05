@@ -26,50 +26,143 @@ on:
 permissions:
   contents: read
 jobs:
-  build_fedora:
-    # Containers must run in Linux based operating systems  
+  build_Alpine:
+    # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: fedora:latest
+    container: alpine:latest
+    strategy:
+      matrix:
+        boards: [msys2]
     steps:
-      - name: System Information
+      - name: Create file status_job1.txt and write the job status into it
+        if: always()
         run: |
-          ## system_profiler SPSoftwareDataType
-          bash --version
-          uname -a
-          dnf list installed
-          # dnf -y install @development-tools @rpm-development-tools
-          # dnf -y install mesa-libGL-devel mesa-libGLU-devel
-          # dnf -y install copr-cli make gcc-c++
-          # dnf -y install perl
-          dnf -y install \
-                 bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
-                 gperf automake libtool pkgconfig @development-tools gperf genromfs \
-                 gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
-                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux
-          dnf -y upgrade git
-          dnf list installed
-          sudo which bison
-          sudo which flock
-      - name: Set Environment Variables
-        run: |
-          echo "$GITHUB_PATH"
-          echo "$PATH"
-          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
-          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
-          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v4
+          echo ${{ job.status }} > status_job1.txt
+        
+      - name: Upload file status_job1.txt as an artifact
+        if: always()
+        uses: actions/upload-artifact@v1
         with:
-          ref: ${{ inputs.ref_name || github.ref }}
-      - name: Python Setup
-        uses: actions/setup-python@v4
+          name: pass_status_job1
+          path: status_job1.txt
+          
+      - name: Install Build Tools
+        run:  |
+         apk --no-cache --update add \
+         bash \
+         coreutils \
+         findutils \
+         gawk \
+         bison \
+         flex \
+         gettext \
+         texinfo \
+         gperf \
+         automake \
+         libtool \
+         binutils-dev \
+         picocom \
+         u-boot-tools \
+         util-linux \
+         patch \
+         autoconf \
+         build-base \
+         bash-completion \
+         shadow \
+         git \
+         curl \
+         rsync \
+         nano \
+         tar \
+         gzip \
+         bzip2 \
+         xz \
+         zip \
+         bsd-compat-headers \
+         zlib-dev \
+         ncurses-dev \
+         cmake \
+         xxd \
+         python3 \
+         py3-pip
+         ## libstdc++ \
+         ## libgcc
+         ## Alpine 3.19.x Fix pip error: externally-managed-environment
+         ## https://github.com/alpinelinux/docker-alpine/issues/361  
+      - name: Create the virtual environment
+        run:  |
+         python3 -m venv --system-site-packages /usr/local \
+                 && pip3 install --root-user-action=ignore --no-cache-dir \
+         setuptools \
+         wheel \
+         pyelftools \
+         cxxfilt \
+         ninja \
+         kconfiglib
+        
+        ## WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager.
+        ## It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+        ##  ignore warning message
+        ##  Container -> ENV PIP_ROOT_USER_ACTION=ignore
+        ##  Action    -> pip install --root-user-action=ignore
+        ##  WARNING: The directory '/github/home/.cache/pip' or its parent directory is not owned or is not writable by the current user.
+        ##  The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
+        ##  Container -> ENV PIP_NO_CACHE_DIR=false
+        ##  Action    -> pip3 install --no-cache-dir
+        ## only for Alpine 3.18.x
+        ## - name: Install Python 3 option
+        ##  run:  |
+        ##    pip3 install --root-user-action=ignore --no-cache-dir \
+        ##    setuptools \
+        ##    wheel \
+        ##    pyelftools \
+        ##    cxxfilt \
+        ##    kconfiglib
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
         with:
-          python-version: 3.9
-      - name: Install Dependencies
-             # --lhelper will eliminate a warning with arm64 and libusb
-        run: bash --version
-      - name: Build
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ runner.os }}-cache-tools
+        with:
+          path: ./sources/tools
+          key: ${{ runner.os }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
+
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Builds
         run: |
-          bash --version
-          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+          echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          export ARTIFACTDIR=`pwd`/buildartifacts
+          cd sources/nuttx/tools/ci
+          ./cibuild.sh -i -A -C -R testlist/${{matrix.boards}}.dat
+      - uses: actions/upload-artifact@v4
+        with:
+          name: alpine-builds
+          path: buildartifacts/
+        continue-on-error: true
+      - name: Create file status_job2.txt and write the job status into it
+        if: always()
+        run: |
+          echo ${{ job.status }} > status_job2.txt
+      - name: Upload file status_job2.txt as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pass_status_job2
+          path: status_job2.txt
