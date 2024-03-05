@@ -84,8 +84,7 @@ jobs:
     with:
       ref_name: ${{ inputs.ref_name }}
       package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-  - name: Output artifact ID
-    run: echo "Artifact ID from previous job is $package_names"
+      run: echo "Artifact ID from previous job is $package_names"
 
 
 
