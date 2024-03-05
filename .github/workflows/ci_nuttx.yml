@@ -30,7 +30,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-   FetchNuttX:
+   NuttX:
      uses: ./.github/workflows/ci_fetch.yml
      permissions:
        contents: write
