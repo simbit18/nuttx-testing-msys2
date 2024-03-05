@@ -27,13 +27,13 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
-  cancel-in-progress: true    
+  cancel-in-progress: true
 
 jobs:
    Fetch-Source:
-       uses: ./.github/workflows/ci_fetch.yml
-    permissions:
-      contents: write
+     uses: ./.github/workflows/ci_fetch.yml
+     permissions:
+     contents: write
   # Fetch-Source:
     # runs-on: ubuntu-latest
     # steps:
@@ -81,7 +81,7 @@ jobs:
           # name: source-bundle
           # path: sources.tar.gz
 
-          
+
   # fedora:
     # needs: Fetch-Source
     # uses: ./.github/workflows/ci_fedora.yml
@@ -89,9 +89,9 @@ jobs:
     # with:
       # ref_name: ${{ inputs.ref_name }}
       # package_names: ${{ needs.diff.outputs.package_names }}
-    
-     
-      
+
+
+
   # macos:
   #  uses: ./.github/workflows/macos.yml
   #  permissions:
@@ -102,4 +102,3 @@ jobs:
   #  permissions:
   #    contents: write
 
-  
