@@ -46,8 +46,8 @@ jobs:
 
     strategy:
       matrix:
-        boards: ${{fromJson(env.input)}}
-        # boards: ${{ env.input }}
+        boards: ${{ env.input }}
+        # boards: ${{fromJson(env.input)}}
         # boards: ${{fromJson(needs.setup.outputs.matrix)}}
 
     steps:
