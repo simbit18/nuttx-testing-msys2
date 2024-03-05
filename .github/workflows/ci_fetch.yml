@@ -92,6 +92,13 @@ jobs:
     with:
       ref_name: ${{ inputs.ref_name }}
       package_names: ${{ needs.Fetch-Source.outputs.output1 }}
+  macos:
+    needs: Fetch-Source
+    uses: ./.github/workflows/ci_macos.yml
+    secrets: inherit
+    with:
+      ref_name: ${{ inputs.ref_name }}
+      package_names: ${{ needs.Fetch-Source.outputs.output1 }}
 
   # macos:
   #  uses: ./.github/workflows/macos.yml
