@@ -34,53 +34,6 @@ jobs:
      uses: ./.github/workflows/ci_fetch.yml
      permissions:
        contents: write
-  # Fetch-Source:
-    # runs-on: ubuntu-latest
-    # steps:
-      # - name: Determine Target Branches
-        # id: gittargets
-        # shell: bash
-        # run: |
-          # OS_REF=""
-          # APPS_REF=""
-          # # 
-          # # REF="refs/heads/simbit18-platforms"
-          # # master
-          # REF="refs/heads/main"
-          # echo "Working with ref: $REF"
-      # - name: Checkout nuttx repo
-        # uses: actions/checkout@v4
-        # with:
-          # repository: simbit18/nuttx
-          # # ref: simbit18-platforms
-          # ref: simbit18-20240221
-          # # master
-          # # ref:  master
-          # path: sources/nuttx
-          # fetch-depth: 2
-      # - name: Checkout nuttx repo tags
-        # run: git -C sources/nuttx fetch --tags
-
-      # - name: Checkout apps repo
-        # uses: actions/checkout@v4
-        # with:
-          # repository: simbit18/nuttx-apps
-          # # ref: simbit18-platforms
-          # ref: simbit18-20240221 
-          # # master
-          # # ref: master
-          # path: sources/apps
-          # fetch-depth: 2
-
-      # - name: Tar sources
-        # run: tar zcf sources.tar.gz sources
-
-      # - name: Archive Source Bundle
-        # uses: actions/upload-artifact@v4
-        # with:
-          # name: source-bundle
-          # path: sources.tar.gz
-
 
   # fedora:
     # needs: Fetch-Source

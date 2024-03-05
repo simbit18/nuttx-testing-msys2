@@ -47,9 +47,9 @@ jobs:
         with:
           repository: simbit18/nuttx
           # ref: simbit18-platforms
-          ref: simbit18-20240221
+          # ref: simbit18-20240221
           # master
-          # ref:  master
+          ref:  master
           path: sources/nuttx
           fetch-depth: 2
       - name: Checkout nuttx repo tags
@@ -60,9 +60,9 @@ jobs:
         with:
           repository: simbit18/nuttx-apps
           # ref: simbit18-platforms
-          ref: simbit18-20240221 
+          #ref: simbit18-20240221 
           # master
-          # ref: master
+          ref: master
           path: sources/apps
           fetch-depth: 2
 
