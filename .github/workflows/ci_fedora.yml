@@ -32,6 +32,8 @@ jobs:
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
     steps:
+        
+        run: echo "Artifact ID from previous job is $package_names"
       - name: System Information
         run: |
           ## system_profiler SPSoftwareDataType
