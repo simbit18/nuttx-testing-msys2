@@ -28,6 +28,8 @@ permissions:
 jobs:
   Fetch-Source:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.gittargets.outputs.artifact-id }}
     steps:
       - name: Determine Target Branches
         id: gittargets
