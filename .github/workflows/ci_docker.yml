@@ -36,8 +36,8 @@ jobs:
         #  echo "::set-output name=matrix::$input"
         #run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
         run: echo "name=matrix::$input" >> $GITHUB_OUTPUT
-        ## env:
-        input: ${{ inputs.package_names }}
+        env:
+          input: ${{ inputs.package_names }}
 
   build_Docker:
     needs: setup
