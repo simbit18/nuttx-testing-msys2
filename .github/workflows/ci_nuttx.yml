@@ -35,8 +35,8 @@ jobs:
      uses: ./.github/workflows/ci_fetch.yml
      with:
       # Custom
-      base_ref: simbit18-20240221
-      ref_name: simbit18-20240221
+      base_ref: simbit18-20240306
+      ref_name: simbit18-20240306
       # master
       #base_ref: main
       #ref_name: master
