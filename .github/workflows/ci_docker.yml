@@ -42,7 +42,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
-      input: ${{ inputs.package_names }}
+      input: ${{fromJson(inputs.package_names)}}
+      ## input: ${{ inputs.package_names }}
 
     strategy:
       matrix:
