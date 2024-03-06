@@ -38,7 +38,7 @@ jobs:
           OS_REF=""
           APPS_REF=""
           # 
-          REF="refs/heads/"${{ needs.setup.outputs.matrix }}
+          REF="refs/heads/"${{ inputs.ref_name }}
           # master
           ###### REF="refs/heads/main"
           echo "Working with ref: $REF"

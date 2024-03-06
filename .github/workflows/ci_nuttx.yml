@@ -24,7 +24,7 @@ on:
         required: true
       base_ref:
         type: string
-        
+
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
   cancel-in-progress: true
