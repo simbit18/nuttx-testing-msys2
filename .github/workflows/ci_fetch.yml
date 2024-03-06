@@ -28,8 +28,8 @@ permissions:
 jobs:
   Fetch-Source:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.gittargets.outputs.artifact-id }}
+    # outputs:
+      # output1: ${{ steps.gittargets.outputs.artifact-id }}
     steps:
       - name: Determine Target Branches
         id: gittargets
@@ -38,9 +38,9 @@ jobs:
           OS_REF=""
           APPS_REF=""
           # 
-          # REF="refs/heads/simbit18-platforms"
+          REF="refs/heads/"${{ needs.setup.outputs.matrix }}
           # master
-          REF="refs/heads/main"
+          ###### REF="refs/heads/main"
           echo "Working with ref: $REF"
       - name: Checkout nuttx repo
         uses: actions/checkout@v4
@@ -48,8 +48,9 @@ jobs:
           repository: simbit18/nuttx
           # ref: simbit18-platforms
           # ref: simbit18-20240221
+          ref: ${{ inputs.ref_name }}
           # master
-          ref:  master
+          #ref:  master
           path: sources/nuttx
           fetch-depth: 2
       - name: Checkout nuttx repo tags
@@ -60,9 +61,10 @@ jobs:
         with:
           repository: simbit18/nuttx-apps
           # ref: simbit18-platforms
-          #ref: simbit18-20240221 
+          #ref: simbit18-20240221
+          ref: ${{ inputs.ref_name }}
           # master
-          ref: master
+          # ref: master
           path: sources/apps
           fetch-depth: 2
 
@@ -74,17 +76,17 @@ jobs:
         with:
           name: source-bundle
           path: sources.tar.gz
-      - name: Output artifact ID
-        run:  echo 'Artifact ID is ${{ steps.gittargets.outputs.artifact-id }}'
+      # - name: Output artifact ID
+        # run:  echo 'Artifact ID is ${{ steps.gittargets.outputs.artifact-id }}'
 
   docker:
     needs: Fetch-Source
     uses: ./.github/workflows/ci_docker.yml
     secrets: inherit
     with:
-      ref_name: ${{ inputs.ref_name }}
-      package_names: '["msys2", "arm-01"]'
-      # package_names: '[msys2]'
+      # ref_name: ${{ inputs.ref_name }}
+      # package_names: '["msys2", "arm-01"]'
+      package_names: '[msys2]'
       # package_names: '["msys2", "javascript"]' 
   # fedora:
     # needs: Fetch-Source
