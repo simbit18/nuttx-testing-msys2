@@ -14,9 +14,7 @@ name: CI Build macOS
 on:
   workflow_call:
     inputs:
-      ref_name:
-        type: string
-      package_names:
+      testlist_names:
         type: string
         required: true
     outputs:
@@ -30,7 +28,7 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        boards: [msys2]
+        boards: ${{ fromJson(inputs.testlist_names) }}
     steps:
       - name: Download Source Artifact
         uses: actions/download-artifact@v4

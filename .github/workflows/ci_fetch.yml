@@ -50,8 +50,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: simbit18/nuttx
-          # ref: simbit18-platforms
-          # ref: simbit18-20240221
           ref: ${{ inputs.ref_name }}
           # master
           #ref:  master
@@ -88,11 +86,9 @@ jobs:
     uses: ./.github/workflows/ci_docker.yml
     secrets: inherit
     with:
-      # ref_name: ${{ inputs.ref_name }}
-      # package_names: '["msys2", "arm-01"]'
+      # testlist_names: '["msys2", "arm-01"]'
       testlist_names: '["msys2"]'
-      # package_names: '["msys2", "javascript"]' 
-  # fedora:
+# fedora:
     # needs: Fetch-Source
     # uses: ./.github/workflows/ci_fedora.yml
     # secrets: inherit
@@ -100,18 +96,18 @@ jobs:
       # ref_name: ${{ inputs.ref_name }}
       # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
       
-  # msys2:
-    # needs: Fetch-Source
-    # uses: ./.github/workflows/ci_msys2.yml
-    # secrets: inherit
-    # with:
-      # ref_name: ${{ inputs.ref_name }}
-      # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
-  # macos:
-    # needs: Fetch-Source
-    # uses: ./.github/workflows/ci_macos.yml
-    # secrets: inherit
-    # with:
-      # ref_name: ${{ inputs.ref_name }}
-      # package_names: ${{ needs.Fetch-Source.outputs.output1 }}
+  msys2:
+    needs: Fetch-Source
+    uses: ./.github/workflows/ci_msys2.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2"]'
+  macos:
+    needs: Fetch-Source
+    uses: ./.github/workflows/ci_macos.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2"]'
 

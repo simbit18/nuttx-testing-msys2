@@ -14,9 +14,7 @@ name: CI Build MSYS2
 on:
   workflow_call:
     inputs:
-      ref_name:
-        type: string
-      package_names:
+      testlist_names:
         type: string
         required: true
     outputs:
@@ -27,12 +25,11 @@ permissions:
   contents: read
 jobs:
   build_MSYS2:
-    # needs: Fetch-Source
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        boards: [msys2]
+        boards: ${{ fromJson(inputs.testlist_names) }}
     defaults:
       run:
         shell: msys2 {0}
@@ -75,10 +72,10 @@ jobs:
 
       - name: Extract sources
         run: tar zxf sources.tar.gz
-        
+
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
-        
+
       - name: Run Builds
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
