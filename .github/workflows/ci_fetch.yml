@@ -14,9 +14,13 @@ name: CI Fedora
 on:
   workflow_call:
     inputs:
+      base_ref:
+        type: string
+        required: true
       ref_name:
         type: string
-      package_names:
+        required: true
+      testlist_names:
         type: string
         required: false
     outputs:
@@ -38,7 +42,7 @@ jobs:
           OS_REF=""
           APPS_REF=""
           # 
-          REF="refs/heads/"${{ inputs.ref_name }}
+          REF="refs/heads/"${{ inputs.base_ref }}
           # master
           ###### REF="refs/heads/main"
           echo "Working with ref: $REF"
@@ -86,7 +90,7 @@ jobs:
     with:
       # ref_name: ${{ inputs.ref_name }}
       # package_names: '["msys2", "arm-01"]'
-      package_names: '["msys2"]'
+      testlist_names: '["msys2"]'
       # package_names: '["msys2", "javascript"]' 
   # fedora:
     # needs: Fetch-Source

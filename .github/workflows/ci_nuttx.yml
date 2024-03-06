@@ -24,6 +24,7 @@ on:
         required: true
       base_ref:
         type: string
+        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
@@ -33,7 +34,12 @@ jobs:
    NuttX:
      uses: ./.github/workflows/ci_fetch.yml
      with:
+      # Custom
+      base_ref: simbit18-20240221
       ref_name: simbit18-20240221
+      # master
+      #base_ref: main
+      #ref_name: master
      permissions:
        contents: read
 
