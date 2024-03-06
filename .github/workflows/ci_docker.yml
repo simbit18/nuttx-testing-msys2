@@ -25,19 +25,20 @@ on:
 
 permissions:
   contents: read
-jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.setVariables.outputs.matrix }}
-    steps:
-      - id: setVariables
-        #run: |
-        #  echo "::set-output name=matrix::$input"
-        #run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
-        run: echo "name=matrix::$input" >> $GITHUB_OUTPUT
-        env:
-          input: ${{ inputs.package_names }}
+  
+# jobs:
+  # setup:
+    # runs-on: ubuntu-latest
+    # outputs:
+      # matrix: ${{ steps.setVariables.outputs.matrix }}
+    # steps:
+      # - id: setVariables
+        # #run: |
+        # #  echo "::set-output name=matrix::$input"
+        # #run: echo "::set-output name=matrix::{\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}"
+        # run: echo "name=matrix::$input" >> $GITHUB_OUTPUT
+        # env:
+          # input: ${{ inputs.package_names }}
 
   build_Docker:
     runs-on: ubuntu-latest
@@ -45,7 +46,7 @@ jobs:
       DOCKER_BUILDKIT: 1
       ## input: ${{ fromJson(inputs.package_names )}}
       ## input: ${{ inputs.package_names }}
-    needs: setup
+    ## needs: setup
     strategy:
       matrix:
         # boards: ${{ env.input }}
