@@ -84,7 +84,7 @@ jobs:
     with:
       ref_name: ${{ inputs.ref_name }}
       # package_names: '["msys2"]'
-      package_names: [msys2]
+      package_names: '[msys2]'
       # package_names: '["msys2", "javascript"]' 
   # fedora:
     # needs: Fetch-Source
