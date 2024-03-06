@@ -14,9 +14,7 @@ name: CI Build Docker
 on:
   workflow_call:
     inputs:
-      ref_name:
-        type: string
-      package_names:
+      testlist_names:
         type: string
         required: true
     outputs:
@@ -52,7 +50,7 @@ jobs:
         # boards: ${{ env.input }}
         ## boards: ${{ fromJson(env.input) }}
         ## boards: ${{ needs.setup.outputs.matrix }}
-        boards: ${{ fromJson(inputs.package_names) }}
+        boards: ${{ fromJson(inputs.testlist_names) }}
 
     steps:
       - name: Download Source Artifact
