@@ -40,13 +40,12 @@ jobs:
           input: ${{ inputs.package_names }}
 
   build_Docker:
-    needs: setup
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
       ## input: ${{fromJson(inputs.package_names)}}
       ## input: ${{ inputs.package_names }}
-
+    needs: setup
     strategy:
       matrix:
         # boards: ${{ env.input }}
