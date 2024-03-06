@@ -51,7 +51,7 @@ jobs:
         # boards: ${{ env.input }}
         ## boards: ${{ fromJson(env.input) }}
         ## boards: ${{ needs.setup.outputs.matrix }}
-        boards: ${{ inputs.package_names }}
+        boards: ${{ fromJson(inputs.package_names) }}
 
     steps:
       - name: Download Source Artifact
