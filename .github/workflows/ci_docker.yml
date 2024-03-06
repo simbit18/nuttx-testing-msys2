@@ -43,14 +43,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
-      ## input: ${{fromJson(inputs.package_names)}}
+      ## input: ${{ fromJson(inputs.package_names )}}
       ## input: ${{ inputs.package_names }}
     needs: setup
     strategy:
       matrix:
         # boards: ${{ env.input }}
-        ## boards: ${{fromJson(env.input)}}
-        boards: ${{fromJson(needs.setup.outputs.matrix)}}
+        ## boards: ${{ fromJson(env.input) }}
+        boards: ${{ fromJson(needs.setup.outputs.matrix )}}
 
     steps:
       - name: Download Source Artifact
