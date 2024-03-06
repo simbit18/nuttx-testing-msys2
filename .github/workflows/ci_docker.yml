@@ -39,6 +39,7 @@ jobs:
         # env:
           # input: ${{ inputs.package_names }}
   build_Docker:
+    needs: setup
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
