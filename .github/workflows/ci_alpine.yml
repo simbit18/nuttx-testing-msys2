@@ -14,9 +14,7 @@ name: CI Build Alpine
 on:
   workflow_call:
     inputs:
-      ref_name:
-        type: string
-      package_names:
+      testlist_names:
         type: string
         required: true
     outputs:
@@ -33,7 +31,7 @@ jobs:
     container: alpine:latest
     strategy:
       matrix:
-        boards: [msys2]
+        boards: ${{ fromJson(inputs.testlist_names) }}
     steps:
       - name: Create file status_job1.txt and write the job status into it
         if: always()
