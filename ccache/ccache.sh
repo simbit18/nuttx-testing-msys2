@@ -23,11 +23,10 @@ ccache_test() {
   # Configuring the PATH environment variable
   # export CARGO_HOME=${tools}/rust/cargo
   export CCACHE_DIR=${tools}/ccache/bin
-  if type -p ccache > /dev/null 2>&1; then
-    command ccache --version
-  else
-    ccache -s
+  if ! type ccache > /dev/null 2>&1; then
+    pacman -S --noconfirm --needed ccache
   fi
+  ccache -s
   setup_links
   gcc ${WD}/exception_setjmp.c -o exception_setjmp
   ccache -s
