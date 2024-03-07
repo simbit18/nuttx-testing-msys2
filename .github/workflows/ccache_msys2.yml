@@ -10,7 +10,7 @@ on:
       - '.github/workflows/ccache_msys2.yml'
 
 jobs:
-  rust-msys2:
+  ccache-msys2:
     runs-on: windows-latest
     defaults:
       run:
@@ -57,8 +57,9 @@ jobs:
           ## Show the GCC version
           gcc -v
           ls -a 
-          ## cp -f rust/rust.sh rust-tools/rust.sh
+          cp -f ccache/ccache.sh ccache-tools/ccache.sh
+          cp -f ccache/exception_setjmp.c ccache-tools/exception_setjmp.c
           cd ccache-tools
           ls -a
-          ##./rust.sh
+          ./ccache.sh
           ls -a
