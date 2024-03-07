@@ -23,6 +23,9 @@ on:
       testlist_names:
         type: string
         required: false
+      platforms_ref:
+        type: string
+        required: true
     outputs:
       release:
         value: "false"
@@ -83,6 +86,7 @@ jobs:
 
   alpine:
     needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'alpine')
     uses: ./.github/workflows/ci_alpine.yml
     secrets: inherit
     with:
@@ -90,6 +94,7 @@ jobs:
       testlist_names: '["msys2"]'
   docker:
     needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'docker')
     uses: ./.github/workflows/ci_docker.yml
     secrets: inherit
     with:
@@ -105,12 +110,14 @@ jobs:
       
   msys2:
     needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'msys2')
     uses: ./.github/workflows/ci_msys2.yml
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
       testlist_names: '["msys2"]'
   macos:
+    if: contains(fromJSON(inputs.platforms_ref), 'macos')
     needs: Fetch-Source
     uses: ./.github/workflows/ci_macos.yml
     secrets: inherit
