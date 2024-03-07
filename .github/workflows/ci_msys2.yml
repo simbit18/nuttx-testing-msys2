@@ -84,7 +84,7 @@ jobs:
           git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
           ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
-          ./cibuild.sh -g -i -A -c -C -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -g -d -i -c -A -C -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
           name: msys2-builds
