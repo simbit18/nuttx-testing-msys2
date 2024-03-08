@@ -65,4 +65,4 @@ jobs:
           ./ccache.sh
           ls -a
           echo 'job: ' $GITHUB_JOB
-          echo "How about " ${{ github.jobs[github.job].name }}
+          ##echo "How about " ${{ github.jobs[github.job].name }}

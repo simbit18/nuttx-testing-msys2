@@ -78,10 +78,10 @@ jobs:
         id: cache-tools
         uses: actions/cache@v4
         env:
-          cache-name: ${{ job.build_MSYS2.name }}-cache-tools
+          cache-name: $GITHUB_JOB-cache-tools
         with:
           path: ./sources/tools
-          key: ${{ job.build_MSYS2.name }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
+          key: $GITHUB_JOB-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
 
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
