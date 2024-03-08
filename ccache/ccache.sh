@@ -41,10 +41,10 @@ setup_links() {
   # ok local
   # export MSYS=winsymlinks:lnk
   # export MSYS=winsymlinks:nativestrict
-  MSYS=winsymlinks:lnk ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
-  MSYS=winsymlinks:lnk ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
-  MSYS=winsymlinks:lnk ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
-  MSYS=winsymlinks:lnk ln -sf "$(which ccache)" "${tools}"/ccache/bin/g++
+  MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
+  MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
+  MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
+  MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/g++
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/cc
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/c++
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/gcc
