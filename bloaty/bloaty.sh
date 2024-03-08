@@ -22,7 +22,9 @@ bloaty_test() {
   add_path "${NUTTXTOOLS}"/bloaty/bin
 
   if [ ! -f "${NUTTXTOOLS}/bloaty/bin/bloaty" ]; then
+    mkdir -p "${NUTTXTOOLS}"/bloaty-src
     git clone --branch main https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
+    git clone https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
     mkdir -p "${NUTTXTOOLS}"/bloaty
     cd "${NUTTXTOOLS}"/bloaty-src
     cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
