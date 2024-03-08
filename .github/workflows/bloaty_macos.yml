@@ -18,7 +18,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/macos.yml'
+      - '.github/workflows/bloaty_macos.yml'
 
 jobs:
   bloaty_macos:
