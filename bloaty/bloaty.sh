@@ -25,7 +25,7 @@ bloaty_test() {
     git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
     mkdir -p "${NUTTXTOOLS}"/bloaty
     cd "${NUTTXTOOLS}"/bloaty-src
-    cmake -B build/bloaty -D CMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
+    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
     cmake --build build/bloaty
     cmake --build build/bloaty --target install
     cd "${NUTTXTOOLS}"
