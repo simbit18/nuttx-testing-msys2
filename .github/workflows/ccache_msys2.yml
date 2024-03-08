@@ -11,6 +11,7 @@ on:
 
 jobs:
   ccache-msys2:
+    name: ccache_msys2
     runs-on: windows-latest
     defaults:
       run:
@@ -63,3 +64,5 @@ jobs:
           ls -a
           ./ccache.sh
           ls -a
+          echo 'job: $GITHUB_JOB'
+          echo "How about ${{ github.jobs[github.job].name }}"
