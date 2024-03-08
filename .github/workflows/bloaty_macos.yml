@@ -1,0 +1,66 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Bloaty macOS
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/macos.yml'
+
+jobs:
+  bloaty_macos:
+    runs-on: macOS-latest
+    steps:
+      - name: System Information
+        run: |
+          ## system_profiler SPSoftwareDataType
+          bash --version
+          gcc -v
+          xcodebuild -version
+          brew install dmd
+          brew install dub
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - uses: actions/checkout@v3
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+             # --lhelper will eliminate a warning with arm64 and libusb
+        run: bash --version
+      - name: Build
+        run: |
+          bash --version
+          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+          echo 'Build'
+          ## Move to nuttx
+          mkdir bloaty-tools
+          ls -a
+          ## Show the GCC version
+          gcc -v
+          ls -a 
+          cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
+          cd bloaty-tools
+          ls -a
+          ./bloaty.sh
+          ls -a
