@@ -22,7 +22,7 @@ on:
 
 jobs:
   bloaty_macos:
-    runs-on: macOS-latest
+    runs-on: macOS-13
     steps:
       - name: System Information
         run: |
