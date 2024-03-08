@@ -52,6 +52,7 @@ jobs:
         run: bash --version
       - name: Build
         run: |
+          uname -a
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
           echo 'Build'
