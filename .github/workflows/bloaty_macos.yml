@@ -22,7 +22,9 @@ on:
 
 jobs:
   bloaty_macos:
-    runs-on: macOS-13
+    permissions:
+      contents: write
+    runs-on: macos-latest
     steps:
       - name: System Information
         run: |
