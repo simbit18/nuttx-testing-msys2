@@ -19,7 +19,7 @@ check_cmd() {
 }
 
 bloaty_test() {
-  add_path "${${tools}}"/bloaty/bin
+  add_path "${tools}"/bloaty/bin
 
   if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
     mkdir -p "${tools}"/bloaty-src
