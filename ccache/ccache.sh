@@ -39,20 +39,20 @@ setup_links() {
   # Configure ccache
   mkdir -p "${tools}"/ccache/bin/
   # ok local
-  # export MSYS=winsymlinks:lnk
+  export MSYS=winsymlinks:lnk
   # export MSYS=winsymlinks:nativestrict
   # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
   # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
   # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
-  # ln -s "$(which ccache)" "${tools}"/ccache/bin/g++
-  # ln -s "$(which ccache)" "${tools}"/ccache/bin/cc
-  # ln -s "$(which ccache)" "${tools}"/ccache/bin/c++
-  # ln -s "$(which ccache)" "${tools}"/ccache/bin/gcc
-  # ln -s "$(which ccache)" "${tools}"/ccache/bin/g++
+  ln -sf "$(which ccache)" "${tools}"/ccache/bin/g++
+  ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
+  ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
+  ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
+  # cp -a "$(which ccache)" "${tools}"/ccache/bin/g++
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/cc
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/c++
   # cp -a "$(which ccache)" "${tools}"/ccache/bin/gcc
-  # cp -a "$(which ccache)" "${tools}"/ccache/bin/g++
+  ls -l "${tools}"/ccache/bin
 }
 
 
