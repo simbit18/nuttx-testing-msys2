@@ -22,9 +22,8 @@ bloaty_test() {
   add_path "${tools}"/bloaty/bin
 
   if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
-    mkdir -p "${tools}"/bloaty-src
     git clone --branch main https://github.com/google/bloaty "${tools}"/bloaty-src
-    git clone https://github.com/google/bloaty "${tools}"/bloaty-src
+    # git clone https://github.com/google/bloaty "${tools}"/bloaty-src
     mkdir -p "${tools}"/bloaty
     cd "${tools}"/bloaty-src
     cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${tools}"/bloaty
