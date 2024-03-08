@@ -18,50 +18,29 @@ check_cmd() {
     command -v "$1" > /dev/null 2>&1
 }
 
-ccache_test() {
-  add_path "${tools}"/ccache/bin
-  # Configuring the PATH environment variable
-  # export CARGO_HOME=${tools}/rust/cargo
-  export CCACHE_DIR=${tools}/ccache/bin
-  if ! type ccache > /dev/null 2>&1; then
-    pacman -S --noconfirm --needed ccache
+bloaty_test() {
+  add_path "${NUTTXTOOLS}"/bloaty/bin
+
+  if [ ! -f "${NUTTXTOOLS}/bloaty/bin/bloaty" ]; then
+    git clone --depth 1 --branch v1.1 https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
+    mkdir -p "${NUTTXTOOLS}"/bloaty
+    cd "${NUTTXTOOLS}"/bloaty-src
+    cmake -B build/bloaty -D CMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
+    cmake --build build/bloaty
+    cmake --build build/bloaty --target install
+    cd "${NUTTXTOOLS}"
+    rm -rf bloaty-src
+    ls -a "${NUTTXTOOLS}"/bloaty
   fi
-  ccache -s
-  setup_links
-  gcc ${WD}/exception_setjmp.c -o exception_setjmp
-  ccache -s
-  ccache -p
-  command ccache --version
+
+  command bloaty --version
   
 }
-
-setup_links() {
-  # Configure ccache
-  mkdir -p "${tools}"/ccache/bin/
-  # ok local
-  export MSYS=winsymlinks:lnk
-  # export MSYS=winsymlinks:nativestrict
-  # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
-  # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
-  # MSYS=winsymlinks:nativestrict ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
-  ln -sf "$(which ccache)" "${tools}"/ccache/bin/g++
-  ln -sf "$(which ccache)" "${tools}"/ccache/bin/cc
-  ln -sf "$(which ccache)" "${tools}"/ccache/bin/c++
-  ln -sf "$(which ccache)" "${tools}"/ccache/bin/gcc
-  # cp -a "$(which ccache)" "${tools}"/ccache/bin/g++
-  # cp -a "$(which ccache)" "${tools}"/ccache/bin/cc
-  # cp -a "$(which ccache)" "${tools}"/ccache/bin/c++
-  # cp -a "$(which ccache)" "${tools}"/ccache/bin/gcc
-  ls -l "${tools}"/ccache/bin
-}
-
-
-
 
 main() {
   mkdir -p "${tools}"
   cd "${tools}"
-  ccache_test
+  bloaty_test
 
 }
 main
