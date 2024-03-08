@@ -19,20 +19,20 @@ check_cmd() {
 }
 
 bloaty_test() {
-  add_path "${NUTTXTOOLS}"/bloaty/bin
+  add_path "${${tools}}"/bloaty/bin
 
-  if [ ! -f "${NUTTXTOOLS}/bloaty/bin/bloaty" ]; then
-    mkdir -p "${NUTTXTOOLS}"/bloaty-src
-    git clone --branch main https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
-    git clone https://github.com/google/bloaty "${NUTTXTOOLS}"/bloaty-src
-    mkdir -p "${NUTTXTOOLS}"/bloaty
-    cd "${NUTTXTOOLS}"/bloaty-src
-    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${NUTTXTOOLS}"/bloaty
+  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
+    mkdir -p "${tools}"/bloaty-src
+    git clone --branch main https://github.com/google/bloaty "${tools}"/bloaty-src
+    git clone https://github.com/google/bloaty "${tools}"/bloaty-src
+    mkdir -p "${tools}"/bloaty
+    cd "${tools}"/bloaty-src
+    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${tools}"/bloaty
     cmake --build build/bloaty
     cmake --build build/bloaty --target install
-    cd "${NUTTXTOOLS}"
+    cd "${tools}"
     rm -rf bloaty-src
-    ls -a "${NUTTXTOOLS}"/bloaty
+    ls -a "${tools}"/bloaty
   fi
 
   command bloaty --version
