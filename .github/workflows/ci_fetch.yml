@@ -100,9 +100,9 @@ jobs:
     with:
       # testlist_names: '["msys2", "arm-01"]'
       testlist_names: '["msys2"]'
-fedora:
+  fedora:
     needs: Fetch-Source
-    if: contains(fromJSON(inputs.platforms_ref), 'msys2')
+    if: contains(fromJSON(inputs.platforms_ref), 'fedora')
     uses: ./.github/workflows/ci_fedora.yml
     secrets: inherit
     with:
