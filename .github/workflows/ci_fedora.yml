@@ -14,9 +14,7 @@ name: CI Build Fedora
 on:
   workflow_call:
     inputs:
-      ref_name:
-        type: string
-      package_names:
+      testlist_names:
         type: string
         required: true
     outputs:
@@ -33,10 +31,11 @@ jobs:
         namejob: Fedora
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
+    strategy:
+      matrix:
+        boards: ${{ fromJson(inputs.testlist_names) }}
     steps:
-      - name: Output artifact ID
-        run: echo "Artifact ID from previous job is $package_names"
-      - name: System Information
+      - name: Install Build Tools
         run: |
           ## system_profiler SPSoftwareDataType
           bash --version
@@ -50,7 +49,7 @@ jobs:
                  bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
                  gperf automake libtool pkgconfig @development-tools gperf genromfs \
                  gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
-                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux
+                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux python3 python3-pip
           dnf -y upgrade git
           dnf list installed
           # sudo which bison
@@ -63,17 +62,41 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v4
+
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
         with:
-          ref: ${{ inputs.ref_name || github.ref }}
-      - name: Python Setup
-        uses: actions/setup-python@v4
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ env.namejob }}-cache-tools
         with:
-          python-version: 3.9
-      - name: Install Dependencies
-             # --lhelper will eliminate a warning with arm64 and libusb
-        run: bash --version
-      - name: Build
+          path: ./sources/tools
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
+
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Builds
         run: |
-          bash --version
-          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+          echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          export ARTIFACTDIR=`pwd`/buildartifacts
+          cd sources/nuttx/tools/ci
+          ./cibuild.sh -i -c -A -C -R testlist/${{matrix.boards}}.dat
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.namejob }}-builds
+          path: buildartifacts/
+        continue-on-error: true

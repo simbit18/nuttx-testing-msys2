@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
+      namejob: Docker
       ## input: ${{ fromJson(inputs.package_names )}}
       ## input: ${{ inputs.package_names }}
     ## needs: setup
@@ -95,6 +96,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: docker-builds
+          name: ${{ env.namejob }}-builds
           path: buildartifacts/
         continue-on-error: true

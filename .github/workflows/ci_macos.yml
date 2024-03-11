@@ -68,6 +68,6 @@ jobs:
           ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
-          name: macos-builds
+          name: ${{ env.namejob }}-builds
           path: buildartifacts/
         continue-on-error: true
