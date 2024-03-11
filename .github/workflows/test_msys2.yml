@@ -50,8 +50,10 @@ jobs:
           pip3 install --upgrade pip
           pip3 install --root-user-action=ignore --no-cache-dir setuptools pyelftools cffi cxxfilt kconfiglib
       - name: Build
+        env:
+          build-name: "$GITHUB_JOB"-test
         run: |
-          echo 'Test $GITHUB_JOB - ' $GITHUB_JOB
+          echo 'Test $GITHUB_JOB - ' $GITHUB_JOB env.build-name
           ls -a
           ## Show the GCC version
           gcc -v
