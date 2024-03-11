@@ -28,7 +28,10 @@ on:
       platforms_ref:
         type: string
         required: true
-
+        
+permissions:
+  contents: read
+  
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
   cancel-in-progress: true
@@ -44,8 +47,6 @@ jobs:
       # master
       #base_ref: main
       #ref_name: master
-     permissions:
-       contents: read
 
   # fedora:
     # needs: Fetch-Source
