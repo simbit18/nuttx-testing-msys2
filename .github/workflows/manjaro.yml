@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Arch
+name: Manjaro Linux
 
 permissions:
   contents: read
@@ -21,7 +21,7 @@ on:
       - '.github/workflows/manjaro.yml'
 
 jobs:
-  build_arch:
+  build_manjaro:
     container: manjarolinux/base:latest
     runs-on: ubuntu-latest
     steps:
