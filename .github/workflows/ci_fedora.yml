@@ -49,7 +49,7 @@ jobs:
                  bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
                  gperf automake libtool pkgconfig @development-tools gperf genromfs \
                  gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
-                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux python3 python3-pip
+                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux xz python3 python3-pip
           dnf -y upgrade git
           dnf list installed
           # sudo which bison
