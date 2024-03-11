@@ -56,8 +56,8 @@ bloaty_brew() {
 main() {
   mkdir -p "${tools}"
   cd "${tools}"
-  ## bloaty_test
-  bloaty_brew
+  bloaty_test
+  ## bloaty_brew
 
 }
 main
