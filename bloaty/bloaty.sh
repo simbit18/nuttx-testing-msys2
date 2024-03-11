@@ -32,8 +32,11 @@ bloaty_test() {
     cd "${tools}"
     rm -rf bloaty-src
     ls -a "${tools}"/bloaty
+    ls -a "${tools}"/bloaty/bin
   fi
-
+  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
+    echo "no bloaty !!!"
+  fi
   command bloaty --version
   
 }
