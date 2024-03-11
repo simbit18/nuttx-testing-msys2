@@ -53,7 +53,7 @@ jobs:
       - name: Build
         run: |
           echo 'Test $GITHUB_JOB - ' $GITHUB_JOB
-          echo "How about ${{ github.jobs[github.job].name }}"
+          echo "How about " ${{ github.jobs[github.job].name }}
           ls -a
           ## Show the GCC version
           gcc -v
