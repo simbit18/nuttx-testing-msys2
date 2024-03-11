@@ -1,0 +1,58 @@
+name: Test MSYS2
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/test_msys2.yml'
+
+jobs:
+  test-msys2:
+    name: TESTMSYS2
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            libffi-devel
+            libcrypt-devel
+            zlib-devel
+            openssl
+            openssl-devel
+            pkg-config
+            cmake
+            ninja
+            python-pip 
+            vim
+            curl
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --upgrade pip
+          pip3 install --root-user-action=ignore --no-cache-dir setuptools pyelftools cffi cxxfilt kconfiglib
+      - name: Build
+        run: |
+          echo 'Test $GITHUB_JOB - ' $GITHUB_JOB
+          ls -a
+          ## Show the GCC version
+          gcc -v
+          ls -a 
