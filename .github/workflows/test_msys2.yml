@@ -11,6 +11,7 @@ on:
 
 jobs:
   test-msys2:
+    name: ${{ env.namejob }}
     runs-on: windows-latest
     env:
         namejob: TESTMSYS2
