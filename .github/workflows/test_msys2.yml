@@ -11,8 +11,9 @@ on:
 
 jobs:
   test-msys2:
-    name: TESTMSYS2
     runs-on: windows-latest
+    env:
+        namejob: TESTMSYS2
     defaults:
       run:
         shell: msys2 {0}
@@ -53,7 +54,7 @@ jobs:
       - name: Build
         run: |
           echo 'Test $GITHUB_JOB - ' $GITHUB_JOB ${{ github.job }} ${{ github.run_id }}
-          echo "How about " "{{ github.job.id }}"
+          echo "How about " "${{ env.namejob }}"
           ls -a
           ## Show the GCC version
           gcc -v
