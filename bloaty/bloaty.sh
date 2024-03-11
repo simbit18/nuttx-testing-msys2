@@ -15,7 +15,7 @@ add_path() {
 }
 
 check_cmd() {
-    command -v "$1" > /dev/null 2>&1
+  command -v "$1" > /dev/null 2>&1
 }
 
 bloaty_test() {
@@ -37,14 +37,27 @@ bloaty_test() {
   if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
     echo "no bloaty !!!"
   fi
+
   command bloaty --version
-  
+
 }
 
+bloaty_brew() {
+  if ! type avr-gcc > /dev/null 2>&1; then
+    echo "no bloaty !!!"
+    brew install bloaty
+  else
+    echo "ok bloaty !!!"
+  fi
+
+  command bloaty --version
+
+}
 main() {
   mkdir -p "${tools}"
   cd "${tools}"
-  bloaty_test
+  ## bloaty_test
+  bloaty_brew
 
 }
 main
