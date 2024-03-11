@@ -52,7 +52,7 @@ jobs:
 
       - name: Build
         run: |
-          echo 'Test $GITHUB_JOB - ' "$GITHUB_JOB" # ${{ GITHUB_JOB }}
+          echo 'Test $GITHUB_JOB - ' $GITHUB_JOB # ${{ GITHUB_JOB }}
           ls -a
           ## Show the GCC version
           gcc -v
