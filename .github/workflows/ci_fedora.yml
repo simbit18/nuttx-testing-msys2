@@ -29,6 +29,8 @@ jobs:
   build_Fedora:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
+    env:
+        namejob: Fedora
     # Docker Hub image that `container-job` executes in
     container: fedora:latest
     steps:

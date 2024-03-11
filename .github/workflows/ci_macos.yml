@@ -26,6 +26,8 @@ permissions:
 jobs:
   build_macOS:
     runs-on: macos-13
+    env:
+        namejob: macOS
     strategy:
       matrix:
         boards: ${{ fromJson(inputs.testlist_names) }}
@@ -43,10 +45,10 @@ jobs:
         id: cache-tools
         uses: actions/cache@v4
         env:
-          cache-name: ${{ runner.os }}-cache-tools
+          cache-name: ${{ env.namejob }}-cache-tools
         with:
           path: ./sources/tools
-          key: ${{ runner.os }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/cibuild.sh') }}
 
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
