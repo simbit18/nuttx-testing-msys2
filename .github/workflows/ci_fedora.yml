@@ -53,6 +53,11 @@ jobs:
                  zlib-devel cmake ninja-build
           dnf -y upgrade git
           dnf list installed
+          pip3 install \
+               cxxfilt \
+               esptool \
+               imgtool \
+               kconfiglib
           # sudo which bison
           # sudo which flock
       - name: Set Environment Variables
