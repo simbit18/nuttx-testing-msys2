@@ -39,11 +39,13 @@ jobs:
                  bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
                  gperf automake libtool pkgconfig @development-tools gperf genromfs \
                  gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
-                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux
+                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux wget xz python3 python3-pip \
+                 zlib-devel cmake ninja-build
           dnf -y upgrade git
           dnf list installed
-          sudo which bison
-          sudo which flock
+          pip3 install cxxfilt esptool imgtool kconfiglib
+          # sudo which bison
+          # sudo which flock
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
