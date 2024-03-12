@@ -50,6 +50,8 @@ jobs:
                kconfiglib
           which bison
           # sudo which flock
+          dnf clean all
+          rm -rf /var/cache/dnf
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
