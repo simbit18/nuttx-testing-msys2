@@ -1,0 +1,77 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Alpine Linux
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/alpine.yml'
+
+jobs:
+  build_alpine:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    # Docker Hub image that `container-job` executes in
+    container: alpine:latest
+
+    steps:
+
+      - name: Install Build Tools
+        run:  |
+          apk --no-cache --update add \
+          bash \
+          git \
+          build-base \
+          cmake \
+          zlib-dev \
+          libstdc++ \
+          libgcc
+
+      - name: Checkout Source Files
+        run:  |
+          uname -a
+          ## mkdir bloaty
+          ## cd bloaty
+          ## mkdir pippo
+          ## git clone https://github.com/google/bloaty.git
+          ## cd bloaty
+          ## pwd
+            ## cmake -B build -DCMAKE_INSTALL_PREFIX=/__w/nuttx-testing-alpine/nuttx-testing-alpine/bloaty/pippo
+          ## cmake -B build -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/bloaty/pippo
+          ## cmake --build build
+          ## cmake --build build --target install
+          ## ls -a $GITHUB_WORKSPACE/bloaty/pippo
+          
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - uses: actions/checkout@v3
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+             # --lhelper will eliminate a warning with arm64 and libusb
+        run: bash --version
+      - name: Build
+        run: |
+          bash --version
+          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
