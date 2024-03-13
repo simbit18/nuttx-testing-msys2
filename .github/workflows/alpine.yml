@@ -40,13 +40,15 @@ jobs:
           libstdc++ \
           libgcc \
           clang \
-          wasi-sdk
+          wasi-sdk \
+          wasmtime
 
       - name: Checkout Source Files
         run:  |
           env
           uname -a
-          git clone --recursive https://github.com/WebAssembly/wasi-sdk.git
+          wamrc --version
+          # git clone --recursive https://github.com/WebAssembly/wasi-sdk.git
           ls -a
           ## mkdir bloaty
           ## cd bloaty
