@@ -40,19 +40,19 @@ jobs:
           ## system_profiler SPSoftwareDataType
           bash --version
           uname -a
-          dnf list installed
+          # dnf list installed
           # dnf -y install @development-tools @rpm-development-tools
           # dnf -y install mesa-libGL-devel mesa-libGLU-devel
           # dnf -y install copr-cli make gcc-c++
           # dnf -y install perl
-          dnf -y install \
+          dnf -yq install \
                  bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
                  which gperf automake libtool pkgconfig @development-tools gperf genromfs \
                  gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
-                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux wget xz python3 python3-pip \
+                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux wget python3 python3-pip \
                  zlib-devel cmake ninja-build
           dnf -y upgrade git
-          dnf list installed
+          # dnf list installed
           pip3 install \
                cxxfilt \
                esptool \
