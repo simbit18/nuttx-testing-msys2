@@ -38,10 +38,12 @@ jobs:
           cmake \
           zlib-dev \
           libstdc++ \
-          libgcc
+          libgcc \
+          wasi-sdk
 
       - name: Checkout Source Files
         run:  |
+          env
           uname -a
           ## mkdir bloaty
           ## cd bloaty
