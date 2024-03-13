@@ -39,12 +39,15 @@ jobs:
           zlib-dev \
           libstdc++ \
           libgcc \
+          clang \
           wasi-sdk
 
       - name: Checkout Source Files
         run:  |
           env
           uname -a
+          git clone --recursive https://github.com/WebAssembly/wasi-sdk.git
+          ls -a
           ## mkdir bloaty
           ## cd bloaty
           ## mkdir pippo
