@@ -44,16 +44,8 @@ jobs:
       base_ref: simbit18-20240306
       ref_name: simbit18-20240306
       ## platforms_ref: '["alpine", "docker", "macos", "msys2"]'
-      platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      platforms_ref: '["docker", "fedora", "macos", "msys2"]'
       # master
       #base_ref: main
       #ref_name: master
-
-  # fedora:
-    # needs: Fetch-Source
-    # uses: ./.github/workflows/ci_fedora.yml
-    # secrets: inherit
-    # with:
-      # ref_name: ${{ inputs.ref_name }}
-      # package_names: ${{ needs.diff.outputs.package_names }}
-
