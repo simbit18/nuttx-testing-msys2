@@ -41,7 +41,7 @@ jobs:
           libgcc \
           clang \
           wasi-sdk \
-          wasmtime
+          wasmtime-dev
 
       - name: Checkout Source Files
         run:  |
