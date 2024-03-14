@@ -58,8 +58,14 @@ bloaty_brew() {
 }
 main() {
   mkdir -p "${WDTOOLS}"
-   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
-  cd "${WDTOOLS}"
+  echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
+  
+  mkdir -p "${NUTTXTOOLS}"/homebrew
+  export HOMEBREW_CACHE=${NUTTXTOOLS}/homebrew
+  echo "export HOMEBREW_CACHE=${NUTTXTOOLS}/homebrew" >> "${NUTTXTOOLS}"/env.sh
+  
+  oldpath=$(cd . && pwd -P)
+  cd "${oldpath}"
   bloaty_test
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
