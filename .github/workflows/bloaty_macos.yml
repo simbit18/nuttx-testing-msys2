@@ -36,7 +36,7 @@ jobs:
           xcodebuild -version
           brew install dmd
           brew install dub
-     - name: Move file
+      - name: Move file
         run: |
           uname -a
           bash --version
