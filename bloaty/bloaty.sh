@@ -6,12 +6,11 @@ set -o xtrace
 WD=$(cd "$(dirname "$0")" && pwd)
 WORKSPACE=$(cd "${WD}"/../ && pwd -P)
 
-tools=${WORKSPACE}/tools
+WDTOOLS=${WORKSPACE}/tools
 EXTRA_PATH=
 
 add_path() {
   PATH=$1:${PATH}
-  EXTRA_PATH=$1:${EXTRA_PATH}
 }
 
 check_cmd() {
@@ -19,22 +18,22 @@ check_cmd() {
 }
 
 bloaty_test() {
-  add_path "${tools}"/bloaty/bin
+  add_path "${WDTOOLS}"/bloaty/bin
 
-  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
-    git clone --branch main https://github.com/google/bloaty "${tools}"/bloaty-src
+  if [ ! -f "${WDTOOLS}/bloaty/bin/bloaty" ]; then
+    git clone --branch main https://github.com/google/bloaty "${WDTOOLS}"/bloaty-src
     # git clone https://github.com/google/bloaty "${tools}"/bloaty-src
-    mkdir -p "${tools}"/bloaty
-    cd "${tools}"/bloaty-src
-    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${tools}"/bloaty
+    mkdir -p "${WDTOOLS}"/bloaty
+    cd "${WDTOOLS}"/bloaty-src
+    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${WDTOOLS}"/bloaty
     cmake --build build/bloaty
     cmake --build build/bloaty --target install
-    cd "${tools}"
+    cd "${WDTOOLS}"
     rm -rf bloaty-src
-    ls -a "${tools}"/bloaty
-    ls -a "${tools}"/bloaty/bin
+    ls -a "${WDTOOLS}"/bloaty
+    ls -a "${WDTOOLS}"/bloaty/bin
   fi
-  if [ ! -f "${tools}/bloaty/bin/bloaty" ]; then
+  if [ ! -f "${WDTOOLS}/bloaty/bin/bloaty" ]; then
     echo "no bloaty !!!"
   fi
 
@@ -54,13 +53,13 @@ bloaty_brew() {
 
 }
 main() {
-  mkdir -p "${tools}"
-   echo "#!/usr/bin/env sh" > "${tools}"/env.sh
-  cd "${tools}"
+  mkdir -p "${WDTOOLS}"
+   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
+  cd "${WDTOOLS}"
   bloaty_test
-  echo "PATH=${PATH}" >> "${tools}"/env.sh
-  echo "export PATH" >> "${tools}"/env.sh
-  source "${tools}"/env.sh
+  echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
+  echo "export PATH" >> "${WDTOOLS}"/env.sh
+  source "${WDTOOLS}"/env.sh
   ## bloaty_brew
 
 }

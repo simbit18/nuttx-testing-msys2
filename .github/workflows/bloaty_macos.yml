@@ -36,6 +36,15 @@ jobs:
           xcodebuild -version
           brew install dmd
           brew install dub
+     - name: Move file
+        run: |
+          uname -a
+          bash --version
+          ## Move file
+          mkdir -p tools
+          ls -a
+          cp -f bloaty/exception_setjmp.c $GITHUB_WORKSPACE/tools/exception_setjmp.c
+          ls -a $GITHUB_WORKSPACE/tools
       - name: Restore Tools Cache
         id: cache-tools
         uses: actions/cache@v4
@@ -43,7 +52,7 @@ jobs:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
           path: ./tools
-          key: ${{ env.namejob }}-tools-${{ hashFiles('$GITHUB_WORKSPACE/bloaty/exception_setjmp.c') }}
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
