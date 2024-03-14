@@ -25,6 +25,8 @@ jobs:
     permissions:
       contents: write
     runs-on: macos-latest
+    env:
+        namejob: macBloaty
     steps:
       - name: System Information
         run: |
@@ -34,6 +36,14 @@ jobs:
           xcodebuild -version
           brew install dmd
           brew install dub
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ env.namejob }}-cache-tools
+        with:
+          path: ./tools
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./bloaty/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -63,7 +73,9 @@ jobs:
           gcc -v
           ls -a 
           cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
+          cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
           cd bloaty-tools
           ls -a
           ./bloaty.sh
           ls -a
+          gcc ./exception_setjmp.c -o exception_setjmp
