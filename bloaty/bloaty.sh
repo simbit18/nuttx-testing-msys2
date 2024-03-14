@@ -60,9 +60,9 @@ main() {
   mkdir -p "${WDTOOLS}"
   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
   
-  mkdir -p "${NUTTXTOOLS}"/homebrew
-  export HOMEBREW_CACHE=${NUTTXTOOLS}/homebrew
-  echo "export HOMEBREW_CACHE=${NUTTXTOOLS}/homebrew" >> "${NUTTXTOOLS}"/env.sh
+  mkdir -p "${WDTOOLS}"/homebrew
+  export HOMEBREW_CACHE=${WDTOOLS}/homebrew
+  echo "export HOMEBREW_CACHE=${WDTOOLS}/homebrew" >> "${WDTOOLS}"/env.sh
   
   oldpath=$(cd . && pwd -P)
   cd "${oldpath}"
