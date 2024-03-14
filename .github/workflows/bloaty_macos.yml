@@ -84,7 +84,7 @@ jobs:
           cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
           cd bloaty-tools
           ls -a
-          ./bloaty.sh
+          ## ./bloaty.sh
           ls -a
           gcc ./exception_setjmp.c -o exception_setjmp
           ls -a $GITHUB_WORKSPACE/tools
