@@ -43,7 +43,7 @@ jobs:
           ## Move file
           mkdir -p tools
           ls -a
-          cp -f bloaty/exception_setjmp.c ./tools/exception_setjmp.c
+          cp -f bloaty/exception_setjmp.c tools/exception_setjmp.c
           ls -a $GITHUB_WORKSPACE/tools
       - name: Restore Tools Cache
         id: cache-tools
