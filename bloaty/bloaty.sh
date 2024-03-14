@@ -55,8 +55,12 @@ bloaty_brew() {
 }
 main() {
   mkdir -p "${tools}"
+   echo "#!/usr/bin/env sh" > "${tools}"/env.sh
   cd "${tools}"
   bloaty_test
+  echo "PATH=${PATH}" >> "${tools}"/env.sh
+  echo "export PATH" >> "${tools}"/env.sh
+  source "${tools}"/env.sh
   ## bloaty_brew
 
 }
