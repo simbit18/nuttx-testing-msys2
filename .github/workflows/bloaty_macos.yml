@@ -50,7 +50,7 @@ jobs:
         env:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
-          path: ./tools
+          path: ./
           key: ${{ env.namejob }}-tools-${{ hashFiles('./tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
