@@ -22,9 +22,13 @@ bloaty_test() {
 
   if [ ! -f "${WDTOOLS}/bloaty/bin/bloaty" ]; then
     git clone --branch main https://github.com/google/bloaty "${WDTOOLS}"/bloaty-src
-    # git clone https://github.com/google/bloaty "${tools}"/bloaty-src
-    mkdir -p "${WDTOOLS}"/bloaty
     cd "${WDTOOLS}"/bloaty-src
+    # Due to issues with latest MacOS versions use pinned commit.
+    # https://github.com/google/bloaty/pull/326
+    git checkout 52948c107c8f81045e7f9223ec02706b19cfa882
+    mkdir -p "${WDTOOLS}"/bloaty
+    # cmake -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -DCMAKE_SYSTEM_PREFIX_PATH="${WDTOOLS}"/bloaty
+    # make install -j 4
     cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${WDTOOLS}"/bloaty
     cmake --build build/bloaty
     cmake --build build/bloaty --target install
