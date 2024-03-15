@@ -36,6 +36,7 @@ jobs:
           ## rpm -qa
           echo "List dnf"
           dnf list installed
+          dnf install dnf-plugin-config-manager
           # dnf -y install @development-tools @rpm-development-tools
           # dnf -y install mesa-libGL-devel mesa-libGLU-devel
           # dnf -y install copr-cli make gcc-c++
