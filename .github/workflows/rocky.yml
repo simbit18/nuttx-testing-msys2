@@ -32,7 +32,7 @@ jobs:
           uname -a
           echo "List rpm"
           rpm -qa
-          rpm -i tar
+          rpm -ivh tar.rpm
           echo "List rpm"
           rpm -qa
       - name: Set Environment Variables
