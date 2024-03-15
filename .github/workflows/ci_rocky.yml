@@ -1,0 +1,109 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: CI Build Rocky
+on:
+  workflow_call:
+    inputs:
+      testlist_names:
+        type: string
+        required: true
+    outputs:
+      release:
+        value: "false"
+
+permissions:
+  contents: read
+jobs:
+  build_Rocky:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    env:
+        namejob: Rocky
+    # Docker Hub image that `container-job` executes in
+    container: rockylinux:9.3
+    strategy:
+      matrix:
+        boards: ${{ fromJson(inputs.testlist_names) }}
+    steps:
+      - name: Install Build Tools
+        run: |
+          ##
+          bash --version
+          uname -a
+          dnf -yq update
+          ## echo "List dnf"
+          ## dnf list installed
+          dnf -yq install dnf-plugin-config-manager
+          echo "Check currently enabled yum repositories..."
+          dnf repolist
+          echo "Enable CRB repository"
+          dnf config-manager --set-enabled crb
+          dnf -yq install \
+                 bison flex gettext texinfo ncurses-devel ncurses \
+                 which gperf automake libtool pkgconfig gperf \
+                 gmp-devel mpfr-devel libmpc-devel binutils-devel elfutils-libelf-devel \
+                 expat-devel gcc-c++ g++ util-linux wget python3 python3-pip \
+                 xz zlib-devel cmake ninja-build git
+          # dnf list installed
+          pip3 install \
+               cxxfilt \
+               esptool \
+               imgtool \
+               kconfiglib
+
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ env.namejob }}-cache-tools
+        with:
+          path: ./sources/tools
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/platforms/rocky.sh') }}
+
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Builds
+        run: |
+          echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          export ARTIFACTDIR=`pwd`/buildartifacts
+          cd sources/nuttx/tools/ci
+          ./cibuild.sh -i -c -A -C -R testlist/${{matrix.boards}}.dat
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.namejob }}-builds
+          path: buildartifacts/
+        continue-on-error: true
