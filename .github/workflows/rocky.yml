@@ -22,7 +22,7 @@ on:
 
 jobs:
   build_rocky:
-    container: rockylinux:9.3-minimal
+    container: rockylinux:9.3
     runs-on: ubuntu-latest
     steps:
       - name: System Information
