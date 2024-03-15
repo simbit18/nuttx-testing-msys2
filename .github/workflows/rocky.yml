@@ -54,7 +54,7 @@ jobs:
                  gperf automake libtool pkgconfig gperf \
                  gmp-devel mpfr-devel libmpc-devel binutils-devel elfutils-libelf-devel \
                  expat-devel gcc-c++ g++ util-linux wget xz python3 python3-pip \
-                 zlib-devel cmake ninja-build which git unzip coreutils
+                 zlib-devel cmake ninja-build which git unzip coreutils-single
 
           dnf list installed
           pip3 install \
