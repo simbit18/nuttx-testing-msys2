@@ -37,7 +37,7 @@ jobs:
           # rpm -q tar
           echo "List rpm"
           rpm -qa
-          rpm --test -ivh dnf-4.14.0-8.el9.noarch.rpm
+          rpm  -ivh dnf-4.14.0-8.el9.noarch.rpm
           rpm -qa
       - name: Set Environment Variables
         run: |
