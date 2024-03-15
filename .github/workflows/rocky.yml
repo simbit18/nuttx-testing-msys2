@@ -32,8 +32,9 @@ jobs:
           uname -a
           echo "List rpm"
           rpm -qa
-          echo "List dnf"
-          dnf list
+          rpm -i tar
+          echo "List rpm"
+          rpm -qa
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
