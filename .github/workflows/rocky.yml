@@ -28,12 +28,13 @@ jobs:
       - name: System Information
         run: |
           ## system_profiler SPSoftwareDataType
+          rpm --rebuilddb
           bash --version
           uname -a
           echo "List rpm"
           rpm -qa
-          rpm -q java
-          rpm -q tar
+          # rpm -q java
+          # rpm -q tar
           echo "List rpm"
           rpm -qa
       - name: Set Environment Variables
