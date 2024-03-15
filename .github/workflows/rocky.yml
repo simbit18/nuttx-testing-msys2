@@ -37,7 +37,8 @@ jobs:
           # rpm -q tar
           echo "List rpm"
           rpm -qa
-          rpm --test -ivh dnf-*.x86_64.rpm
+          rpm --test -ivh dnf-4.14.0-8.el9.noarch.rpm
+          rpm -qa
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
