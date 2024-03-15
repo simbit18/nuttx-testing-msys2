@@ -45,7 +45,8 @@ jobs:
       ref_name: simbit18-20240306
       ## platforms_ref: '["alpine", "docker", "macos", "msys2"]'
       ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
-      platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      platforms_ref: '["rocky"]'
       # master
       #base_ref: main
       #ref_name: master
