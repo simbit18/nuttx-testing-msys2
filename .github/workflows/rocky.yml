@@ -1,0 +1,74 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Rocky Linux
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/rocky.yml'
+
+jobs:
+  build_rocky:
+    container: rockylinux
+    runs-on: ubuntu-latest
+    steps:
+      - name: System Information
+        run: |
+          ## system_profiler SPSoftwareDataType
+          bash --version
+          uname -a
+          dnf list installed
+          # dnf -y install @development-tools @rpm-development-tools
+          # dnf -y install mesa-libGL-devel mesa-libGLU-devel
+          # dnf -y install copr-cli make gcc-c++
+          # dnf -y install perl
+          dnf -y install \
+                 bison flex gettext texinfo ncurses-devel ncurses ncurses-compat-libs \
+                 gperf automake libtool pkgconfig @development-tools gperf genromfs \
+                 gmp-devel mpfr-devel libmpc-devel isl-devel binutils-devel elfutils-libelf-devel \
+                 expat-devel gcc-c++ g++ picocom uboot-tools util-linux wget xz python3 python3-pip \
+                 zlib-devel cmake ninja-build which
+          dnf -y upgrade git
+          dnf list installed
+          pip3 install \
+               cxxfilt \
+               esptool \
+               imgtool \
+               kconfiglib
+          which bison
+          # sudo which flock
+          dnf clean all
+          rm -rf /var/cache/dnf
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - uses: actions/checkout@v3
+      - name: Python Setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+             # --lhelper will eliminate a warning with arm64 and libusb
+        run: bash --version
+      - name: Build
+        run: |
+          bash --version
+          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
