@@ -48,6 +48,7 @@ jobs:
           dnf repolist
           echo "Enable CRB repository"
           dnf config-manager --set-enabled crb
+          # find uboot-tools
           dnf -yq install \
                  bison flex gettext texinfo ncurses-devel ncurses \
                  which gperf automake libtool pkgconfig gperf \
