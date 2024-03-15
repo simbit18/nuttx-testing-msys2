@@ -37,8 +37,9 @@ jobs:
           # rpm -q tar
           echo "List rpm"
           rpm -qa
-          dnf-4.14.0-8.el9.noarch.rpm 
-          rpm -i https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/d/dnf-4.14.0-8.el9.noarch.rpm
+          dnf update
+          # dnf-4.14.0-8.el9.noarch.rpm 
+          # rpm -i https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/d/dnf-4.14.0-8.el9.noarch.rpm
           ## rpm  -ivh dnf-4.14.0-8.el9.noarch.rpm
           rpm -qa
       - name: Set Environment Variables
