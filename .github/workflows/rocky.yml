@@ -34,7 +34,7 @@ jobs:
           echo "List rpm"
           rpm -qa
 
-          rpm -ivh dnf-data-4.14.0-8.el9.noarch
+          rpm -ivh dnf-data-4.14.0-8.el9.noarch.rpm
           # rpm -q java
           # rpm -q tar
           echo "List rpm"
