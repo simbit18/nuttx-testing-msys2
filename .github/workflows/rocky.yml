@@ -33,8 +33,8 @@ jobs:
           uname -a
           echo "List rpm"
           rpm -qa
-
-          rpm -i dnf-data-4.14.0-8.el9.noarch.rpm
+          rpm -qa | grep  ^curl-minimal
+          ## rpm -i dnf-data-4.14.0-8.el9.noarch.rpm
           # rpm -q java
           # rpm -q tar
           echo "List rpm"
