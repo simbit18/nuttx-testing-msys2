@@ -43,7 +43,7 @@ jobs:
           echo "Check currently enabled yum repositories..."
           dnf repolist
           echo "Enable CRB repository"
-          dnf config-manager --enable crb
+          dnf -y config-manager --enable crb
           echo "Check currently enabled yum repositories..."
           dnf repolist
           dnf -y install \
