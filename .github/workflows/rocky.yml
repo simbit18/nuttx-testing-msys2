@@ -25,7 +25,7 @@ jobs:
     container: rockylinux:9.3
     runs-on: ubuntu-latest
     steps:
-      - name: System Information
+      - name: Install dependencies on Rocky
         run: |
           ## system_profiler SPSoftwareDataType
           ## rpm --rebuilddb
@@ -54,7 +54,7 @@ jobs:
                  gperf automake libtool pkgconfig gperf \
                  gmp-devel mpfr-devel libmpc-devel binutils-devel elfutils-libelf-devel \
                  expat-devel gcc-c++ g++ util-linux wget xz python3 python3-pip \
-                 zlib-devel cmake ninja-build which git unzip
+                 zlib-devel cmake ninja-build which git unzip coreutils
 
           dnf list installed
           pip3 install \
@@ -73,14 +73,10 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - name: Install genromfs
+      - name: Test command
         run: |
-          cd /tmp
-          git clone https://github.com/chexum/genromfs.git
-          cd genromfs
-          make
-          make install
-          cd /
+          cmp -v
+          diff -v
       - uses: actions/checkout@v4
       - name: Python Setup
         uses: actions/setup-python@v4
