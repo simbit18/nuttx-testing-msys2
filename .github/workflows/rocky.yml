@@ -73,6 +73,14 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - name: Install genromfs
+        run: |
+          cd /tmp
+          git clone https://github.com/chexum/genromfs.git
+          cd genromfs
+          make
+          make install
+          cd /
       - uses: actions/checkout@v4
       - name: Python Setup
         uses: actions/setup-python@v4
