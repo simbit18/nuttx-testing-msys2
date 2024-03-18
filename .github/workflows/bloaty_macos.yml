@@ -114,7 +114,7 @@ jobs:
         run: |
           uname -a
           bash --version
-          mkdir -p tools
+          # mkdir -p tools
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
           echo 'Build'
           ## Move to nuttx
@@ -130,7 +130,7 @@ jobs:
           ## ./bloaty.sh
           ## ls -a
           ## Move to bloaty
-          cd bloaty
+          cd sources/nuttx-testing-msys2/bloaty
           gcc ./exception_setjmp.c -o exception_setjmp
           ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
