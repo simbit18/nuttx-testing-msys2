@@ -70,7 +70,8 @@ main() {
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
   source "${WDTOOLS}"/env.sh
-  ./bloaty ${WDTOOLS}/bloaty/bin/bloaty -d compileunits
+  bloaty --version
+  bloaty ${WDTOOLS}/bloaty/bin/bloaty -d compileunits
   ## bloaty_brew
 
 }
