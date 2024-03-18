@@ -111,4 +111,6 @@ jobs:
           ./bloaty.sh
           echo "$GITHUB_PATH"
           echo "$PATH"
+          bloaty --version
+          bloaty -n 20 -d sections,symbols /exception_setjmp
 
