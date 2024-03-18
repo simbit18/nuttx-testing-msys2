@@ -135,3 +135,8 @@ jobs:
           ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
           ./bloaty.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.namejob }}-builds
+          path: buildartifacts/
+        continue-on-error: true
