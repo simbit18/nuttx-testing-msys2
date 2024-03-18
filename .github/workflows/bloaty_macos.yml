@@ -71,7 +71,15 @@ jobs:
         run: |
           tar zxf sources.tar.gz
           ls -a
-
+      - name: System Information
+        run: |
+          ## system_profiler SPSoftwareDataType
+          uname -a
+          bash --version
+          gcc -v
+          xcodebuild -version
+          brew install dmd
+          brew install dub
       - name: Restore Tools Cache
         id: cache-tools
         uses: actions/cache@v4
@@ -80,65 +88,28 @@ jobs:
         with:
           path: ./sources/tools
           key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx-testing-msys2/bloaty/exception_setjmp.c') }}
-      - name: System Information
-        run: |
-          ## system_profiler SPSoftwareDataType
-          bash --version
-          gcc -v
-          xcodebuild -version
-          brew install dmd
-          brew install dub
-      - name: Move file
-        run: |
-          uname -a
-          bash --version
-          ## Move file
-          mkdir -p bloaty
-          ls -a $GITHUB_WORKSPACE/bloaty
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
 
-      - name: Set Environment Variables
-        run: |
-          echo "$GITHUB_PATH"
-          echo "$PATH"
-          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
-          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
-          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v4
-      - name: Python Setup
-        uses: actions/setup-python@v4
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
         with:
-          python-version: 3.9
-      - name: Install Dependencies
-             # --lhelper will eliminate a warning with arm64 and libusb
-        run: bash --version
-      - name: Build
+          python-version: '3.10'
+      - name: Run Builds
         run: |
-          uname -a
-          bash --version
-          # mkdir -p tools
-          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+          ##echo "::add-matcher::sources/nuttx/.github/gcc.json"
+          ## export ARTIFACTDIR=`pwd`/buildartifacts
+          #cd sources/nuttx/tools/ci
+          # debug
+          #./cibuild.sh -d -i -c -C -A -R testlist/${{matrix.boards}}.dat
+          #./cibuild.sh -i -c -A -C -R testlist/${{matrix.boards}}.dat
           echo 'Build'
-          ## Move to nuttx
-          ## mkdir bloaty-tools
-          ## ls -a
-          ## Show the GCC version
-          gcc -v
-          ls -a
-          ## cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
-          ## cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
-          ## cd bloaty-tools
-          ## ls -a
-          ## ./bloaty.sh
-          ## ls -a
-          ## Move to bloaty
           cd sources/nuttx-testing-msys2/bloaty
           gcc ./exception_setjmp.c -o exception_setjmp
           ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
           ./bloaty.sh
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.namejob }}-builds
-          path: buildartifacts/
-        continue-on-error: true
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+
