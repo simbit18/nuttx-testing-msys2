@@ -68,7 +68,9 @@ jobs:
           path: .
 
       - name: Extract sources
-        run: tar zxf sources.tar.gz
+        run: |
+          tar zxf sources.tar.gz
+          ls -a
 
       - name: Restore Tools Cache
         id: cache-tools
@@ -122,7 +124,7 @@ jobs:
           ## ls -a
           ## Show the GCC version
           gcc -v
-          ls -a 
+          ls -a
           ## cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
           ## cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
           ## cd bloaty-tools
