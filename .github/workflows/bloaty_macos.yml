@@ -77,7 +77,7 @@ jobs:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
           path: ./sources/tools
-          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/bloaty/exception_setjmp.c') }}
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx-testing-msys2/bloaty/exception_setjmp.c') }}
       - name: System Information
         run: |
           ## system_profiler SPSoftwareDataType
