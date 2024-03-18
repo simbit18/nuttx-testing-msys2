@@ -109,6 +109,7 @@ jobs:
           ## ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
           ./bloaty.sh
+          source sources/tools/env.sh
           echo "$GITHUB_PATH"
           echo "$PATH"
           bloaty --version
