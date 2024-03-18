@@ -4,7 +4,7 @@ set -e
 set -o xtrace
 
 WD=$(cd "$(dirname "$0")" && pwd)
-WORKSPACE=$(cd "${WD}"/../ && pwd -P)
+WORKSPACE=$(cd "${WD}"/../../ && pwd -P)
 
 WDTOOLS=${WORKSPACE}/tools
 EXTRA_PATH=

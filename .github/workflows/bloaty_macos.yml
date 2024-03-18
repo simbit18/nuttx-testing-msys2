@@ -41,7 +41,7 @@ jobs:
           # master
           ref:  main
           path: sources/nuttx-testing-msys2
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Checkout nuttx repo tags
         run: git -C sources/nuttx-testing-msys2 fetch --tags
 
@@ -70,10 +70,9 @@ jobs:
       - name: Extract sources
         run: |
           tar zxf sources.tar.gz
-          ls -a
+          ls -a source
       - name: System Information
         run: |
-          ## system_profiler SPSoftwareDataType
           uname -a
           bash --version
           gcc -v
@@ -88,8 +87,8 @@ jobs:
         with:
           path: ./sources/tools
           key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx-testing-msys2/bloaty/exception_setjmp.c') }}
-      - name: Export NuttX Repo SHA
-        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+      - name: Export bloaty Repo SHA
+        run: echo "bloaty_sha=`git -C sources/bloaty rev-parse HEAD`" >> $GITHUB_ENV
 
       # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
       # https://github.com/cython/cython/issues/4500
