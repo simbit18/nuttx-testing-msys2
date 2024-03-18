@@ -51,7 +51,7 @@ jobs:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
           path: ~/.mio
-          key: ${{ env.namejob }}-tools-${{ hashFiles('./tools/exception_setjmp.c') }}
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./bloaty-tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -88,3 +88,4 @@ jobs:
           ls -a
           gcc ./exception_setjmp.c -o exception_setjmp
           ls -a $GITHUB_WORKSPACE/tools
+          ./exception_setjmp
