@@ -134,3 +134,4 @@ jobs:
           gcc ./exception_setjmp.c -o exception_setjmp
           ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
+          ./bloaty.sh
