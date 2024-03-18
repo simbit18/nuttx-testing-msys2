@@ -39,7 +39,7 @@ jobs:
         with:
           repository: simbit18/nuttx-testing-msys2
           # master
-          ref:  master
+          ref:  main
           path: sources/nuttx
           fetch-depth: 2
       - name: Checkout nuttx repo tags
