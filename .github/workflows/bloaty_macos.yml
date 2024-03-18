@@ -50,7 +50,7 @@ jobs:
         env:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
-          path: ~/.mio
+          path: ./bloaty-tools
           key: ${{ env.namejob }}-tools-${{ hashFiles('./bloaty-tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
