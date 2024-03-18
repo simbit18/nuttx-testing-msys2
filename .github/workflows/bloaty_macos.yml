@@ -21,13 +21,63 @@ on:
       - '.github/workflows/bloaty_macos.yml'
 
 jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # 
+          # master
+          REF="refs/heads/main"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-testing-msys2
+          # master
+          ref:  master
+          path: sources/nuttx
+          fetch-depth: 2
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
   bloaty_macos:
+    needs: Fetch-Source
     permissions:
       contents: write
     runs-on: macos-latest
     env:
         namejob: macBloaty
     steps:
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ env.namejob }}-cache-tools
+        with:
+          path: ./sources/tools
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/bloaty/exception_setjmp.c') }}
       - name: System Information
         run: |
           ## system_profiler SPSoftwareDataType
@@ -44,14 +94,6 @@ jobs:
           mkdir -p tools
           ls -a $GITHUB_WORKSPACE/tools
 
-      - name: Restore Tools Cache
-        id: cache-tools
-        uses: actions/cache@v4
-        env:
-          cache-name: ${{ env.namejob }}-cache-tools
-        with:
-          path: ./bloaty-tools
-          key: ${{ env.namejob }}-tools-${{ hashFiles('./bloaty-tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
