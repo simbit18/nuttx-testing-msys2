@@ -117,10 +117,10 @@ jobs:
           ## bloaty -n 20 -d sections,symbols /exception_setjmp
       - name: Test Bloaty
         run: |
-          ls -a ${{github.workspace}}
-          ls -a ${{github.workspace}}/sources
+          #ls -a ${{github.workspace}}
+          #ls -a ${{github.workspace}}/sources
           ls -a ${{github.workspace}}/sources/tools
-          echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $GITHUB_PATH
+          echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $env:GITHUB_PATH
           echo "$GITHUB_PATH"
           bloaty --version
 
