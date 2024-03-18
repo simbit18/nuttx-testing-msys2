@@ -114,6 +114,7 @@ jobs:
         run: |
           uname -a
           bash --version
+          mkdir -p tools
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
           echo 'Build'
           ## Move to nuttx
