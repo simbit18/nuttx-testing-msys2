@@ -40,10 +40,10 @@ jobs:
           repository: simbit18/nuttx-testing-msys2
           # master
           ref:  main
-          path: sources/nuttx
+          path: sources/nuttx-testing-msys2
           fetch-depth: 2
       - name: Checkout nuttx repo tags
-        run: git -C sources/nuttx fetch --tags
+        run: git -C sources/nuttx-testing-msys2 fetch --tags
 
       - name: Tar sources
         run: tar zcf sources.tar.gz sources
