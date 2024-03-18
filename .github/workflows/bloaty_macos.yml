@@ -97,12 +97,6 @@ jobs:
           python-version: '3.10'
       - name: Run Builds
         run: |
-          ##echo "::add-matcher::sources/nuttx/.github/gcc.json"
-          ## export ARTIFACTDIR=`pwd`/buildartifacts
-          #cd sources/nuttx/tools/ci
-          # debug
-          #./cibuild.sh -d -i -c -C -A -R testlist/${{matrix.boards}}.dat
-          #./cibuild.sh -i -c -A -C -R testlist/${{matrix.boards}}.dat
           echo 'Build'
           cd sources/nuttx-testing-msys2/bloaty
           gcc ./exception_setjmp.c -o exception_setjmp
@@ -120,7 +114,6 @@ jobs:
           #ls -a ${{github.workspace}}
           #ls -a ${{github.workspace}}/sources
           ls -a ${{github.workspace}}/sources/tools
-          echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $env:GITHUB_PATH
+          # echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $env:GITHUB_PATH
           echo "$GITHUB_PATH"
-          bloaty --version
-
+          # bloaty --version
