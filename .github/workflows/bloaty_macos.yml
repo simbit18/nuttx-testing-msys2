@@ -118,6 +118,7 @@ jobs:
       - name: Test Bloaty
         run: |
           ls -a ${{github.workspace}}
-          ## echo "${{github.workspace}}/main/extern/crashpad/breakpad/win/" >> $GITHUB_PATH
-          # bloaty --version
+          ## echo "/Users/runner/work/nuttx-testing-msys2/nuttx-testing-msys2/sources/tools/bloaty/bin" >> $GITHUB_PATH
+          echo "$GITHUB_PATH"
+          bloaty --version
 
