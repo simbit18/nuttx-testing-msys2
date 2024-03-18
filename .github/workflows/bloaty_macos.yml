@@ -50,7 +50,7 @@ jobs:
         env:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
-          path: ./
+          path: ~/.mio
           key: ${{ env.namejob }}-tools-${{ hashFiles('./tools/exception_setjmp.c') }}
       - name: Set Environment Variables
         run: |
@@ -60,7 +60,7 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Python Setup
         uses: actions/setup-python@v4
         with:
