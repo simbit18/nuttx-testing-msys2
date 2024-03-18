@@ -70,7 +70,7 @@ jobs:
       - name: Extract sources
         run: |
           tar zxf sources.tar.gz
-          ls -a source
+          # ls -a source
       - name: System Information
         run: |
           uname -a
