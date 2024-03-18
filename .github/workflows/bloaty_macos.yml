@@ -114,6 +114,10 @@ jobs:
           echo 'PATH'
           echo "$GITHUB_PATH"
           echo "$PATH"
-          bloaty --version
           ## bloaty -n 20 -d sections,symbols /exception_setjmp
+      - name: Test Bloaty
+        run: |
+          ls -a ${{github.workspace}}
+          ## echo "${{github.workspace}}/main/extern/crashpad/breakpad/win/" >> $GITHUB_PATH
+          # bloaty --version
 
