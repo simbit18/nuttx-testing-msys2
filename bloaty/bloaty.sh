@@ -71,7 +71,9 @@ main() {
   echo "export PATH" >> "${WDTOOLS}"/env.sh
   source "${WDTOOLS}"/env.sh
   bloaty --version
-  bloaty -n 20 -d sections,symbols ${WDTOOLS}/bloaty/bin/bloaty
+  bloaty -n 20 -d sections,symbols "${WDTOOLS}"/bloaty/bin/bloaty
+  gcc "${WD}"/exception_setjmp.c -o exception_setjmp
+  bloaty -n 20 -d sections,symbols "${WD}"/exception_setjmp
   ## bloaty_brew
 
 }
