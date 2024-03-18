@@ -91,8 +91,8 @@ jobs:
           uname -a
           bash --version
           ## Move file
-          mkdir -p tools
-          ls -a $GITHUB_WORKSPACE/tools
+          mkdir -p bloaty
+          ls -a $GITHUB_WORKSPACE/bloaty
 
       - name: Set Environment Variables
         run: |
@@ -117,17 +117,19 @@ jobs:
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
           echo 'Build'
           ## Move to nuttx
-          mkdir bloaty-tools
-          ls -a
+          ## mkdir bloaty-tools
+          ## ls -a
           ## Show the GCC version
           gcc -v
           ls -a 
-          cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
-          cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
-          cd bloaty-tools
-          ls -a
+          ## cp -f bloaty/bloaty.sh bloaty-tools/bloaty.sh
+          ## cp -f bloaty/exception_setjmp.c bloaty-tools/exception_setjmp.c
+          ## cd bloaty-tools
+          ## ls -a
           ## ./bloaty.sh
-          ls -a
+          ## ls -a
+          ## Move to bloaty
+          cd bloaty
           gcc ./exception_setjmp.c -o exception_setjmp
-          ls -a $GITHUB_WORKSPACE/tools
+          ls -a $GITHUB_WORKSPACE/bloaty
           ./exception_setjmp
