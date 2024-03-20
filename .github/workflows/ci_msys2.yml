@@ -97,6 +97,9 @@ jobs:
           cd sources/nuttx/tools/ci
           ## ./cibuild.sh -g -i -c -A -R testlist/${{matrix.boards}}.dat
           ./cibuild.sh -g -d -i -c -A -C -R testlist/${{matrix.boards}}.dat
+          cd $GITHUB_WORKSPACE/sources
+          rm -rf nuttx
+          rm -rf apps
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.namejob }}-builds
