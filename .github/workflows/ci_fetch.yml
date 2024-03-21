@@ -123,7 +123,7 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["msys2"]'
+      testlist_names: '["macos"]'
   rocky:
     if: contains(fromJSON(inputs.platforms_ref), 'rocky')
     needs: Fetch-Source
