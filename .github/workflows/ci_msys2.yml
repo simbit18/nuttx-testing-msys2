@@ -92,9 +92,10 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
-          git config --global core.autocrlf true
-          git config --global --add safe.directory /github/workspace/sources/nuttx
-          git config --global --add safe.directory /github/workspace/sources/apps
+          ## git config --global core.autocrlf true
+          ## git config --global core.filemode false
+          ## git config --global --add safe.directory /github/workspace/sources/nuttx
+          ## git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
           ./cibuild.sh -g -d -i -c -A -R testlist/${{matrix.boards}}.dat
           ## ./cibuild.sh -g -d -i -c -A -C -R testlist/${{matrix.boards}}.dat
