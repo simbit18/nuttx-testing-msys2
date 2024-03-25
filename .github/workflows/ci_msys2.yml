@@ -93,8 +93,10 @@ jobs:
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
           ## git config --global core.autocrlf true
-          git config --unset core.filemode
-          git config --global core.filemode false
+          git config --global core.autocrlf input
+          # Configure Git on <your os> to properly handle line endings
+          ## git config --unset core.filemode
+          ## git config --global core.filemode false
           ## git config --global --add safe.directory /github/workspace/sources/nuttx
           ## git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
