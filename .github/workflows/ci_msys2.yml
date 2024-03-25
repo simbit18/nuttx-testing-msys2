@@ -92,7 +92,7 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
-          git config --global core.autocrlf false
+          git config --global core.autocrlf true
           git config --global --add safe.directory /github/workspace/sources/nuttx
           git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
