@@ -41,8 +41,8 @@ jobs:
      uses: ./.github/workflows/ci_fetch.yml
      with:
       # Custom
-      base_ref: simbit18-20240306
-      ref_name: simbit18-20240306
+      # base_ref: simbit18-20240306
+      # ref_name: simbit18-20240306
       # test
       # base_ref: simbit18-legacy
       # ref_name: simbit18-legacy
@@ -51,5 +51,5 @@ jobs:
       ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
       platforms_ref: '["msys2"]'
       # master
-      #base_ref: main
-      #ref_name: master
+      base_ref: main
+      ref_name: master
