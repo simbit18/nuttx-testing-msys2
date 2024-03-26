@@ -49,7 +49,7 @@ jobs:
       ## platforms_ref: '["alpine", "docker", "macos", "msys2"]'
       ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
       ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
-      platforms_ref: '["msys2"]'
+      platforms_ref: '["alpine"]'
       # master
       base_ref: main
       ref_name: master
