@@ -35,18 +35,16 @@ jobs:
       matrix:
         boards: ${{ fromJson(inputs.testlist_names) }}
     steps:
-      - name: Create file status_job1.txt and write the job status into it
-        if: always()
-        run: |
-          echo ${{ job.status }} > status_job1.txt
-        
-      - name: Upload file status_job1.txt as an artifact
-        if: always()
-        uses: actions/upload-artifact@v1
-        with:
-          name: pass_status_job1
-          path: status_job1.txt
-          
+      # - name: Create file status_job1.txt and write the job status into it
+        # if: always()
+        # run: |
+          # echo ${{ job.status }} > status_job1.txt
+      # - name: Upload file status_job1.txt as an artifact
+        # if: always()
+        # uses: actions/upload-artifact@v1
+        # with:
+          # name: pass_status_job1
+          # path: status_job1.txt
       - name: Install Build Tools
         run:  |
          apk --no-cache --update add \
@@ -156,13 +154,13 @@ jobs:
           name: ${{ env.namejob }}-builds
           path: buildartifacts/
         continue-on-error: true
-      - name: Create file status_job2.txt and write the job status into it
-        if: always()
-        run: |
-          echo ${{ job.status }} > status_job2.txt
-      - name: Upload file status_job2.txt as an artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pass_status_job2
-          path: status_job2.txt
+      # - name: Create file status_job2.txt and write the job status into it
+        # if: always()
+        # run: |
+          # echo ${{ job.status }} > status_job2.txt
+      # - name: Upload file status_job2.txt as an artifact
+        # if: always()
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: pass_status_job2
+          # path: status_job2.txt
