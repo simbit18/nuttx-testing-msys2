@@ -147,6 +147,7 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
+          git config --global --add safe.directory '*'
           cd sources/nuttx/tools/ci
           ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
