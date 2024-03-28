@@ -151,7 +151,7 @@ jobs:
           ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.namejob }}-builds
+          name: ${{ env.namejob }}-${{matrix.boards}}-builds
           path: buildartifacts/
         continue-on-error: true
       # - name: Create file status_job2.txt and write the job status into it
