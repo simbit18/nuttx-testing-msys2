@@ -55,6 +55,7 @@ jobs:
             python3
             cmake
             ninja
+            curl
             python-pip
         
     - name: pip3 install
