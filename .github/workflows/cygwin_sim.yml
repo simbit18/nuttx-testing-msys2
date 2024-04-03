@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/cygwin.yml'
+      - '.github/workflows/cygwin_sim.yml'
 
 jobs:
   nuttx-sim-cygwin:
