@@ -1,4 +1,4 @@
-name: Nuttx-master MSYS2
+name: Nuttx-master cygwin
 
 permissions:
   ## Allow publishing of GitHub Release
@@ -7,36 +7,46 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/sim.yml'
+      - '.github/workflows/cygwin.yml'
 
 jobs:
-  nuttx-sim-msys2:
+  nuttx-sim-cygwin:
     runs-on: windows-latest
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash.exe --login --norc -eo pipefail -o igncr '{0}'
     steps:
       - uses: actions/checkout@v4
-      - uses: msys2/setup-msys2@v2
+      with: 
+        submodules: 'true'
+      - uses: cygwin/cygwin-install-action@master
         with:
-          msystem: MSYS
-          update: false
-          install: >-
-            base-devel
-            gcc
+          platform: x64
+          packages: >-
+            make
+            gcc-core
+            gcc-g++
             gperf
+            flex
             git
-            python3
-            ncurses-devel
+            bison
+            byacc
+            gdb
             unzip
-            zip
-            tio
+            awk
+            automake-1.15
+            autoconf
+            wget
+            xxd
+            libmpc-devel
+            libncurses-devel
+            libmpfr-devel
             zlib-devel
+            patch
+            python3
             cmake
             ninja
-            python-pip 
-            vim
-            curl
+            python-pip
         
       - name: pip3 install
         run: |
@@ -104,7 +114,7 @@ jobs:
           ## cp -f ../../fix/1200/lib_exit.c libs/libc/stdlib/lib_exit.c
           
           ## Configure the build
-          ./tools/configure.sh -g sim:nsh
+          ./tools/configure.sh -c sim:nsh
           
           ## mkdir nuttxmsys2
           
