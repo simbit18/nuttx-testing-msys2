@@ -15,8 +15,17 @@ jobs:
     defaults:
       run:
         shell: bash.exe --login --norc -eo pipefail -o igncr '{0}'
+    env:
+      SHELLOPTS: igncr
+      CHERE_INVOKING: 1
+      CYGWIN_NOWINPATH: 1
     steps:
-      - uses: actions/checkout@v4
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf input
+      shell: cmd
+    - name: Checkout from git
+      uses: actions/checkout@v4
       with: 
         submodules: 'true'
       - uses: cygwin/cygwin-install-action@master
