@@ -32,6 +32,7 @@ jobs:
       with:
           platform: x64
           packages: >-
+            coreutils
             make
             gcc-core
             gcc-g++
