@@ -28,8 +28,8 @@ jobs:
       uses: actions/checkout@v4
       with: 
         submodules: 'true'
-      - uses: cygwin/cygwin-install-action@master
-        with:
+    - uses: cygwin/cygwin-install-action@master
+      with:
           platform: x64
           packages: >-
             make
@@ -57,14 +57,14 @@ jobs:
             ninja
             python-pip
         
-      - name: pip3 install
-        run: |
+    - name: pip3 install
+      run: |
           echo 'pip3 install'
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
 
-      - name: Install kconfig-frontends
-        run: |
+    - name: Install kconfig-frontends
+      run: |
           echo 'Install kconfig-frontends'
           curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
           mkdir nuttx-tools
@@ -73,16 +73,16 @@ jobs:
           ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf
           make install
           
-      - name: Install genromfs
-        run: |
+    - name: Install genromfs
+      run: |
           echo 'Install genromfs'
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
           make install PREFIX=/opt/nuttxenv
 
-      - name: Copy NXTOOL GENROMFS and clean source files
-        run: |
+    - name: Copy NXTOOL GENROMFS and clean source files
+      run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
           cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
           cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
@@ -91,8 +91,8 @@ jobs:
           rm -rf nuttx-tools genromfs-0.5.2
           ls -a
           
-      - name: Checkout Source Files
-        run: |
+    - name: Checkout Source Files
+      run: |
           echo 'Checkout Source Files'
           mkdir nuttxspace
           ls -a
@@ -107,8 +107,8 @@ jobs:
           ## cd nuttx
           ls -a
 
-      - name: Build
-        run: |
+    - name: Build
+      run: |
           echo 'Build'
 
           ## Move to nuttx
