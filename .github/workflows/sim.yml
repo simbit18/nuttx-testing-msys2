@@ -37,6 +37,7 @@ jobs:
             python-pip 
             vim
             curl
+            glib2-devel
         
       - name: pip3 install
         run: |
