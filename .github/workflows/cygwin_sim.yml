@@ -74,7 +74,9 @@ jobs:
           mkdir nuttx-tools
           tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
           cd nuttx-tools/kconfig-frontends
-          ./configure --enable-mconf --disable-nconf --disable-gconf --disable-qconf
+          ./configure --disable-kconfig --disable-nconf --disable-qconf \
+                      --disable-gconf --disable-mconf --disable-static \
+                      --disable-shared --disable-L10n
           make install
           
     - name: Install genromfs
