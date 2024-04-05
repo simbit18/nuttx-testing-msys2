@@ -67,19 +67,19 @@ jobs:
 
     - name: Install kconfig-frontends
       run: |
-          export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
-          export MAKEFLAGS=-j$(nproc)
+          # export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
+          # export MAKEFLAGS=-j$(nproc)
           uname -a
           gcc -v
           echo 'Install kconfig-frontends'
           curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
           mkdir nuttx-tools
           tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
-          cd nuttx-tools/kconfig-frontends
-          ./configure --disable-kconfig --disable-nconf --disable-qconf \
-                      --disable-gconf --disable-mconf --disable-static \
-                      --disable-shared --disable-L10n
-          make install
+          # cd nuttx-tools/kconfig-frontends
+          # ./configure --disable-kconfig --disable-nconf --disable-qconf \
+                      # --disable-gconf --disable-mconf --disable-static \
+                      # --disable-shared --disable-L10n
+          # make install
           
     - name: Install genromfs
       run: |
