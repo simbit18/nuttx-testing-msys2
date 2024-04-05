@@ -37,8 +37,7 @@ jobs:
             python-pip 
             vim
             curl
-            glib2-devel
-        
+
       - name: pip3 install
         run: |
           echo 'pip3 install'
@@ -118,4 +117,4 @@ jobs:
           ## cp /usr/bin/msys-2.0.dll nuttxmsys2/msys-2.0.dll
           ## cp /usr/bin/msys-z.dll nuttxmsys2/msys-z.dll
           ## zip -r nuttxmsys2.zip nuttxmsys2
-          
+
