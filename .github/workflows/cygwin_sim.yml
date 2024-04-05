@@ -75,11 +75,11 @@ jobs:
           curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
           mkdir nuttx-tools
           tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
-          # cd nuttx-tools/kconfig-frontends
-          # ./configure --disable-kconfig --disable-nconf --disable-qconf \
-                      # --disable-gconf --disable-mconf --disable-static \
-                      # --disable-shared --disable-L10n
-          # make install
+          cd nuttx-tools/kconfig-frontends
+          ./configure --prefix=/opt/nuttxenv/usr --disable-kconfig --disable-nconf --disable-qconf \
+                      --disable-gconf --disable-mconf --disable-static \
+                      --disable-shared --disable-L10n
+          make install
           
     - name: Install genromfs
       run: |
@@ -93,7 +93,7 @@ jobs:
       run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
           cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
-          cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
+          # cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
           cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
           cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
           rm -rf nuttx-tools genromfs-0.5.2
