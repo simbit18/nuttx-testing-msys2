@@ -64,7 +64,11 @@ jobs:
           echo 'pip3 install'
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-
+    - name: Check ENV
+      shell: cmd
+      run: |
+          echo "PATH=%PATH%"
+          ls -a
     - name: Install kconfig-frontends
       run: |
           # export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
