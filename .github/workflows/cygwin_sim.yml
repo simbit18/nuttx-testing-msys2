@@ -30,7 +30,7 @@ jobs:
         submodules: 'true'
     - uses: cygwin/cygwin-install-action@master
       with:
-          platform: x64
+          platform: x86_64
           packages: >-
             coreutils
             make
