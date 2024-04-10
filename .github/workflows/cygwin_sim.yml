@@ -51,6 +51,7 @@ jobs:
             libmpc-devel
             libncurses-devel
             libmpfr-devel
+            libiconv-devel
             zlib-devel
             patch
             python3
