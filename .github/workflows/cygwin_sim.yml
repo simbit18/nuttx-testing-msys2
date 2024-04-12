@@ -85,7 +85,7 @@ jobs:
           ./configure --disable-kconfig --disable-nconf --disable-qconf \
                       --disable-gconf --disable-mconf --disable-static \
                       --disable-shared --disable-L10n
-          make
+          touch aclocal.m4 Makefile.in
           make install
 
     - name: Install genromfs
