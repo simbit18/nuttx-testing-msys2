@@ -36,6 +36,7 @@ jobs:
           update: false
           install: >-
             base-devel
+            gcc
             gperf
             git
             ncurses-devel
