@@ -19,6 +19,7 @@ jobs:
           - Release
         msystem:
           #- CLANG64
+          - MSYS
           - UCRT64
         target:
           - skiptest
