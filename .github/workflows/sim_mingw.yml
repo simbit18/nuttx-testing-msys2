@@ -20,7 +20,7 @@ jobs:
         msystem:
           #- CLANG64
           - MINGW64
-          - UCRT64
+          #- UCRT64
         target:
           - skiptest
         generator:
