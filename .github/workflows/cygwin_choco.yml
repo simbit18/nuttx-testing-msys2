@@ -26,32 +26,32 @@ jobs:
     - name: Install cygwin additional packages
       run: |
           C:\tools\cygwin\cygwinsetup.exe -qgnNdO -R C:/tools/cygwin -s https://mirrors.kernel.org/sourceware/cygwin/ -P `
-            coreutils `
-            make `
-            gcc-core `
-            gcc-g++ `
-            gperf `
-            flex `
-            git `
-            bison `
-            byacc `
-            gdb `
-            unzip `
-            awk `
-            automake-1.15 `
-            autoconf `
-            wget `
-            xxd `
-            libmpc-devel `
-            libncurses-devel `
-            libmpfr-devel `
-            libiconv-devel `
-            zlib-devel `
-            patch `
-            python3 `
-            cmake `
-            ninja `
-            curl `
+            coreutils, `
+            make, `
+            gcc-core, `
+            gcc-g++, `
+            gperf, `
+            flex, `
+            git, `
+            bison, `
+            byacc, `
+            gdb, `
+            unzip, `
+            awk, `
+            automake-1.15, `
+            autoconf, `
+            wget, `
+            xxd, `
+            libmpc-devel, `
+            libncurses-devel, `
+            libmpfr-devel, `
+            libiconv-devel, `
+            zlib-devel, `
+            patch, `
+            python3, `
+            cmake, `
+            ninja, `
+            curl, `
             python-pip
       shell: cmd
     - name: pip3 install
