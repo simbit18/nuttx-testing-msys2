@@ -13,9 +13,8 @@ jobs:
   nuttx-choco-cygwin:
     runs-on: windows-latest
     steps:
-    - name: Configure git
+    - name: Set git to use LF
       run: |
-        run: |
           git config --global core.autocrlf false
     - name: Checkout from git
       uses: actions/checkout@v4
