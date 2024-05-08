@@ -56,12 +56,6 @@ jobs:
               curl,^
               python-pip
       shell: cmd
-    - name: pip3 install
-      run: |
-          echo 'pip3 install'
-          uname
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-      shell: cmd
     - name: Set ENV
       shell: cmd
       run: |
@@ -70,6 +64,12 @@ jobs:
       shell: cmd
       run: |
           echo "PATH=%PATH%"
+    - name: pip3 install
+      run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+      shell: cmd
     - name: Check ENV
       shell: cmd
       run: |
