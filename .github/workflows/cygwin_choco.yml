@@ -87,8 +87,8 @@ jobs:
           mkdir nuttx-tools
           tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
           cd nuttx-tools/kconfig-frontends
-          ./configure --disable-kconfig --disable-nconf --disable-qconf \
-                      --disable-gconf --disable-mconf --disable-static \
+          ./configure --disable-kconfig --disable-nconf --disable-qconf ^
+                      --disable-gconf --disable-mconf --disable-static ^
                       --disable-shared --disable-L10n
           touch aclocal.m4 Makefile.in
           make install
