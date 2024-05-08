@@ -88,13 +88,14 @@ jobs:
           mkdir nuttx-tools
           tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
           cd nuttx-tools/kconfig-frontends
-          C:\tools\cygwin\bin\bash.exe "./configure --disable-kconfig --disable-nconf --disable-qconf ^
+          C:\tools\cygwin\bin\bash.exe ./configure --disable-kconfig --disable-nconf --disable-qconf ^
                       --disable-gconf --disable-mconf --disable-static ^
-                      --disable-shared --disable-L10n"
+                      --disable-shared --disable-L10n
           touch aclocal.m4 Makefile.in
           make install
 
     - name: Install genromfs
+      shell: cmd
       run: |
           echo 'Install genromfs'
           cd nuttx-tools
@@ -103,6 +104,7 @@ jobs:
           make install PREFIX=/opt/nuttxenv
 
     - name: Copy NXTOOL GENROMFS and clean source files
+      shell: cmd
       run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
           cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
@@ -113,6 +115,7 @@ jobs:
           ls -a
           
     - name: Checkout Source Files
+      shell: cmd
       run: |
           echo 'Checkout Source Files'
           mkdir nuttxspace
