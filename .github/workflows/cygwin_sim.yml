@@ -23,12 +23,14 @@ jobs:
     - name: Configure git
       run: |
         git config --global core.autocrlf input
-      shell: cmd
+      # shell: cmd
     - name: Checkout from git
       uses: actions/checkout@v4
       with: 
         submodules: 'true'
-    - uses: cygwin/cygwin-install-action@master
+    # install cygwin and build tools
+    - name: Install Cygwin
+      uses: cygwin/cygwin-install-action@master
       with:
           platform: x86_64
           packages: >-
@@ -66,11 +68,12 @@ jobs:
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
     - name: Check ENV
-      shell: cmd
+      # shell: cmd
       run: |
           echo "PATH=%PATH%"
           ls -a
     - name: Install kconfig-frontends
+      shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
       run: |
           # export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
           # export MAKEFLAGS=-j$(nproc)
@@ -89,13 +92,13 @@ jobs:
           make install
 
     - name: Install genromfs
+      shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
       run: |
           echo 'Install genromfs'
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
           make install PREFIX=/opt/nuttxenv
-
     - name: Copy NXTOOL GENROMFS and clean source files
       run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
