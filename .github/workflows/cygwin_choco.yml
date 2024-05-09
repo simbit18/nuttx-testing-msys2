@@ -59,17 +59,18 @@ jobs:
     - name: pip3 install
       run: |
           echo 'pip3 install'
-          uname
+          uname -a
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-      shell: cmd
+      shell: bash
     - name: Set ENV
       shell: cmd
       run: |
           echo PATH=C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin >> %GITHUB_ENV%
           :: echo PATH=C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin;%PATH% >> %GITHUB_ENV%
     - name: Check ENV
-      shell: cmd
+      shell: bash
       run: |
+          echo "$GITHUB_ENV"
           echo "$GITHUB_PATH"
           echo "$PATH"
           :: echo "PATH=%PATH%"
@@ -77,18 +78,18 @@ jobs:
     - name: Install kconfig-frontends
       shell: cmd
       run: |
-          echo "$PATH" &&
-          uname -a &&
-          gcc -v &&
-          echo 'Install kconfig-frontends' &&
-          curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz &&
-          mkdir nuttx-tools &&
-          tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools &&
-          cd nuttx-tools/kconfig-frontends &&
+          echo "$PATH"
+          uname -a
+          gcc -v
+          echo 'Install kconfig-frontends'
+          curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
+          mkdir nuttx-tools
+          tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
+          cd nuttx-tools/kconfig-frontends
           C:\tools\cygwin\bin\bash.exe ./configure --disable-kconfig --disable-nconf --disable-qconf ^
                       --disable-gconf --disable-mconf --disable-static ^
-                      --disable-shared --disable-L10n &&
-          touch aclocal.m4 Makefile.in &&
+                      --disable-shared --disable-L10n
+          touch aclocal.m4 Makefile.in
           make install
 
     - name: Install genromfs
