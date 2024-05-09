@@ -56,6 +56,12 @@ jobs:
               curl,^
               python-pip
       shell: cmd
+    - name: pip3 install
+      run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+      shell: cmd
     - name: Set ENV
       shell: cmd
       run: |
@@ -64,22 +70,14 @@ jobs:
     - name: Check ENV
       shell: cmd
       run: |
-          echo "PATH=%PATH%"
-    - name: pip3 install
-      run: |
-          echo 'pip3 install'
-          uname
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-      shell: cmd
-    - name: Check ENV
-      shell: cmd
-      run: |
-          echo "PATH=%PATH%"
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          :: echo "PATH=%PATH%"
           ls -a
     - name: Install kconfig-frontends
       shell: cmd
       run: |
-          echo "PATH=%PATH%" &&
+          echo "$PATH" &&
           uname -a &&
           gcc -v &&
           echo 'Install kconfig-frontends' &&
