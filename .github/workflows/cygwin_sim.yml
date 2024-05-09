@@ -75,9 +75,10 @@ jobs:
     - name: Install kconfig-frontends
       shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
       run: |
-          # export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
-          # export MAKEFLAGS=-j$(nproc)
-          echo "PATH=%PATH%"
+          export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
+          export MAKEFLAGS=-j$(nproc)
+          echo "$GITHUB_PATH"
+          echo "$PATH"
           uname -a
           gcc -v
           echo 'Install kconfig-frontends'
