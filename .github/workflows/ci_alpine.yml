@@ -122,8 +122,6 @@ jobs:
         with:
           name: source-bundle
           path: .
-          pattern: buildartifacts/*
-          merge-multiple: true
 
       - name: Extract sources
         run: tar zxf sources.tar.gz
@@ -154,8 +152,11 @@ jobs:
           ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.namejob }}-${{matrix.boards}}-builds
+          name: ${{ env.namejob }}-builds
+          #name: ${{ env.namejob }}-${{matrix.boards}}-builds
           path: buildartifacts/
+          pattern: buildartifacts/*
+          merge-multiple: true
         continue-on-error: true
       # - name: Create file status_job2.txt and write the job status into it
         # if: always()
