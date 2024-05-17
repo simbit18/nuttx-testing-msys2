@@ -1,16 +1,11 @@
 name: CI V3
-on:
-  workflow_call:
-    inputs:
-      testlist_names:
-        type: string
-        required: true
-    outputs:
-      release:
-        value: "false"
-
 permissions:
   contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/v3.yml'
 
 
 jobs:
