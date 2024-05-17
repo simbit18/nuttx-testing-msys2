@@ -153,9 +153,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.namejob }}-${{matrix.boards}}-builds
-          #path: buildartifacts/
-          pattern: buildartifacts*
-          merge-multiple: true
+          path: buildartifacts/
+          #pattern: buildartifacts*
+          #merge-multiple: true
         continue-on-error: true
       # - name: Create file status_job2.txt and write the job status into it
         # if: always()
