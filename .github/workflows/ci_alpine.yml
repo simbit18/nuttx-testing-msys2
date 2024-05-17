@@ -122,6 +122,8 @@ jobs:
         with:
           name: source-bundle
           path: .
+          pattern: buildartifacts/*
+          merge-multiple: true
 
       - name: Extract sources
         run: tar zxf sources.tar.gz
