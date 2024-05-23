@@ -115,7 +115,8 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["msys2-01", "msys2-02"]'
+      # testlist_names: '["msys2-01", "msys2-02"]'
+      testlist_names: '["msys2"]'
   macos:
     if: contains(fromJSON(inputs.platforms_ref), 'macos')
     needs: Fetch-Source
