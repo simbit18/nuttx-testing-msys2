@@ -65,6 +65,10 @@ jobs:
         run: |
           echo 'Checkout Source Files'
           ls -a
+          echo 'Checkout Source Files'
+          mkdir -p nuttxspace
+          ls -a
+          cd nuttxspace
           echo 'Copy tools'
           cp -f ../tools/install_tools_kconfig.sh install_tools_kconfig.sh
           ls -a
