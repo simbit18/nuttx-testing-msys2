@@ -37,7 +37,6 @@ jobs:
           update: false
           install: >-
             base-devel
-            gcc
             gperf
             git
             ncurses-devel
@@ -67,6 +66,6 @@ jobs:
           echo 'Checkout Source Files'
           ls -a
           echo 'Copy tools'
-          cp -f ../tools/arm64/install_tools_arm64.sh install_tools_arm64.sh
+          cp -f ../tools/install_tools_kconfig.sh install_tools_kconfig.sh
           ls -a
           ./install_tools_kconfig.sh
