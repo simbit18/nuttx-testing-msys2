@@ -1,0 +1,72 @@
+name: Nuttx-master MSYS2 UCRT64
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sim_ucrt64.yml'
+
+jobs:
+  nuttx-sim-msys2-mingw:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        btype:
+          - Release
+        msystem:
+          # - CLANG64
+          # - MINGW64
+          - UCRT64
+        target:
+          - skiptest
+        generator:
+          - Ninja
+        eco: [-DDONT_USE_INTERNAL_LIBRAW=ON]
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            git
+            ncurses-devel
+            unzip
+            zip
+            tio
+            vim
+          pacboy: >-
+            cc:p
+            cmake:p
+            ninja:p
+            python:p
+            python-jsonschema:p
+            python-pip:p
+            curl:p
+            gcc-libs:p
+            gettext:p
+            zlib:p
+
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+      - name: Checkout Source Files
+        run: |
+          echo 'Checkout Source Files'
+          ls -a
+          echo 'Copy tools'
+          cp -f ../tools/arm64/install_tools_arm64.sh install_tools_arm64.sh
+          ls -a
+          ./install_tools_kconfig.sh
