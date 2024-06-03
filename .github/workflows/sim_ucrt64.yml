@@ -20,7 +20,7 @@ jobs:
         msystem:
           # - CLANG64
           # - MINGW64
-          - MSYS
+          # - MSYS
           - UCRT64
         target:
           - skiptest
@@ -38,6 +38,7 @@ jobs:
           update: false
           install: >-
             base-devel
+            gcc
             gperf
             git
             ncurses-devel
