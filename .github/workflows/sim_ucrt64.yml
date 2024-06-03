@@ -19,8 +19,9 @@ jobs:
           - Release
         msystem:
           # - CLANG64
-          - MINGW64
-          # - UCRT64
+          # - MINGW64
+          - MSYS
+          - UCRT64
         target:
           - skiptest
         generator:
