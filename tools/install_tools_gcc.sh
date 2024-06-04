@@ -33,16 +33,17 @@ add_path() {
 }
 
 gcc_toolchain() {
-  add_path "${NUTTXTOOLS}"/mingw64/bin
+  add_path "${NUTTXTOOLS}"/winlibs/bin
 
   if [ ! -f "${NUTTXTOOLS}/mingw64/bin/gcc" ]; then
+    mkdir -p "${NUTTXTOOLS}/winlibs"
     local basefile
     basefile=winlibs-x86_64-posix-seh-gcc-13.3.0-mingw-w64ucrt-11.0.1-r1
     cd "${NUTTXTOOLS}"
     # Download the latest GCC toolchain prebuilt by winlibs
     curl -O -L https://github.com/brechtsanders/winlibs_mingw/releases/download/13.3.0posix-11.0.1-ucrt-r1/${basefile}.zip
     unzip -qo ${basefile}.zip
-    mv ${basefile} mingw64
+    mv ${basefile} "${NUTTXTOOLS}/winlibs"
     rm ${basefile}.zip
   fi
 
