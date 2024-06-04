@@ -86,7 +86,7 @@ install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
 
-  install="gcc_toolchain gen_romfs kconfig_frontends"
+  install="gcc_toolchain kconfig_frontends"
 
   oldpath=$(cd . && pwd -P)
   for func in ${install}; do
