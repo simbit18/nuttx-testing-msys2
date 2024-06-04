@@ -37,16 +37,15 @@ jobs:
           update: false
           install: >-
             base-devel
-            gcc
-            gperf
             git
-            ncurses-devel
             unzip
             zip
             tio
             vim
           pacboy: >-
             cc:p
+            gperf:p
+            ncurses:p
             cmake:p
             ninja:p
             python:p
