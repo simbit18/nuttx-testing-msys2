@@ -42,7 +42,7 @@ gcc_toolchain() {
     # Download the latest GCC toolchain prebuilt by winlibs
     curl -O -L https://github.com/brechtsanders/winlibs_mingw/releases/download/13.3.0posix-11.0.1-ucrt-r1/${basefile}.zip
     unzip -qo ${basefile}.zip
-    mv ${basefile}/mingw64 gcc-winlibs
+    mv ${basefile} gcc-winlibs
     rm ${basefile}.zip
   fi
 
