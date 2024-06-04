@@ -1,0 +1,67 @@
+name: Nuttx-master MSYS2 WINLIBS
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sim_winlibs.yml'
+
+jobs:
+  nuttx-sim-msys2-winlibs:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        btype:
+          - Release
+        msystem:
+          # - CLANG64
+          # - MINGW64
+          - MSYS
+          # - UCRT64
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          update: false
+          install: >-
+            base-devel
+            gperf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            vim
+            zlib-devel
+            cmake
+            ninja
+            python-pip 
+            vim
+            curl
+
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+      - name: Checkout Source Files
+        run: |
+          echo 'Checkout Source Files'
+          ls -a
+          echo 'Checkout Source Files'
+          mkdir -p nuttxspace
+          ls -a
+          cd nuttxspace
+          echo 'Copy tools'
+          cp -f ../tools/install_tools_gcc.sh install_tools_gcc.sh
+          ls -a
+          ./install_tools_gcc.sh
