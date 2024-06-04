@@ -37,10 +37,10 @@ gcc_toolchain() {
 
   if [ ! -f "${NUTTXTOOLS}/gcc-winlibs/bin/gcc" ]; then
     local basefile
-    basefile=winlibs-x86_64-posix-seh-gcc-13.3.0-mingw-w64ucrt-11.0.1-r1.zip
+    basefile=winlibs-x86_64-posix-seh-gcc-13.3.0-mingw-w64ucrt-11.0.1-r1
     cd "${NUTTXTOOLS}"
     # Download the latest GCC toolchain prebuilt by winlibs
-    wget --quiet https://github.com/brechtsanders/winlibs_mingw/releases/download/13.3.0posix-11.0.1-ucrt-r1/${basefile}.zip
+    curl -O -L https://github.com/brechtsanders/winlibs_mingw/releases/download/13.3.0posix-11.0.1-ucrt-r1/${basefile}.zip
     unzip -qo ${basefile}.zip
     mv ${basefile}/mingw64 gcc-winlibs
     rm ${basefile}.zip
