@@ -123,8 +123,13 @@ RUN mkdir gcc-aarch64-none-elf && \
 ###############################################################################
 FROM nuttx-toolchain-base AS nuttx-toolchain-avr32
 # Download the prebuilt AVR32 GCC toolchain
-RUN mkdir gcc-avr32-gnu && \
-  git clone https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86 gcc-avr32-gnu
+RUN mkdir -p gcc-avr32-gnu
+RUN git clone https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86 gcc-avr32-gnu
+  # curl -O -L https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86/archive/refs/heads/master.zip && \
+  # unzip master.zip && mv avr32-gnu-toolchain-linux_x86-master gcc-avr32-gnu
+  #cd gcc-avr32-gnu && \
+#  git clone https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86 
+  
 
 ###############################################################################
 # Build image for tool required by Pinguino builds
