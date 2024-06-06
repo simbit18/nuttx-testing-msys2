@@ -125,9 +125,10 @@ FROM nuttx-toolchain-base AS nuttx-toolchain-avr32
 # Download the prebuilt AVR32 GCC toolchain
 RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
   git
-# Download toolchain source code
+# Clone Main Repository 
 RUN mkdir -p gcc-avr32-gnu && \
-  git clone https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86 /gcc-avr32-gnu
+  git clone --depth 1 https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86 gcc-avr32-gnu && \
+  ls -a
 
 ###############################################################################
 # Build image for tool required by Pinguino builds
@@ -271,9 +272,9 @@ RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -q
   libssl-dev
 
 RUN mkdir -p cmake && \
-    curl -s -L wget https://cmake.org/files/v3.26/cmake-3.26.0.tar.gz \
-    | tar -C cmake --strip-components=1 -xz && \
-    cd cmake && ./bootstrap && make && make install && rm -rf cmake
+  curl -s -L wget https://cmake.org/files/v3.26/cmake-3.26.0.tar.gz \
+  | tar -C cmake --strip-components=1 -xz && \
+  cd cmake && ./bootstrap && make && make install && rm -rf cmake
 
 RUN dpkg --add-architecture i386
 # This is used for the final images so make sure to not store apt cache
