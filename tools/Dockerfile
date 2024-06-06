@@ -121,7 +121,7 @@ RUN mkdir gcc-aarch64-none-elf && \
 ###############################################################################
 # Build image for tool required by AVR32 builds
 ###############################################################################
-FROM nuttx-toolchain-base AS nuttx-toolchain-avr32
+FROM nuttx-toolchain-base AS avr32-gnu-toolchain-linux_x86
 # Download the prebuilt AVR32 GCC toolchain
 RUN git clone https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86
   # curl -O -L https://github.com/ramangopalan/avr32-gnu-toolchain-linux_x86/archive/refs/heads/master.zip && \
@@ -396,7 +396,10 @@ COPY --from=nuttx-toolchain-arm64 /tools/gcc-aarch64-none-elf/ gcc-aarch64-none-
 ENV PATH="/tools/gcc-aarch64-none-elf/bin:$PATH"
 
 # AVR32 toolchain
-COPY --from=nuttx-toolchain-avr32 /tools/avr32-gnu-toolchain-linux_x86/ gcc-avr32-gnu/
+# COPY --from=nuttx-toolchain-avr32 /tools/avr32-gnu-toolchain-linux_x86/ gcc-avr32-gnu/
+# ENV PATH="/tools/gcc-avr32-gnu/bin:$PATH"
+
+COPY --from=avr32-gnu-toolchain-linux_x86 /tools/avr32-gnu-toolchain-linux_x86/ gcc-avr32-gnu/
 ENV PATH="/tools/gcc-avr32-gnu/bin:$PATH"
 
 # MIPS toolchain
