@@ -30,8 +30,6 @@ jobs:
           ## system_profiler SPSoftwareDataType
           bash --version
           uname -a
-          pacman -Syu --noconfirm --needed openssl
-          pacman -Sy --noconfirm --needed glibc git base-devel perl make unzip
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
