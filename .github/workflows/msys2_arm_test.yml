@@ -126,7 +126,7 @@ jobs:
           cp .config nuttxmsys2/nuttx.config
 
           ## Run the build
-          make V=1 -j4 > log.txt
+          make V=1 -j4 >> log.txt
 
           ## Show the size
           arm-none-eabi-size nuttx
