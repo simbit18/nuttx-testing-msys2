@@ -24,42 +24,43 @@ jobs:
 
     - name: Install Build Tools
       run:  |
-        apk --no-cache add \
-        bash \
-        coreutils \
-        findutils \
-        gawk \
-        git
-
-    - name: Install and Upgrade Base Packages
-      run:  |
-        apk --no-cache --update add \
-        bison \
-        flex \
-        gettext \
-        texinfo \
-        gperf \
-        automake \
-        libtool \
-        binutils-dev \
-        picocom \
-        u-boot-tools \
-        util-linux \
-        patch \
-        autoconf \
-        build-base \
-        bash \
-        bash-completion \
-        shadow \
-        git \
-        curl \
-        rsync \
-        nano \
-        tar \
-        gzip \
-        bzip2 \
-        xz \
-        zip
+         apk --no-cache --update add \
+         bash \
+         coreutils \
+         findutils \
+         gawk \
+         bison \
+         flex \
+         gettext \
+         texinfo \
+         gperf \
+         automake \
+         libtool \
+         binutils-dev \
+         picocom \
+         u-boot-tools \
+         util-linux \
+         patch \
+         autoconf \
+         build-base \
+         bash-completion \
+         shadow \
+         git \
+         curl \
+         rsync \
+         nano \
+         tar \
+         gzip \
+         bzip2 \
+         xz \
+         zip \
+         bsd-compat-headers \
+         zlib-dev \
+         ncurses-dev \
+         cmake \
+         xxd \
+         python3 \
+         py3-pip
         
     - name: Install and Upgrade ARM Compiler Packages
       run :  |
@@ -67,22 +68,7 @@ jobs:
         gcc-arm-none-eabi \
         newlib-arm-none-eabi \
         g++-arm-none-eabi
-
-    - name: Install and Upgrade Packages for Nuttx 
-      run:  |
-        apk --no-cache --update add \
-        bsd-compat-headers \
-        zlib-dev \
-        ncurses-dev
-
-    - name: Install Development Tools Packages
-      run:  | 
-        apk --no-cache --update add \
-        cmake \
-        xxd \
-        python3 \
-        py3-pip
-
+        
         ## WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager.
         ## It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
         ##  ignore warning message
@@ -92,12 +78,16 @@ jobs:
         ##  The cache has been disabled. Check the permissions and owner of that directory. If executing pip with sudo, you should use sudo's -H flag.
         ##  Container -> ENV PIP_NO_CACHE_DIR=false
         ##  Action    -> pip3 install --no-cache-dir
-        
-    - name: Install Python 3 option
+    - name: Create the virtual environment
       run:  |
-        pip3 install --break-system-packages --user --root-user-action=ignore --no-cache-dir \
-        pyelftools \
-        cxxfilt
+         python3 -m venv --system-site-packages /usr/local \
+                 && pip3 install --root-user-action=ignore --no-cache-dir \
+         setuptools \
+         wheel \
+         pyelftools \
+         cxxfilt \
+         ninja \
+         kconfiglib
 
     - name: Install kconfig-frontends
       run:  |
