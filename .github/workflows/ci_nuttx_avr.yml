@@ -1,0 +1,58 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: CI NuttX AVR
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ci_nuttx_avr.yml'
+  workflow_call:
+    inputs:
+      ref_name:
+        type: string
+        required: true
+      base_ref:
+        type: string
+        required: true
+      platforms_ref:
+        type: string
+        required: true
+        
+permissions:
+  contents: read
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+   NuttXBoard:
+     uses: ./.github/workflows/ci_fetch.yml
+     with:
+      # Custom
+      # base_ref: simbit18-20240306
+      # ref_name: simbit18-20240306
+      # New Board msys2
+      base_ref: simbit18-avr
+      ref_name: simbit18-avr
+      # test
+      # base_ref: simbit18-legacy
+      # ref_name: simbit18-legacy
+      ## platforms_ref: '["alpine", "docker", "macos", "msys2"]'
+      ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      ## platforms_ref: '["alpine", "docker", "fedora", "macos", "msys2"]'
+      platforms_ref: '["docker"]'
+      # master
+      ## base_ref: main
+      ## ref_name: master
