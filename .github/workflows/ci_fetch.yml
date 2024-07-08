@@ -99,7 +99,7 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["msys2"]'
+      testlist_names: '["avr"]'
   fedora:
     needs: Fetch-Source
     if: contains(fromJSON(inputs.platforms_ref), 'fedora')
