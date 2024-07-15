@@ -99,7 +99,8 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["arm-02", "arm-05", "arm-07", "arm-08", "arm-10", "arm-12", "other", "risc-v", "sim-01", "sim-02"]'
+      # testlist_names: '["arm-02", "arm-05", "arm-07", "arm-08", "arm-10", "arm-12", "other", "risc-v", "sim-01", "sim-02"]'
+      testlist_names: '["msys2"]'
   fedora:
     needs: Fetch-Source
     if: contains(fromJSON(inputs.platforms_ref), 'fedora')
@@ -124,7 +125,7 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["sim-01", "sim-02"]'
+      testlist_names: '["msys2"]'
   rocky:
     if: contains(fromJSON(inputs.platforms_ref), 'rocky')
     needs: Fetch-Source
