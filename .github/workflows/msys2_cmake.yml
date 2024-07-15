@@ -13,7 +13,7 @@ env:
    ARM_NAME: arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi
 
 jobs:
-  nuttx-sim-msys2:
+  nuttx-msys2_cmake:
     runs-on: windows-latest
     defaults:
       run:
@@ -114,6 +114,12 @@ jobs:
       - name: Build
         run: |
           echo 'Build'
+
+          source nuttxenv/arm
+
+          ## Show the GCC version
+          arm-none-eabi-gcc --version
+          arm-none-eabi-c++ --version
 
           ## Move to nuttx
           cd nuttxspace/nuttx
