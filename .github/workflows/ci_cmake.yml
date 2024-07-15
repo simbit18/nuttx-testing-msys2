@@ -40,7 +40,7 @@ jobs:
      with:
       # Custom
       base_ref: simbit18-cmake
-      app_name: master
+      app_name: simbit18-cmake
       platforms_ref: '["docker", "macos", "msys2"]'
       # master
       #base_ref: main
