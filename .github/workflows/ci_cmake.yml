@@ -20,10 +20,10 @@ on:
       
   workflow_call:
     inputs:
-      ref_name:
+      base_ref:
         type: string
         required: true
-      base_ref:
+      app_name:
         type: string
         required: true
       platforms_ref:
@@ -31,7 +31,7 @@ on:
         required: true
 
 concurrency:
-  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  group: ${{ github.workflow }}-${{ inputs.base_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
