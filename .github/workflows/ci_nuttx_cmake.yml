@@ -11,12 +11,12 @@
 # limitations under the License.
 #
 
-name: CI NuttX cmake
+name: CI NuttX CMAKE
 on:
   workflow_dispatch:
   push:
     paths:
-      - '.github/workflows/ci_cmake.yml'
+      - '.github/workflows/ci_nuttx_cmake.yml'
       
   workflow_call:
     inputs:
