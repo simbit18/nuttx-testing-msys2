@@ -133,9 +133,9 @@ jobs:
           ## cp -f ../../fix/1200/lib_exit.c libs/libc/stdlib/lib_exit.c
           
           ## Configure the build
-          cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh
+          ## cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh
           # ninja
-          # cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh -GNinja
+          cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh -GNinja
           
           ## mkdir nuttxmsys2
           

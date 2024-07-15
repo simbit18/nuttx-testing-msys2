@@ -64,8 +64,8 @@ jobs:
           export ARTIFACTDIR=`pwd`/buildartifacts
           cd sources/nuttx/tools/ci
           # debug
-          ./cibuild.sh -d -i -c -A -R testlist/${{matrix.boards}}.dat
-          # ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
+          #./cibuild.sh -d -i -c -A -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -i -c -A -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.namejob }}-${{matrix.boards}}-builds
