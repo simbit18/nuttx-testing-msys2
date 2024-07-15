@@ -8,6 +8,9 @@ on:
   push:
     paths:
       - '.github/workflows/msys2_cmake.yml'
+env:
+   ARM_URL: https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/
+   ARM_NAME: arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi
 
 jobs:
   nuttx-sim-msys2:
@@ -53,7 +56,7 @@ jobs:
           cd nuttx-tools/kconfig-frontends
           ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf
           make install
-          
+
       - name: Install genromfs
         run: |
           echo 'Install genromfs'
@@ -71,7 +74,25 @@ jobs:
           cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
           rm -rf nuttx-tools genromfs-0.5.2
           ls -a
+
+      - name: Install arm toolchain for Windows
+        run: |   
+           curl -L ${{ env.ARM_URL }}${{ env.ARM_NAME }}.zip -o ${{ env.ARM_NAME }}.zip
+           unzip -qo ${{ env.ARM_NAME }}.zip
+           mkdir -p /opt/nuttxenv/usr
           
+           cp -ar ${{ env.ARM_NAME }}/* /opt/nuttxenv/usr
+           rm -rf ${{ env.ARM_NAME }}
+           rm ${{ env.ARM_NAME }}.zip           
+           ## ls -a /opt/nuttxenv/usr
+
+      - name: Create PATH environment arm support script
+        run: |
+           mkdir -p nuttxenv
+           echo "#!/usr/bin/env bash" > nuttxenv/arm
+           echo "PATH=/opt/nuttxenv/usr/bin:"'${PATH}' >> nuttxenv/arm
+           echo "export PATH" >> nuttxenv/arm
+
       - name: Checkout Source Files
         run: |
           echo 'Checkout Source Files'
