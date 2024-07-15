@@ -1,0 +1,48 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: CI NuttX cmake
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ci_cmake.yml'
+      
+  workflow_call:
+    inputs:
+      ref_name:
+        type: string
+        required: true
+      base_ref:
+        type: string
+        required: true
+      platforms_ref:
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+   NuttX:
+     uses: ./.github/workflows/ci_fetch_cmake.yml
+     with:
+      # Custom
+      base_ref: simbit18-cmake
+      app_name: master
+      platforms_ref: '["docker", "macos", "msys2"]'
+      # master
+      #base_ref: main
+      #ref_name: master
+
