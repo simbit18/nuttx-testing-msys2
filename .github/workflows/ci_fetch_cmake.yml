@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: CI Fetch
+name: CI Fetch Cmake
 on:
   workflow_call:
     inputs:
