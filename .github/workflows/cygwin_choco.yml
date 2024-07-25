@@ -91,7 +91,7 @@ jobs:
                       --disable-gconf --disable-mconf --disable-static ^
                       --disable-shared --disable-L10n
           touch aclocal.m4 Makefile.in
-          make install
+          C:\tools\cygwin\bin\bash.exe make install
 
     - name: Install genromfs
       shell: cmd
