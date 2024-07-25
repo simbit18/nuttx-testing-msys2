@@ -17,7 +17,7 @@ jobs:
       run: |
           git config --global core.autocrlf false
     ## - name: Checkout from git
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - name: Install cygwin base packages with chocolatey
       run: |
           choco config get cacheLocation
