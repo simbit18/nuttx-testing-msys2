@@ -82,7 +82,7 @@ jobs:
       run: |
           echo "$PATH"
           uname -a
-          gcc -v
+          :: gcc -v
           echo 'Install kconfig-frontends'
           curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
           mkdir nuttx-tools
