@@ -44,6 +44,7 @@ jobs:
               autoconf,^
               wget,^
               xxd,^
+              dos2unix,^
               libmpc-devel,^
               libncurses-devel,^
               libmpfr-devel,^
@@ -54,7 +55,8 @@ jobs:
               cmake,^
               ninja,^
               curl,^
-              python-pip
+              python-pip,^
+              vim
       shell: cmd
     - name: pip3 install
       run: |
