@@ -16,7 +16,7 @@ jobs:
     - name: Set git to use LF
       run: |
           git config --global core.autocrlf false
-    - name: Checkout from git
+    ## - name: Checkout from git
       uses: actions/checkout@v4
     - name: Install cygwin base packages with chocolatey
       run: |
@@ -61,19 +61,19 @@ jobs:
           echo 'pip3 install'
           uname -a
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-      shell: bash
+      shell: cmd
     - name: Set ENV
       shell: cmd
       run: |
           echo PATH=C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin;%PATH% >> %GITHUB_ENV%
           :: echo PATH=C:\tools\cygwin\bin;C:\tools\cygwin\usr\bin;%PATH% >> %GITHUB_ENV%
     - name: Check ENV
-      shell: bash
+      shell: cmd
       run: |
           echo "$GITHUB_ENV"
           echo "$GITHUB_PATH"
-          echo "$PATH"
-          :: echo "PATH=%PATH%"
+          :: echo "$PATH"
+          echo "PATH=%PATH%"
           ls -a
     - name: Install kconfig-frontends
       shell: cmd
