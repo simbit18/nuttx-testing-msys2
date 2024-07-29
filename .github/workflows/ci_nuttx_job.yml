@@ -39,8 +39,8 @@ jobs:
      uses: ./.github/workflows/ci_fetch_job.yml
      with:
       # Custom
-      base_ref: simbit18-cmake
-      app_name: simbit18-cmake
+      base_ref: simbit18-job
+      app_name: simbit18-job
       platforms_ref: '["docker"]'
       # master
       #base_ref: main
