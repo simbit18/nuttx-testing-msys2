@@ -1,0 +1,136 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: CI Fetch Job
+on:
+  workflow_call:
+    inputs:
+      base_ref:
+        type: string
+        required: true
+      app_name:
+        type: string
+        required: true
+      testlist_names:
+        type: string
+        required: false
+      platforms_ref:
+        type: string
+        required: true
+    outputs:
+      release:
+        value: "false"
+
+permissions:
+  contents: read
+jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    # outputs:
+      # output1: ${{ steps.gittargets.outputs.artifact-id }}
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # 
+          REF="refs/heads/"${{ inputs.base_ref }}
+          # master
+          ###### REF="refs/heads/main"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx
+          ref: ${{ inputs.base_ref }}
+          # master
+          #ref:  master
+          path: sources/nuttx
+          fetch-depth: 2
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+
+      - name: Checkout apps repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-apps
+          # ref: simbit18-platforms
+          #ref: simbit18-20240221
+          ref: ${{ inputs.app_name }}
+          # master
+          # ref: master
+          path: sources/apps
+          fetch-depth: 2
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+      # - name: Output artifact ID
+        # run:  echo 'Artifact ID is ${{ steps.gittargets.outputs.artifact-id }}'
+
+  alpine:
+    needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'alpine')
+    uses: ./.github/workflows/ci_alpine.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2", "qemu"]'
+  docker:
+    needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'docker')
+    uses: ./.github/workflows/ci_docker.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      # testlist_names: '["arm-02", "arm-05", "arm-07", "arm-08", "arm-10", "arm-12", "other", "risc-v", "sim-01", "sim-02"]'
+      testlist_names: '["xtensa-01", "xtensa-02", "risc-v-01", "risc-v-02",]'
+  fedora:
+    needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'fedora')
+    uses: ./.github/workflows/ci_fedora.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2"]'
+  msys2:
+    needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'msys2')
+    uses: ./.github/workflows/ci_msys2.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      # testlist_names: '["msys2-01", "msys2-02"]'
+      testlist_names: '["msys2"]'
+  macos:
+    if: contains(fromJSON(inputs.platforms_ref), 'macos')
+    needs: Fetch-Source
+    uses: ./.github/workflows/ci_macos.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2"]'
+  rocky:
+    if: contains(fromJSON(inputs.platforms_ref), 'rocky')
+    needs: Fetch-Source
+    uses: ./.github/workflows/ci_rocky.yml
+    secrets: inherit
+    with:
+      # testlist_names: '["msys2", "arm-01"]'
+      testlist_names: '["msys2"]'
