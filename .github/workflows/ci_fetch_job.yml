@@ -100,7 +100,8 @@ jobs:
     with:
       # testlist_names: '["msys2", "arm-01"]'
       # testlist_names: '["arm-02", "arm-05", "arm-07", "arm-08", "arm-10", "arm-12", "other", "risc-v", "sim-01", "sim-02"]'
-      testlist_names: '["xtensa-01", "xtensa-02", "risc-v-01", "risc-v-02",]'
+      # testlist_names: '["xtensa-01", "xtensa-02", "risc-v-01", "risc-v-02"]'
+      testlist_names: '["arm-10"]'
   fedora:
     needs: Fetch-Source
     if: contains(fromJSON(inputs.platforms_ref), 'fedora')
