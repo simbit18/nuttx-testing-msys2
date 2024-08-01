@@ -39,8 +39,8 @@ jobs:
      uses: ./.github/workflows/ci_fetch_job.yml
      with:
       # Custom
-      base_ref: simbit18-artifact
-      app_name: simbit18-job
+      base_ref: simbit18-speed
+      app_name: simbit18-speed
       platforms_ref: '["docker"]'
       # master
       #base_ref: main
