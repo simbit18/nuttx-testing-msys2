@@ -57,7 +57,7 @@ jobs:
     needs: Fetch-Source
     permissions:
       contents: write
-    runs-on: macos-latest
+    runs-on: macos-13
     env:
         namejob: macninja
     steps:
@@ -78,8 +78,8 @@ jobs:
           gcc -v
           xcodebuild -version
           # https://github.com/Homebrew/homebrew-core/issues/6272#issuecomment-256417270
-          cd "$(brew --repo)" && git fetch && git reset --hard origin/master && brew update
-          brew upgrade
+          # cd "$(brew --repo)" && git fetch && git reset --hard origin/master && brew update
+          # brew upgrade
           brew install dmd
           brew install dub
       - name: Restore Tools Cache
