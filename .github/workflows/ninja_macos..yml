@@ -77,7 +77,9 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
+          # https://github.com/Homebrew/homebrew-core/issues/6272#issuecomment-256417270
           cd "$(brew --repo)" && git fetch && git reset --hard origin/master && brew update
+          brew upgrade
           brew install dmd
           brew install dub
       - name: Restore Tools Cache
