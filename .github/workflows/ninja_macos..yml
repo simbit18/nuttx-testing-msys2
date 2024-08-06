@@ -102,9 +102,9 @@ jobs:
         run: |
           echo 'Build'
           cd sources/nuttx-testing-msys2/ninja
-          # gcc ./exception_setjmp.c -o exception_setjmp
+          gcc ./exception_setjmp.c -o exception_setjmp
           ## ls -a $GITHUB_WORKSPACE/ninja
-          #./exception_setjmp
+          ./exception_setjmp
           ./ninja.sh
           # echo 'source'
           # source sources/tools/env.sh
