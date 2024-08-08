@@ -49,6 +49,9 @@ jobs:
           echo %PATH%
           gcc -v
           cmake --version
+          where ninja
+          choco install ninja
+          where ninja
           pip install kconfiglib
           mkdir nuttxspace
           cd nuttxspace
@@ -62,10 +65,9 @@ jobs:
         run: |
           cd ${{github.workspace}}\nuttxspace\nuttx
           dir
-          cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          # cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja
           cmake --build vs2022
-          
-          
         shell: cmd
 
       - name: Tests
