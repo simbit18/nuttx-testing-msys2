@@ -52,15 +52,15 @@ jobs:
           pip install kconfiglib
           mkdir nuttxspace
           cd nuttxspace
-          git clone https://github.com/apache/nuttx nuttx
-          git clone https://github.com/apache/nuttx-apps apps
+          git clone --depth 1 https://github.com/apache/nuttx nuttx
+          git clone --depth 1 https://github.com/apache/nuttx-apps apps
           
           dir
         shell: cmd
 
       - name: Build
         run: |
-          cd D:\a\nuttx_windows\nuttx_windows\nuttxspace\nuttx
+          cd ${{github.workspace}}\nuttxspace\nuttx
           dir
           cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
           cmake --build vs2022
