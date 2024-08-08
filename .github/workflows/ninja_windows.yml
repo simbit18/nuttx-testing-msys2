@@ -21,108 +21,54 @@ on:
       - '.github/workflows/ninja_windows.yml'
 
 jobs:
-  Fetch-Source:
-    matrix:
-        os: [windows-2019, windows-2022]
+  build:
+    strategy:
+      matrix:
+#        os: [windows-2019, windows-2022]
+        os: [windows-2022]
         arch: [x64, x86]
+
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     concurrency:
         group: ${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}-${{ matrix.os }}-${{ matrix.arch }}-Windows
         cancel-in-progress: true
     steps:
-      - name: Determine Target Branches
-        id: gittargets
-        shell: bash
-        run: |
-          OS_REF=""
-          APPS_REF=""
-          # 
-          # master
-          REF="refs/heads/main"
-          echo "Working with ref: $REF"
-      - name: Checkout nuttx repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          repository: simbit18/nuttx-testing-msys2
-          # master
-          ref:  main
-          path: sources/nuttx-testing-msys2
-          fetch-depth: 2
-      - name: Checkout nuttx-testing-msys2 repo tags
-        run: git -C sources/nuttx-testing-msys2 fetch --tags
-
-      - name: Tar sources
-        run: tar zcf sources.tar.gz sources
-
-      - name: Archive Source Bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: source-bundle
-          path: sources.tar.gz
-  ninja_macos:
-    needs: Fetch-Source
-    permissions:
-      contents: write
-    runs-on: macos-13
-    env:
-        namejob: windowsninja
-    steps:
-      - name: Download Source Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: source-bundle
-          path: .
-
-      - name: Extract sources
+          path: temp
+          # WyriHaximus/github-action-get-previous-tag@master need it
+          fetch-depth: 0
+          submodules: true
+          
+#      - name: Move Checkout
+#        run: |
+#          Copy-Item -Path ".\temp" -Destination "C:\_" -Recurse
+      - name: Checkout Source Files
         run: |
-          tar zxf sources.tar.gz
-          # ls -a source
-      - name: System Information
-        run: |
-          uname -a
-          bash --version
+          echo %PATH%
           gcc -v
-          xcodebuild -version
-          # https://github.com/Homebrew/homebrew-core/issues/6272#issuecomment-256417270
-          # cd "$(brew --repo)" && git fetch && git reset --hard origin/master && brew update
-          # brew upgrade
-          brew install dmd
-          brew install dub
-      - name: Restore Tools Cache
-        id: cache-tools
-        uses: actions/cache@v4
-        env:
-          cache-name: ${{ env.namejob }}-cache-tools
-        with:
-          path: ./sources/tools
-          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx-testing-msys2/ninja/exception_setjmp.c') }}
-      - name: Export ninja Repo SHA
-        run: echo "ninja_sha=`git -C sources/ninja rev-parse HEAD`" >> $GITHUB_ENV
+          cmake --version
+          pip install kconfiglib
+          mkdir nuttxspace
+          cd nuttxspace
+          git clone https://github.com/apache/nuttx nuttx
+          git clone https://github.com/apache/nuttx-apps apps
+          
+          dir
+        shell: cmd
 
-      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
-      # https://github.com/cython/cython/issues/4500
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Run Builds
+      - name: Build
         run: |
-          echo 'Build'
-          cd sources/nuttx-testing-msys2/ninja
-          gcc ./exception_setjmp.c -o exception_setjmp
-          ## ls -a $GITHUB_WORKSPACE/ninja
-          ./exception_setjmp
-          ./ninja.sh
-          # echo 'source'
-          # source sources/tools/env.sh
-          echo 'PATH'
-          echo "$GITHUB_PATH"
-          echo "$PATH"
-          ## ninja -n 20 -d sections,symbols /exception_setjmp
-      - name: Test ninja
+          cd D:\a\nuttx_windows\nuttx_windows\nuttxspace\nuttx
+          dir
+          cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          cmake --build vs2022
+          
+          
+        shell: cmd
+
+      - name: Tests
         run: |
-          #ls -a ${{github.workspace}}
-          #ls -a ${{github.workspace}}/sources
-          ls -a ${{github.workspace}}/sources/tools
-          # echo "${{github.workspace}}/sources/tools/ninja/bin" >> $env:GITHUB_PATH
-          echo "$GITHUB_PATH"
-          # ninja --version
+          gcc -v
+          cmake --version
