@@ -13,9 +13,9 @@ jobs:
     name: Test
     runs-on: "windows-latest"
     steps:
-    - name: Adding markdown
+    - name: Adding markdown bash
       run: |
-        echo '### Hello world! ' >> $GITHUB_STEP_SUMMARY
+        echo '### Hello world 1! ' >> $GITHUB_STEP_SUMMARY
         cat $GITHUB_STEP_SUMMARY
         {
           echo "### :rocket: Workflow inputs"
@@ -26,3 +26,7 @@ jobs:
           echo "| Cluster             | ${{ inputs.cluster }} |"
         } >> $GITHUB_STEP_SUMMARY
       shell: bash
+    - name: Adding markdown PowerShell 
+      run: |
+         echo '### Hello world 2! ' >> $env:GITHUB_STEP_SUMMARY
+         '### Hello world 3! ' >> $env:GITHUB_STEP_SUMMARY
