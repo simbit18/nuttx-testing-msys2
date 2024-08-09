@@ -69,7 +69,7 @@ jobs:
     - name: Show information in the GITHUB_STEP_SUMMARY
       uses: actions/github-script@v7
       env:
-      summaryFile: $
+          summaryFile: $
       with: 
         script: |
           const fs = require('fs')
