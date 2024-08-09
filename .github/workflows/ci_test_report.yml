@@ -9,9 +9,9 @@ on:
       - '.github/workflows/ci_test_report.yml'
 
 jobs:
-  build-and-test:
-    name: Test
-    runs-on: "windows-latest"
+  build-and-test-windows:
+    name: Test Windows
+    runs-on: windows-latest
     steps:
     - name: Adding markdown bash
       run: |
@@ -30,3 +30,35 @@ jobs:
       run: |
          echo '### Hello world 2! ' >> $env:GITHUB_STEP_SUMMARY
          '### Hello world 3! ' >> $env:GITHUB_STEP_SUMMARY
+  build-and-test-linux:
+    name: Test Linux
+    runs-on: ubuntu-latest
+    steps:
+    - name: Adding markdown bash
+      run: |
+        echo '### Hello world Linux 1! ' >> $GITHUB_STEP_SUMMARY
+        cat $GITHUB_STEP_SUMMARY
+        {
+          echo "### :rocket: Workflow inputs"
+          echo "| Arg                 | Value |"
+          echo "| ------------------- | ----- |"
+          echo "| Print inputs        | ${{ inputs.print-inputs }} |"
+          echo "| Environment         | ${{ inputs.environment }} |"
+          echo "| Cluster             | ${{ inputs.cluster }} |"
+        } >> $GITHUB_STEP_SUMMARY
+  build-and-test-macos:
+    name: Test macOS
+    runs-on: macos-13
+    steps:
+    - name: Adding markdown bash
+      run: |
+        echo '### Hello world macOS 1! ' >> $GITHUB_STEP_SUMMARY
+        cat $GITHUB_STEP_SUMMARY
+        {
+          echo "### :rocket: Workflow inputs"
+          echo "| Arg                 | Value |"
+          echo "| ------------------- | ----- |"
+          echo "| Print inputs        | ${{ inputs.print-inputs }} |"
+          echo "| Environment         | ${{ inputs.environment }} |"
+          echo "| Cluster             | ${{ inputs.cluster }} |"
+        } >> $GITHUB_STEP_SUMMARY
