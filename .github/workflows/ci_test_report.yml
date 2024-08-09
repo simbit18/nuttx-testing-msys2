@@ -16,5 +16,14 @@ jobs:
     - name: Adding markdown
       run: |
         echo '### Hello world! ' >> $GITHUB_STEP_SUMMARY
-        cat $GITHUB_STEP_SUMMARY 
+        cat $GITHUB_STEP_SUMMARY
+      run: |
+        {
+          echo "### :rocket: Workflow inputs"
+          echo "| Arg                 | Value |"
+          echo "| ------------------- | ----- |"
+          echo "| Print inputs        | ${{ inputs.print-inputs }} |"
+          echo "| Environment         | ${{ inputs.environment }} |"
+          echo "| Cluster             | ${{ inputs.cluster }} |"
+        } >> $GITHUB_STEP_SUMMARY
       shell: bash
