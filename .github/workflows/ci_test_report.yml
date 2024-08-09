@@ -72,7 +72,7 @@ jobs:
           summaryFile: pippo
       with:
         script: |
-          const test = ['foo.js', "1", "2", '3', '4'];
+          const test = ['foo.js', '1', '2', '3', '4'];
           var summary = JSON.parse(JSON.stringify(test))
           // --- file
           //const fs = require('fs')
