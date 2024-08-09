@@ -1,0 +1,20 @@
+name: Testing windows summaries
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ci_test_report.yml'
+
+jobs:
+  build-and-test:
+    name: Test
+    runs-on: "windows-latest"
+    steps:
+    - name: Adding markdown
+      run: |
+        echo '### Hello world! ' >> $GITHUB_STEP_SUMMARY
+        cat $GITHUB_STEP_SUMMARY 
+      shell: bash
