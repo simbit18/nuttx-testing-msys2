@@ -82,22 +82,16 @@ jobs:
           gcc -v
           cmake --version
 
-      - name: Get Current Date
-        id: date
-        run: |
-          "date=green" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
-          :: run: echo "date=$(date +'%Y-%m-%d')" >> $env:$GITHUB_OUTPUT
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.date.outputs.date }}.zip
+          name: msvc.zip
           path: ./nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
 
       - name: Publish the GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: nuttx-msvc-windows-${{ steps.date.outputs.date }}
+          tag_name: nuttx-msvc-windows
           draft: false
           prerelease: false
           generate_release_notes: false
