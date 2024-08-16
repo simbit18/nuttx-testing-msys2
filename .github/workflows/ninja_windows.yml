@@ -98,5 +98,5 @@ jobs:
           prerelease: false
           generate_release_notes: false
           files: |
-            nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
+            ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc_nsh32.zip
 
