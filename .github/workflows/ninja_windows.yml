@@ -71,7 +71,8 @@ jobs:
           cd vs2022
           mkdir nuttxmsvc
           dir
-          xcopy nuttx.exe ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc\nuttx.exe /q /s /e /y /i
+          dir Debug
+          xcopy ${{github.workspace}}\nuttxspace\nuttx\vs2022\Debug\nuttx.exe ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc\nuttx.exe /q /s /e /y /i
           Compress-Archive -Path ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc -DestinationPath ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc_nsh32.zip.zip
           :: zip -r nuttxmsvc_nsh32.zip nuttxmsvc
         shell: cmd
