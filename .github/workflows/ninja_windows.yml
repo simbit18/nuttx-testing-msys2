@@ -68,9 +68,28 @@ jobs:
           cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
           :: cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja --check-system-vars --debug-trycompile
           cmake --build vs2022 -v
+          cd build
+          mkdir nuttxmsvc
+          dir
+          xcopy nuttx.exe ${{github.workspace}}\nuttxspace\nuttx\build\nuttxmsvc\nuttx.exe /q /s /e /y /i
+          zip -r nuttxmsvc_nsh32.zip nuttxmsvc
         shell: cmd
 
       - name: Tests
         run: |
           gcc -v
           cmake --version
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Publish the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nuttx-msvc-windows-${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+          files: |
+            nuttxspace/nuttx/build/nuttxmsvc_nsh32.zip
+
