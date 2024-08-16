@@ -85,13 +85,13 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: msvc.zip
+          name: nuttx-${{ matrix.os }}-${{ matrix.arch }}
           path: ./nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
 
       - name: Publish the GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: nuttx-msvc-windows
+          tag_name: nuttx--${{ matrix.os }}-${{ matrix.arch }}
           draft: false
           prerelease: false
           generate_release_notes: false
