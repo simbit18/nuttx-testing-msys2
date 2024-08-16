@@ -1,0 +1,191 @@
+name: Build of NuttX Cmake on MSYS2
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: write
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/ninja_msys2.yml'
+env:
+   ARM_URL: https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/binrel/
+   ARM_NAME: arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi
+   RISCV_URL: https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v13.2.0-2/
+   RISCV_NAME: xpack-riscv-none-elf-gcc-13.2.0-2-win32-x64
+
+jobs:
+  nuttx-riscv-msys2:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: false
+          install: >-
+            base-devel
+            gcc
+            gperf
+            git
+            python3
+            ncurses-devel
+            unzip
+            zip
+            tio
+            zlib-devel
+            cmake
+            ninja
+            python-pip 
+            vim
+            curl
+        
+      - name: pip3 install
+        run: |
+          echo 'pip3 install'
+          uname
+          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
+
+      - name: Install kconfig-frontends
+        run: |
+          echo 'Install kconfig-frontends'
+          curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz
+          mkdir nuttx-tools
+          tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools
+          cd nuttx-tools/kconfig-frontends
+          ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf
+          make install
+
+      - name: Install genromfs
+        run: |
+          echo 'Install genromfs'
+          cd nuttx-tools
+          tar xzf genromfs-0.5.2.tar.gz
+          cd genromfs-0.5.2
+          make install PREFIX=/opt/nuttxenv
+
+      - name: Copy NXTOOL GENROMFS and clean source files
+        run: |
+          echo 'Copy NXTOOL GENROMFS and clean source files'
+          cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
+          cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
+          cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
+          cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
+          rm -rf nuttx-tools genromfs-0.5.2
+
+      # - name: Install arm toolchain for Windows
+        # run: |
+          # curl -L ${{ env.ARM_URL }}${{ env.ARM_NAME }}.zip -o ${{ env.ARM_NAME }}.zip
+          # unzip -qo ${{ env.ARM_NAME }}.zip
+          # mkdir -p /opt/nuttxenv/usr
+
+          # cp -ar ${{ env.ARM_NAME }}/* /opt/nuttxenv/usr
+          # rm -rf ${{ env.ARM_NAME }}
+          # rm ${{ env.ARM_NAME }}.zip
+          # ## ls -a /opt/nuttxenv/usr
+
+      # - name: Create PATH environment arm support script
+        # run: |
+           # mkdir -p nuttxenv
+           # echo "#!/usr/bin/env bash" > nuttxenv/arm
+           # echo "PATH=/opt/nuttxenv/usr/bin:"'${PATH}' >> nuttxenv/arm
+           # echo "export PATH" >> nuttxenv/arm
+
+      - name: Install riscv toolchain for Windows
+        run: |
+          curl -L ${{ env.RISCV_URL }}${{ env.RISCV_NAME }}.zip -o ${{ env.RISCV_NAME }}.zip
+          unzip -qo ${{ env.RISCV_NAME }}.zip
+          mkdir -p /opt/nuttxenv/usr
+
+          cp -ar ${{ env.RISCV_NAME }}/* /opt/nuttxenv/usr
+          rm -rf ${{ env.RISCV_NAME }}
+          rm ${{ env.RISCV_NAME }}.zip
+          ## ls -a /opt/nuttxenv/usr
+
+      - name: Create PATH environment riscv support script
+        run: |
+           mkdir -p nuttxenv
+           echo "#!/usr/bin/env bash" > nuttxenv/riscv
+           echo "PATH=/opt/nuttxenv/usr/bin:"'${PATH}' >> nuttxenv/riscv
+           echo "export PATH" >> nuttxenv/riscv
+
+      - name: Checkout Source Files
+        run: |
+          echo 'Checkout Source Files'
+          mkdir nuttxspace
+          ## ls -a
+          cd nuttxspace
+          # #git clone https://github.com/apache/incubator-nuttx nuttx
+          ## git clone https://github.com/apache/incubator-nuttx-apps apps
+          git clone --depth 1 --single-branch --branch simbit18-cmake https://github.com/simbit18/nuttx.git nuttx
+          git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+          ## cd nuttx
+          ## ls -a
+
+      - name: Build
+        run: |
+          echo 'Build'
+          ## source nuttxenv/arm
+          source nuttxenv/riscv
+          ## env
+
+          ## Move to nuttx
+          cd nuttxspace/nuttx
+          ## ls -a
+
+          ## Show the GCC version
+          # arm-none-eabi-gcc --version
+          # arm-none-eabi-c++ --version
+
+          riscv-none-elf-gcc --version
+          riscv-none-elf-c++ --version
+
+          ## Configure the build
+          ## ./tools/configure.sh -g nucleo-f4x1re:f411-nsh
+          mkdir nuttxmsys2
+          cmake -B build -DBOARD_CONFIG=rv-virt:nsh -GNinja
+          cmake --build build -v
+          mkdir nuttxmsys2
+
+          ## Preserve the build config
+          ## cp .config nuttxmsys2/nuttx.config
+
+          ## Run the build
+          ## make
+
+          ## Show the size
+          ## arm-none-eabi-size nuttx
+
+          ## Dump the disassembly to nuttx.S
+          # arm-none-eabi-objdump \
+          # -t -S --demangle --line-numbers --wide \
+          # nuttx \
+          # >nuttx.S \
+          # 2>&1
+
+          ls build
+
+          cp build/nuttx nuttxmsys2/nuttx
+          cp build/nuttx.bin nuttxmsys2/nuttx.bin
+          ## cp nuttx.S nuttxmsys2/nuttx.S
+          ## cp nuttx.hex nuttxmsys2/nuttx.hex
+
+          zip -r msys2_riscv_nsh.zip nuttxmsys2
+
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Publish the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: msys2-riscv-nsh-${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+          files: |
+            nuttxspace/nuttx/msys2_riscv_nsh.zip
+
