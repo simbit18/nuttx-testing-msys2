@@ -13,6 +13,7 @@ env:
    ARM_NAME: arm-gnu-toolchain-12.3.rel1-mingw-w64-i686-arm-none-eabi
    RISCV_URL: https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v13.2.0-2/
    RISCV_NAME: xpack-riscv-none-elf-gcc-13.2.0-2-win32-x64
+   RISCV_NAME2: xpack-riscv-none-elf-gcc-13.2.0-2
 
 jobs:
   nuttx-riscv-msys2:
@@ -99,8 +100,8 @@ jobs:
           unzip -qo ${{ env.RISCV_NAME }}.zip
           mkdir -p /opt/nuttxenv/usr
 
-          cp -ar ${{ env.RISCV_NAME }}/* /opt/nuttxenv/usr
-          rm -rf ${{ env.RISCV_NAME }}
+          cp -ar ${{ env.RISCV_NAME2 }}/* /opt/nuttxenv/usr
+          rm -rf ${{ env.RISCV_NAME2 }}
           rm ${{ env.RISCV_NAME }}.zip
           ## ls -a /opt/nuttxenv/usr
 
