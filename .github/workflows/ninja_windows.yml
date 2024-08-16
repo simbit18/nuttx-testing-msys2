@@ -13,7 +13,8 @@
 name: Ninja Windows
 
 permissions:
-  contents: read
+  ## Allow publishing of GitHub Release
+  contents: write
 on: 
   workflow_dispatch:
   push:
