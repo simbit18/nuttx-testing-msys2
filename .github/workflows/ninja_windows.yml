@@ -74,21 +74,25 @@ jobs:
           dir
           dir Debug
           copy /Y .\Debug\nuttx.exe .\nuttxmsvc\nuttx.exe
-          cd build
           7z a ./nuttxmsvc_nsh32.zip ./nuttxmsvc
-          :: xcopy ${{github.workspace}}\nuttxspace\nuttx\vs2022\Debug\nuttx.exe ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc\nuttx.exe /q /s /e /y /i
-          :: Copy-Item -Path ${{github.workspace}}\nuttxspace\nuttx\vs2022\Debug* -Destination ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc -Recurse
-          :: Compress-Archive -Path ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc -DestinationPath ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc_nsh32.zip
-          :: zip -r nuttxmsvc_nsh32.zip nuttxmsvc
         shell: cmd
 
       - name: Tests
         run: |
           gcc -v
           cmake --version
+
       - name: Get Current Date
         id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: |
+          "date=green" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+        :: run: echo "date=$(date +'%Y-%m-%d')" >> $env:$GITHUB_OUTPUT
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.date.outputs.date }}.zip
+          path: ./nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
 
       - name: Publish the GitHub Release
         uses: softprops/action-gh-release@v2
@@ -98,5 +102,5 @@ jobs:
           prerelease: false
           generate_release_notes: false
           files: |
-            nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
+            ./nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
 
