@@ -74,12 +74,7 @@ jobs:
           dir
           dir Debug
           copy /Y .\Debug\nuttx.exe .\nuttxmsvc\nuttx.exe
-          cd build
           7z a ./nuttxmsvc_nsh32.zip ./nuttxmsvc
-          :: xcopy ${{github.workspace}}\nuttxspace\nuttx\vs2022\Debug\nuttx.exe ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc\nuttx.exe /q /s /e /y /i
-          :: Copy-Item -Path ${{github.workspace}}\nuttxspace\nuttx\vs2022\Debug* -Destination ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc -Recurse
-          :: Compress-Archive -Path ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc -DestinationPath ${{github.workspace}}\nuttxspace\nuttx\vs2022\nuttxmsvc_nsh32.zip
-          :: zip -r nuttxmsvc_nsh32.zip nuttxmsvc
         shell: cmd
 
       - name: Tests
