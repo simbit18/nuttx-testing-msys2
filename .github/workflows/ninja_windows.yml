@@ -86,7 +86,7 @@ jobs:
         id: date
         run: |
           "date=green" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
-        :: run: echo "date=$(date +'%Y-%m-%d')" >> $env:$GITHUB_OUTPUT
+          :: run: echo "date=$(date +'%Y-%m-%d')" >> $env:$GITHUB_OUTPUT
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
