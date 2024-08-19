@@ -88,10 +88,16 @@ jobs:
           name: nuttx-${{ matrix.os }}-${{ matrix.arch }}
           path: ./nuttxspace/nuttx/vs2022/nuttxmsvc_nsh32.zip
 
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        shell: bash
+
+
       - name: Publish the GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: nuttx--${{ matrix.os }}-${{ matrix.arch }}
+          tag_name: msys2-msvc-nsh-${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
           generate_release_notes: false
