@@ -18,29 +18,11 @@ jobs:
       matrix:
         platform: [windows]
         include:
-        - platform: macos
-          TARGET: macos
-          SEPARATOR: ':'
-          RUN_ON: macos-latest
         - platform: windows
           TARGET: win64
           EXTEN: .exe
           SEPARATOR: ';'
           RUN_ON: windows-latest
-        - platform: linux-amd64
-          TARGET: linux-amd64
-          SEPARATOR: ':'
-          RUN_ON: ubuntu-20.04
-        - platform: linux-arm32
-          CONTAINER: python:3.8-bullseye
-          TARGET: linux-arm32
-          SEPARATOR: ':'
-          RUN_ON: [ARM, self-hosted, linux]
-        - platform: linux-arm64
-          CONTAINER: python:3.8-bullseye
-          TARGET: linux-arm64
-          SEPARATOR: ':'
-          RUN_ON: [ARM64, self-hosted, linux]
     container: ${{ matrix.CONTAINER }} # use python container on ARM
     env:
       DISTPATH: esptool-${{ matrix.TARGET }}
