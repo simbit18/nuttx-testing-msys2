@@ -53,6 +53,7 @@ jobs:
           git clone https://github.com/espressif/esptool.git
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
+          ls -a
           cd esptool
       - name: Checkout repository
         uses: actions/checkout@master
