@@ -49,7 +49,21 @@ jobs:
       - name: Install Dependencies
              # --lhelper will eliminate a warning with arm64 and libusb
         run: bash --version
-      - name: Build
-        run: |
-          bash --version
-          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+      - name: Run builds
+        with:
+          run: |
+            echo 'Checkout Source Files'
+            mkdir nuttxspace
+            ## ls -a
+            cd nuttxspace
+            git clone --depth 1 --single-branch --branch simbit18-speed https://github.com/simbit18/nuttx.git nuttx
+            git clone --depth 1 --single-branch --branch simbit18-speed https://github.com/simbit18/nuttx-apps.git apps
+            cd nuttx
+            ## ls -a
+            ## git config --global --add safe.directory /github/workspace/sources/nuttx
+            ## git config --global --add safe.directory /github/workspace/sources/apps
+            ## cd sources/nuttx/tools/ci
+            ## Configure the build
+            ./tools/configure.sh -l esp32-wrover-kit:lvgl
+            ## Run the build
+            make V=1
