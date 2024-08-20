@@ -26,8 +26,8 @@ jobs:
     container: ${{ matrix.CONTAINER }} # use python container on ARM
     env:
       DISTPATH: esptool-${{ matrix.TARGET }}
-      STUBS_DIR: ./esptool/targets/stub_flasher/
-      EFUSE_DIR: ./espefuse/efuse_defs/
+      STUBS_DIR: ./esptool/esptool/targets/stub_flasher/
+      EFUSE_DIR: ./esptool/espefuse/efuse_defs/
       PIP_EXTRA_INDEX_URL: "https://dl.espressif.com/pypi"
     steps:
       - name: Checkout Source Files
@@ -58,7 +58,7 @@ jobs:
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico --add-data="${{ env.STUBS_DIR }}1/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}1/" --add-data="${{ env.STUBS_DIR }}2/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}2/" esptool.py
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico --add-data="${{ env.EFUSE_DIR }}*.yaml${{ matrix.SEPARATOR }}${{ env.EFUSE_DIR }}" espefuse.py
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico espsecure.py
-          pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico $GITHUB_WORKSPACE/esptool/esp_rfc2217_server.py
+          pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico ./esptool/esp_rfc2217_server.py
       - name: Sign binaries
         if: matrix.platform == 'windows' && github.event_name != 'pull_request'
         env:
