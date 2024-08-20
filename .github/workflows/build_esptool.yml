@@ -74,7 +74,7 @@ jobs:
         shell: bash
         run: |
           ls -a
-          ls -a esptool/${{ env.DISTPATH }}
+          ls -a ${{ env.DISTPATH }}
           ./${{ env.DISTPATH }}/esptool${{ matrix.EXTEN }} -h
           ./${{ env.DISTPATH }}/espefuse${{ matrix.EXTEN }} -h
           ./${{ env.DISTPATH }}/espsecure${{ matrix.EXTEN }} -h
