@@ -32,10 +32,10 @@ jobs:
     steps:
       - name: Checkout Source Files
         run: |
-          git clone https://github.com/espressif/esptool.git
+          ## git clone https://github.com/espressif/esptool.git
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
-          cd esptool
+          ## cd esptool
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Set up Python 3.8
@@ -58,7 +58,7 @@ jobs:
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico --add-data="${{ env.STUBS_DIR }}1/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}1/" --add-data="${{ env.STUBS_DIR }}2/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}2/" esptool.py
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico --add-data="${{ env.EFUSE_DIR }}*.yaml${{ matrix.SEPARATOR }}${{ env.EFUSE_DIR }}" espefuse.py
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico espsecure.py
-          pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico esp_rfc2217_server.py
+          pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=ci/espressif.ico $GITHUB_WORKSPACE/esptool/esp_rfc2217_server.py
       - name: Sign binaries
         if: matrix.platform == 'windows' && github.event_name != 'pull_request'
         env:
