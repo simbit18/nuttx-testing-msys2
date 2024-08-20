@@ -74,10 +74,11 @@ jobs:
         shell: bash
         run: |
           ls -a
-          ./esptool/${{ env.DISTPATH }}/esptool${{ matrix.EXTEN }} -h
-          ./esptool/${{ env.DISTPATH }}/espefuse${{ matrix.EXTEN }} -h
-          ./esptool/${{ env.DISTPATH }}/espsecure${{ matrix.EXTEN }} -h
-          ./esptool/${{ env.DISTPATH }}/esp_rfc2217_server${{ matrix.EXTEN }} -h
+          ls -a esptool/${{ env.DISTPATH }}
+          ./${{ env.DISTPATH }}/esptool${{ matrix.EXTEN }} -h
+          ./${{ env.DISTPATH }}/espefuse${{ matrix.EXTEN }} -h
+          ./${{ env.DISTPATH }}/espsecure${{ matrix.EXTEN }} -h
+          ./${{ env.DISTPATH }}/esp_rfc2217_server${{ matrix.EXTEN }} -h
       - name: Add license and readme
         shell: bash
         run: mv ./esptool/LICENSE README.md ./${{ env.DISTPATH }}
