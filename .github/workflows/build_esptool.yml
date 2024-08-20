@@ -73,6 +73,7 @@ jobs:
       - name: Test binaries
         shell: bash
         run: |
+          ls -a
           ./esptool/${{ env.DISTPATH }}/esptool${{ matrix.EXTEN }} -h
           ./esptool/${{ env.DISTPATH }}/espefuse${{ matrix.EXTEN }} -h
           ./esptool/${{ env.DISTPATH }}/espsecure${{ matrix.EXTEN }} -h
