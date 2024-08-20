@@ -50,11 +50,10 @@ jobs:
     steps:
       - name: Checkout Source Files
         run: |
-          mkdir -p esp
-          cd esp
           git clone https://github.com/espressif/esptool.git
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
+          cd esptool
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Set up Python 3.8
