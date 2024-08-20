@@ -48,6 +48,11 @@ jobs:
       EFUSE_DIR: ./espefuse/efuse_defs/
       PIP_EXTRA_INDEX_URL: "https://dl.espressif.com/pypi"
     steps:
+      - name: Checkout Source Files
+        run: |
+          git clone https://github.com/espressif/esptool.git
+          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
+          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Set up Python 3.8
