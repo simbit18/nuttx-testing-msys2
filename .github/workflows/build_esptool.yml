@@ -48,7 +48,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyinstaller==5.13.2
           ## git clone https://github.com/espressif/esptool.git
-          cd esptool
+          cd $GITHUB_WORKSPACE/esptool
           pip install --user -e .
           ## cd esptool
       - name: Build with PyInstaller
