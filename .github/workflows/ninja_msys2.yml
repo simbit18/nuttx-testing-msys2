@@ -146,7 +146,9 @@ jobs:
           ## Configure the build
           ## ./tools/configure.sh -g nucleo-f4x1re:f411-nsh
           mkdir nuttxmsys2
-          cmake -B build -DBOARD_CONFIG=rv-virt:nsh -GNinja
+          ## cmake -B build -DBOARD_CONFIG=rv-virt:nsh -GNinja
+          cmake -B build -DBOARD_CONFIG=stm32f746g-disco:lvgl -GNinja
+
           cmake --build build -v
           mkdir nuttxmsys2
 
