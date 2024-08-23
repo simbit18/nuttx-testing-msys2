@@ -75,7 +75,7 @@ jobs:
           cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
           cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
           rm -rf nuttx-tools genromfs-0.5.2
-
+      - uses: actions/checkout@v4
       - name: Install arm toolchain for Windows
         run: |
           curl -L ${{ env.ARM_URL }}${{ env.ARM_NAME }}.zip -o ${{ env.ARM_NAME }}.zip
@@ -141,8 +141,8 @@ jobs:
           arm-none-eabi-c++ --version
           
           ## Show the riscv GCC version
-          riscv-none-elf-gcc --version
-          riscv-none-elf-c++ --version
+          # riscv-none-elf-gcc --version
+          # riscv-none-elf-c++ --version
 
           ## Configure the build
           ## ./tools/configure.sh -g nucleo-f4x1re:f411-nsh
