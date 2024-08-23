@@ -32,10 +32,8 @@ jobs:
     steps:
       - name: Checkout Source Files
         run: |
-          ## git clone https://github.com/espressif/esptool.git
-          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
-          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
-          ## cd esptool
+          git clone https://github.com/espressif/esptool.git
+          ls -a
       - name: Checkout repository
         uses: actions/checkout@master
       - name: Set up Python 3.8
@@ -49,10 +47,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller==5.13.2
-          git clone https://github.com/espressif/esptool.git
+          ## git clone https://github.com/espressif/esptool.git
           cd esptool
           pip install --user -e .
-          cd esptool
+          ## cd esptool
       - name: Build with PyInstaller
         run: |
           pyinstaller --distpath ./${{ env.DISTPATH }} -F --icon=esptool/ci/espressif.ico --add-data="${{ env.STUBS_DIR }}1/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}1/" --add-data="${{ env.STUBS_DIR }}2/*.json${{ matrix.SEPARATOR }}${{ env.STUBS_DIR }}2/" ./esptool/esptool.py
