@@ -135,13 +135,13 @@ jobs:
           ## Configure the build
           ## cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh
           # ninja
-          cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh -GNinja
+          cmake -B build -DBOARD_CONFIG=stm32f746g-disco:lvgl
           
           ## mkdir nuttxmsys2
           
           ## Preserve the build config
           ## cp .config nuttxmsys2/nuttx.config
-          cmake --build f4x1re
+          cmake --build build
           # verbose
           #cmake --build f4x1re -v
           ls -a
