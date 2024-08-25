@@ -45,7 +45,7 @@ jobs:
            df -h
         - name: Build the WinNano-nuttx-docker Docker image
           run: |
-           docker build docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+           docker build ./docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
            docker run ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
            docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
           ## uses: docker/build-push-action@v6
