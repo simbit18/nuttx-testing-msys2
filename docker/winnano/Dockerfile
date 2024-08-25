@@ -4,8 +4,8 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS installer
 # Retrieve msys2
 RUN powershell -command \
     Invoke-WebRequest "https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe" -OutFile "C:\\windows\\temp\\msys2-base.exe" && \
-    C:\\windows\\temp\\msys2-base.exe -y -oC:\\windows\\temp\\
-
+    "C:\\windows\\temp\\msys2-base.exe" -y "-oC:\\windows\\temp\\" && \
+    Remove-Item "C:\\Windows\\Temp\\msys2-base.exe" -Force
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
@@ -43,6 +43,9 @@ RUN mkdir "%DOWNLOAD_DIR%" && \
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
 USER ContainerUser
+
+ADD https://aka.ms/vs/16/release/vc_redist.x64.exe vc_redist.x64.exe
+RUN VC_redist.x64.exe /install /quiet /norestart /log vc_redist.log
 
 COPY --from=installer ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
 COPY --from=installer ["/windows/temp/msys64", "/msys64"]
