@@ -4,8 +4,7 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS installer
 # Retrieve msys2
 RUN powershell -command \
     Invoke-WebRequest "https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe" -OutFile "C:\\windows\\temp\\msys2-base.exe" && \
-    C:\\windows\\temp\\msys2-base.exe -y -oC:\\windows\\temp\\ && \
-    Remove-Item msys2-base.exe
+    C:\\windows\\temp\\msys2-base.exe -y -oC:\\windows\\temp\\
 
 # Runtime image
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
