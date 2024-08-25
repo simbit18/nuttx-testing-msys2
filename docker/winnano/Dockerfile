@@ -52,7 +52,7 @@ RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin
 USER ContainerUser
 
 # Qt installer framework
-ADD https://download.qt.io/official_releases/qt-installer-framework/4.8.0/QtInstallerFramework-windows-x64-4.8.0.exeADD C:/QtInstallerFramework-windows-x64-4.8.0.exe
+ADD https://download.qt.io/official_releases/qt-installer-framework/4.8.0/QtInstallerFramework-windows-x64-4.8.0.exe C:/QtInstallerFramework-windows-x64-4.8.0.exe
 RUN QtInstallerFramework-windows-x64-4.8.0.exe in --al -c
 
 # Clean
