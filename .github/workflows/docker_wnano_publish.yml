@@ -25,7 +25,7 @@ jobs:
     build:
       runs-on: windows-latest
       env:
-        IMAGE_TAG: ${{ env.REGISTRY }}/${{ github.repository }}/docker-ci-msys2
+        IMAGE_TAG: ghcr.io/${{ github.repository }}/docker-ci-msys2
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
