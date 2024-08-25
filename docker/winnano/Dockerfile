@@ -52,29 +52,28 @@ COPY --from=installer ["/windows/temp/msys64", "/msys64"]
 RUN bash -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
     bash -l -c "pacman -Syu --needed --noconfirm --noprogressbar"
 #    bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
-	
+
 RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
     setx HOME "C:\msys64\home\ContainerUser"
 
-
 # Install required packages
 RUN      bash -l -c " \
-		pacman -S --needed --noconfirm \
-			base-devel \
-			gcc \
-			gperf \
-			git \
-			python3 \
-			ncurses-devel \
-			unzip \
-			tio \
-			zlib-devel \
-			cmake \
-			ninja \
-                        python-pip \
-                        vim && \
-		rm -r /var/cache/pacman/pkg/* \
-          "
+         pacman -S --needed --noconfirm \
+            base-devel \
+            gcc \
+            gperf \
+            git \
+            python3 \
+            ncurses-devel \
+            unzip \
+            tio \
+            zlib-devel \
+            cmake \
+            ninja \
+            python-pip \
+            vim && \
+         rm -r /var/cache/pacman/pkg/* \
+     "
 # WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager.
 # It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 ENV PIP_ROOT_USER_ACTION=ignore
@@ -84,33 +83,33 @@ RUN bash -l -c " \
          pip3 install \
          pyelftools \
          cxxfilt \
-	 kconfiglib \
+         kconfiglib \
      "
 # Install kconfig-frontends
 RUN bash -l -c " \
          curl -L https://bitbucket.org/nuttx/tools/get/master.tar.gz -o nuttx-tools.tar.gz \
-	 && mkdir nuttx-tools \
+         && mkdir nuttx-tools \
          && tar xvzf nuttx-tools.tar.gz --strip-components=1 -C nuttx-tools \
-	 && cd nuttx-tools/kconfig-frontends \
-	 && ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf \
-	 && make install \
-     "     
+         && cd nuttx-tools/kconfig-frontends \
+         && ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf \
+         && make install \
+     "
 # Install genromfs
 RUN bash -l -c " \
          cd nuttx-tools \
-	 && tar xzf genromfs-0.5.2.tar.gz \
+         && tar xzf genromfs-0.5.2.tar.gz \
          && cd genromfs-0.5.2 \
          && make install PREFIX=/opt/nuttxenv \
-     "	
- 		
+     "
+
 # Copy NXTOOL GENROMFS and clean source files
 RUN bash -l -c " \
-	cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin \
-	&& cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin \
-	&& cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin \
-	&& cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin \
-        && rm -rf nuttx-tools genromfs-0.5.2 \
-      "
+         cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin \
+         && cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin \
+         && cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin \
+         && cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin \
+         && rm -rf nuttx-tools genromfs-0.5.2 \
+     "
 ENV MSYSTEM=MSYS
 WORKDIR C:\\msys64\\home\\ContainerUser\\
 CMD ["bash", "-l"]
