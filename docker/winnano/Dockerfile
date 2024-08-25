@@ -1,6 +1,11 @@
 ARG IMAGE_OS_VERSION=ltsc2022
 FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS installer
 
+ADD https://aka.ms/vs/17/release/vc_redist.x64.exe /vc_redist.x64.exe
+RUN C:\vc_redist.x64.exe /quiet /install
+RUN del C:\vc_redist.x64.exe
+RUN dir
+
 # Retrieve msys2
 RUN powershell -command \
     Invoke-WebRequest "https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe" -OutFile "C:\\windows\\temp\\msys2-base.exe" && \
