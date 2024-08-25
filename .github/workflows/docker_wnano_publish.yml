@@ -25,13 +25,13 @@ jobs:
     build:
       runs-on: windows-latest
       env:
-        IMAGE_TAG: ghcr.io/${{ github.repository }}/docker-ci-msys2
+        IMAGE_TAG: ${{ env.REGISTRY }}/${{ github.repository }}/docker-ci-msys2
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4
 
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v3
+        ## - name: Set up Docker Buildx
+        ##  uses: docker/setup-buildx-action@v3
 
         - name: Login to GitHub Container Registry
           uses: docker/login-action@v3
@@ -44,11 +44,15 @@ jobs:
           run: |
            df -h
         - name: Build the WinNano-nuttx-docker Docker image
-          uses: docker/build-push-action@v6
-          with:
-            context: docker/winnano
-            push: ${{ github.ref == 'refs/heads/master' }}
-            tags: ${{ env.IMAGE_TAG }}
+          run: |
+           docker build docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+           docker run ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+           docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+          ## uses: docker/build-push-action@v6
+          ## with:
+          ##  context: docker/winnano
+          ##  push: ${{ github.ref == 'refs/heads/master' }}
+          ##  tags: ${{ env.IMAGE_TAG }}
         - name: Post-build Disk Stats
           if: always()
           run: |
