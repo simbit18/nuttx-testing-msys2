@@ -118,10 +118,13 @@ jobs:
           mkdir nuttxspace
           ## ls -a
           cd nuttxspace
-          # #git clone https://github.com/apache/incubator-nuttx nuttx
-          ## git clone https://github.com/apache/incubator-nuttx-apps apps
-          git clone --depth 1 --single-branch --branch simbit18-cmake https://github.com/simbit18/nuttx.git nuttx
-          git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+          ## Master
+          git clone https://github.com/apache/incubator-nuttx nuttx
+          git clone https://github.com/apache/incubator-nuttx-apps apps
+          #-------
+          # Branch
+          # git clone --depth 1 --single-branch --branch simbit18-cmake https://github.com/simbit18/nuttx.git nuttx
+          # git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           ## cd nuttx
           ## ls -a
 
@@ -147,10 +150,11 @@ jobs:
           ## Configure the build
           ## ./tools/configure.sh -g nucleo-f4x1re:f411-nsh
           mkdir nuttxmsys2
+          cmake -B build -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh
           ## cmake -B build -DBOARD_CONFIG=rv-virt:nsh -GNinja
-          cmake -B build -DBOARD_CONFIG=stm32f746g-disco:lvgl -GNinja
+          ## cmake -B build -DBOARD_CONFIG=stm32f746g-disco:lvgl -GNinja
 
-          cmake --build build -v
+          cmake --build build
           mkdir nuttxmsys2
 
           ## Preserve the build config
