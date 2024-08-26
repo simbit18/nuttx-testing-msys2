@@ -115,7 +115,7 @@ jobs:
       - name: Checkout Source Files
         run: |
           echo 'Checkout Source Files'
-          mkdir nuttxspace
+          mkdir -p nuttxspace
           ## ls -a
           cd nuttxspace
           ## Master
@@ -156,7 +156,7 @@ jobs:
           ## cmake -B build -DBOARD_CONFIG=stm32f746g-disco:lvgl -GNinja
 
           cmake --build build -v
-          mkdir nuttxmsys2
+          mkdir -p nuttxmsys2
 
           ## Preserve the build config
           ## cp .config nuttxmsys2/nuttx.config
