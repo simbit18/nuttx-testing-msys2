@@ -4,7 +4,6 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
 
 ARG 7ZIP_VERSION
 
-
 SHELL ["powershell", "-Command"]
 
 # RUN powershell -command \
