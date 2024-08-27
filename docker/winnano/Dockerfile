@@ -13,22 +13,22 @@ ARG 7ZIP_VERSION
 #    "C:\\windows\\temp\\msys2-base.exe" -y "-oC:\\windows\\temp\\"
 
 RUN powershell -command \
-    if(!(Test-Path -Path 'C:\windows\Temp')) \
+    if(!(Test-Path -Path 'C:\Temp')) \
     { \
         New-Item \
-            -Path 'C:\windows\Temp' \
+            -Path 'C:\Temp' \
             -ItemType Directory \
             -Verbose | Out-Null ; \
     } ; \
     \
     Invoke-WebRequest \
         -Uri $('https://www.7-zip.org/a/7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
-        -OutFile $('C:\windows\Temp\7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
+        -OutFile $('C:\Temp\7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
         -UseBasicParsing \ 
         -Verbose ; \
     \
     Start-Process \
-        -FilePath $('C:\windows\Temp\7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
+        -FilePath $('C:\Temp\7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
         -ArgumentList '/S' \
         -NoNewWindow \
         -Wait \
