@@ -18,7 +18,7 @@ RUN powershell -command \
         New-Item \
             -Path 'C:\Temp' \
             -ItemType Directory \
-            -Verbose | Out-Null ; \
+            -Verbose ; \
     } ; \
     \
     Invoke-WebRequest \
