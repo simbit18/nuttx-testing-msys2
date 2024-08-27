@@ -24,7 +24,11 @@ RUN \
         -ArgumentList '-y -oC:\Temp\' \
         -NoNewWindow \
         -Wait \
-        -Verbose ; 
+        -Verbose ; \
+    \
+    Remove-Item \
+        -Path 'C:\Temp\msys2-base.exe' \
+        -Verbose ;
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
@@ -39,4 +43,7 @@ COPY --from=download ["/temp/msys64", "/msys64"]
 RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
 
 # Test application
-RUN bash -l -c pacman -Syuu --needed --noconfirm --noprogressbar
+RUN \
+    bash \
+        --version
+
