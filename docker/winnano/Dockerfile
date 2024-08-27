@@ -1,4 +1,4 @@
-ARG 7ZIP_VERSION=1805
+ARG 7ZIP_VERSION=2408
 ARG IMAGE_OS_VERSION=ltsc2022
 FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
 
