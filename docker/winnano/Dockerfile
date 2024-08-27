@@ -21,7 +21,7 @@ RUN \
     \
     Start-Process \
         -FilePath $('C:\Temp\msys2-base.exe') \
-        -ArgumentList '-y -oC:\Temp' \
+        -ArgumentList '-y -oC:\Temp\' \
         -NoNewWindow \
         -Wait \
         -Verbose ; 
