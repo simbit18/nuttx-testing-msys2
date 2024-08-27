@@ -2,11 +2,10 @@ ARG 7ZIP_VERSION=1805
 ARG IMAGE_OS_VERSION=ltsc2022
 FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
 
-FROM microsoft/windowsservercore:latest AS download
-
 ARG 7ZIP_VERSION
 
-SHELL ["powershell", "-Command"]
+SHELL ["pwsh", "-Command"]
+# SHELL ["powershell", "-Command"]
 
 RUN \
     if(!(Test-Path -Path 'C:\Temp')) \
@@ -31,21 +30,6 @@ RUN \
         -Verbose ; 
 
 FROM microsoft/nanoserver:latest AS build
-
-LABEL \
-    org.label-schema.name="NanoServer.7-Zip" \
-    org.label-schema.description="This image is a 7-Zip on NanoServer image." \
-    org.label-schema.version="1.0.0" \
-    org.label-schema.schema-version="1.0" \
-    org.label-schema.vendor="Ryen Kia Zhi Tang" \
-    org.label-schema.url="https://www.7-zip.org/" \
-    org.label-schema.maintainer.name="Ryen Kia Zhi Tang" \
-    org.label-schema.vcs-url="https://github.com/kiazhi/Windows-Containers"\
-    org.label-schema.docker.cmd="docker run --name $CONTAINER -t -d nanoserver.7-zip:latest" \
-    org.label-schema.docker.cmd.test="docker exec $CONTAINER 7z b" \
-    org.label-schema.docker.cmd.debug="docker exec -it $CONTAINER 7z" \
-    org.label-schema.docker.docker.cmd.help="docker exec $CONTAINER 7z -h" \
-    org.label-schema.docker.params="7ZIP_VERSION=version number"
 
 ARG 7ZIP_VERSION
 
