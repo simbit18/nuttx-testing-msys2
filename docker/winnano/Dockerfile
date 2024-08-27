@@ -1,8 +1,5 @@
-ARG 7ZIP_VERSION=2408
 ARG IMAGE_OS_VERSION=ltsc2022
 FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
-
-ARG 7ZIP_VERSION
 
 SHELL ["powershell", "-Command"]
 
@@ -23,15 +20,13 @@ RUN \
         -Verbose ; \
     \
     Start-Process \
-        -FilePath $('C:\Temp\7z' + $ENV:7ZIP_VERSION + '-x64.exe') \
+        -FilePath $('C:\Temp\msys2-base.exe') \
         -ArgumentList '-y -oC:\Temp' \
         -NoNewWindow \
         -Wait \
         -Verbose ; 
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
-
-ARG 7ZIP_VERSION
 
 COPY --from=download ["/temp/msys64", "/msys64"]
 
