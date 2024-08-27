@@ -4,15 +4,11 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
 
 ARG 7ZIP_VERSION
 
-#SHELL ["pwsh", "-Command"]
-# SHELL ["powershell", "-Command"]
 
-# Retrieve msys2
-#RUN powershell -command \
-#    Invoke-WebRequest #"https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe" -OutFile #"C:\\windows\\temp\\msys2-base.exe" && \
-#    "C:\\windows\\temp\\msys2-base.exe" -y "-oC:\\windows\\temp\\"
+SHELL ["powershell", "-Command"]
 
-RUN powershell -command \
+# RUN powershell -command \
+RUN \
     if(!(Test-Path -Path 'C:\Temp')) \
     { \
         New-Item \
