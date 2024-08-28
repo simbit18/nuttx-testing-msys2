@@ -3,17 +3,50 @@ FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
 RUN dir & dir Windows
 
+ARG PWSH_VERSION=7.4.5
+
 SHELL ["powershell", "-Command"]
 
 RUN \
+    if(!(Test-Path -Path 'C:\Temp')) \
+    { \
+        New-Item \
+            -Path 'C:\Temp' \
+            -ItemType Directory \
+            -Verbose | Out-Null ; \
+    } ; \
     \
-    Get-ChildItem \
-        -Path 'C:\Windows' \
-        -Filter 'Microsoft-OneCore-ReverseForwarders-Package.cab' \
+    Invoke-WebRequest \
+        -Uri $('https://github.com/PowerShell/PowerShell/releases/download/v' + $ENV:PWSH_VERSION + '/PowerShell-' + $ENV:PWSH_VERSION + '-win-x64.zip') \
+        -OutFile $('C:\Temp\PowerShell-' + $ENV:PWSH_VERSION + '-win-x64.zip') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Expand-Archive \
+        -Path $('C:\Temp\PowerShell-' + $ENV:PWSH_VERSION + '-win-x64.zip') \
+        -DestinationPath $(Join-Path -Path "$ENV:ProgramFiles\PowerShell" -ChildPath $ENV:PWSH_VERSION) \
+        -Verbose ; \
+    \
+    Set-ItemProperty \
+        -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' \
+        -Name 'Path' \
+        -Value $($ENV:Path + ';' + $(Join-Path -Path "$ENV:ProgramFiles\PowerShell" -ChildPath $ENV:PWSH_VERSION)) \
+        -Verbose ;
+
+# Test application
+RUN \
+    pwsh \
+        -v
+
+# Remove temporary items from the build image
+RUN \
+    Remove-Item \
+        -Path 'C:\Temp' \
         -Recurse \
         -Verbose ;
 
-# RUN powershell -command Get-ChildItem -Path C:\ -Filter *.cab -Recurse -ErrorAction SilentlyContinue -Force
+
+RUN pwsh Get-ChildItem -Path C:\ -Filter *.cab -Recurse -ErrorAction SilentlyContinue -Force
 
 RUN dism.exe /online /add-package /packagepath:C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab & del C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab
 # RUN dism /Online /Add-Package /PackagePath:C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab & del C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab
