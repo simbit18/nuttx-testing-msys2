@@ -30,6 +30,8 @@ RUN \
         -Path 'C:\Temp\msys2-base.exe' \
         -Verbose ;
 
+RUN dir windows\system32
+
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
 RUN dir & dir Windows
@@ -48,7 +50,7 @@ COPY --from=download C:/Windows/system32/imm32.dll C:/Windows/system32/imm32.dll
 COPY --from=download C:/Windows/system32/kernel32.dll C:/Windows/system32/kernel32.dll
 COPY --from=download C:/Windows/system32/ole32.dll C:/Windows/system32/ole32.dll
 COPY --from=download C:/Windows/system32/oleacc.dll C:/Windows/system32/oleacc.dll
-COPY --from=download C:/Windows/system32/prntvpt.dll C:/Windows/system32/prntvpt.dll
+# COPY --from=download C:/Windows/system32/prntvpt.dll C:/Windows/system32/prntvpt.dll
 COPY --from=download C:/Windows/system32/psapi.dll C:/Windows/system32/psapi.dll
 COPY --from=download C:/Windows/system32/rstrtmgr.dll C:/Windows/system32/rstrtmgr.dll
 COPY --from=download C:/Windows/system32/secur32.dll C:/Windows/system32/secur32.dll
