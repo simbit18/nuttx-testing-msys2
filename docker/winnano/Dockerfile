@@ -50,6 +50,9 @@ COPY --from=download C:/Windows/system32/winmm.dll C:/Windows/system32/winmm.dll
 
 COPY --from=download C:/Temp/msys64 C:/msys64
 
+RUN dir windows\system32
+
+RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
 # Test application
 RUN \
     bash \
