@@ -17,7 +17,6 @@ RUN \
     } ; \
     \
     Invoke-WebRequest \
-	            https://github.com/PowerShell/PowerShell/releases/download/v7.2.22/PowerShell-7.2.22-win-x64.zip
         -Uri $('https://github.com/PowerShell/PowerShell/releases/download/v' + $ENV:PWSH_VERSION + '/PowerShell-' + $ENV:PWSH_VERSION + '-win-x64.zip') \
         -OutFile $('C:\Temp\PowerShell-' + $ENV:PWSH_VERSION + '-win-x64.zip') \
         -UseBasicParsing \ 
