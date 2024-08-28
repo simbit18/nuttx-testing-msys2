@@ -78,8 +78,8 @@ RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64
 # Test application
 RUN \
     ls \
-        -version
+        --version
 
 RUN \
     bash \
-        -version
+        --version
