@@ -60,11 +60,11 @@ COPY --from=download C:/Windows/system32/shlwapi.dll C:/Windows/system32/shlwapi
 COPY --from=download C:/Windows/system32/user32.dll C:/Windows/system32/user32.dll
 COPY --from=download C:/Windows/system32/usp10.dll C:/Windows/system32/usp10.dll
 COPY --from=download C:/Windows/system32/version.dll C:/Windows/system32/version.dll
-COPY --from=download C:/Windows/system32/wevtapi.dll C:/Windows/system32/wevtapi.dll
+# COPY --from=download C:/Windows/system32/wevtapi.dll C:/Windows/system32/wevtapi.dll
 COPY --from=download C:/Windows/system32/winmm.dll C:/Windows/system32/winmm.dll
 COPY --from=download C:/Windows/system32/winspool.drv C:/Windows/system32/winspool.drv
-COPY --from=download C:/Windows/system32/wtsapi32.dll C:/Windows/system32/wtsapi32.dll
-COPY --from=download C:/Windows/system32/xinput1_4.dll C:/Windows/system32/xinput1_4.dll
+# COPY --from=download C:/Windows/system32/wtsapi32.dll C:/Windows/system32/wtsapi32.dll
+# COPY --from=download C:/Windows/system32/xinput1_4.dll C:/Windows/system32/xinput1_4.dll
 
 COPY --from=download C:/Temp/msys64 C:/msys64
 
