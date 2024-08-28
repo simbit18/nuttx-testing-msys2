@@ -8,8 +8,8 @@ SHELL ["powershell", "-Command"]
 RUN \
     \
     Get-ChildItem \
-        -Path 'C:\' \
-        -Filter '*.cab' \
+        -Path 'C:\Windows\' \
+        -Filter 'Microsoft-OneCore-ReverseForwarders-Package.cab' \
         -Recurse \
         -Verbose ;
 
