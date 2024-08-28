@@ -35,7 +35,7 @@ FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 RUN dir & dir Windows
 RUN dir windows\system32
 
-COPY --from=download C:/Windows/system32/PerceptionDevice.dll C:/Windows/system32/PerceptionDevice.dll
+# COPY --from=download C:/Windows/system32/PerceptionDevice.dll C:/Windows/system32/PerceptionDevice.dll
 COPY --from=download C:/Windows/system32/advapi32.dll C:/Windows/system32/advapi32.dll
 COPY --from=download C:/Windows/system32/comctl32.dll C:/Windows/system32/comctl32.dll
 COPY --from=download C:/Windows/system32/comdlg32.dll C:/Windows/system32/comdlg32.dll
@@ -70,6 +70,10 @@ RUN dir & dir windows\system32
 
 RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
 # Test application
+RUN \
+    ls \
+        -version
+
 RUN \
     bash \
         -version
