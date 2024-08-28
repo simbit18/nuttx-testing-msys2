@@ -74,7 +74,18 @@ COPY --from=download C:/Temp/msys64 C:/msys64
 
 RUN dir & dir windows\system32
 
-RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
+# RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
+RUN SETX /M path "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
+RUN bash -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
+    bash -l -c "pacman -Syu --needed --noconfirm --noprogressbar" && \
+    bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
+
+RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
+    setx HOME "C:\msys64\home\ContainerUser"
+
+WORKDIR C:\\msys64\\home\\ContainerUser\\
+CMD ["bash", "-l"]
+
 # Test application
 RUN \
     ls \
