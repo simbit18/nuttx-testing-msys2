@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
 RUN dir & dir Windows
 
-RUN where /r C:\ *.cab
+RUN powershell -command Get-ChildItem -Path C:\ -Filter *.cab -Recurse -ErrorAction SilentlyContinue -Force
 
 RUN dism.exe /online /add-package /packagepath:C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab & del C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab
 # RUN dism /Online /Add-Package /PackagePath:C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab & del C:\packages\Microsoft-OneCore-ReverseForwarders-Package.cab
