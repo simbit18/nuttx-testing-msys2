@@ -67,6 +67,7 @@ COPY --from=download C:/Windows/system32/winspool.drv C:/Windows/system32/winspo
 # COPY --from=download C:/Windows/system32/xinput1_4.dll C:/Windows/system32/xinput1_4.dll
 
 COPY --from=download C:/Windows/system32/netapi32.dll C:/Windows/system32/netapi32.dll
+COPY --from=download C:/Windows/system32/win32u.dll C:/Windows/system32/win32u.dll
 
 # gdi32full.dll
 
@@ -74,14 +75,18 @@ COPY --from=download C:/Temp/msys64 C:/msys64
 
 RUN dir & dir windows\system32
 
+USER ContainerAdministrator
+
 # RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
-RUN SETX PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
+RUN SETX /m PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
 RUN bash -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
     bash -l -c "pacman -Syu --needed --noconfirm --noprogressbar" && \
     bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
 
 RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
     setx HOME "C:\msys64\home\ContainerUser"
+
+USER ContainerUser
 
 WORKDIR C:\\msys64\\home\\ContainerUser\\
 CMD ["bash", "-l"]
