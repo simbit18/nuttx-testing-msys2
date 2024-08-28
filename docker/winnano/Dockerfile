@@ -67,7 +67,8 @@ COPY --from=download C:/Windows/system32/winspool.drv C:/Windows/system32/winspo
 # COPY --from=download C:/Windows/system32/xinput1_4.dll C:/Windows/system32/xinput1_4.dll
 
 COPY --from=download C:/Windows/system32/netapi32.dll C:/Windows/system32/netapi32.dll
-netapi32.dll
+
+# gdi32full.dll
 
 COPY --from=download C:/Temp/msys64 C:/msys64
 
