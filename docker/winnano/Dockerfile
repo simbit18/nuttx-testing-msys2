@@ -63,7 +63,7 @@ COPY --from=download C:/Windows/system32/version.dll C:/Windows/system32/version
 # COPY --from=download C:/Windows/system32/wevtapi.dll C:/Windows/system32/wevtapi.dll
 COPY --from=download C:/Windows/system32/winmm.dll C:/Windows/system32/winmm.dll
 COPY --from=download C:/Windows/system32/winspool.drv C:/Windows/system32/winspool.drv
-# COPY --from=download C:/Windows/system32/wtsapi32.dll C:/Windows/system32/wtsapi32.dll
+## COPY --from=download C:/Windows/system32/wtsapi32.dll C:/Windows/system32/wtsapi32.dll
 # COPY --from=download C:/Windows/system32/xinput1_4.dll C:/Windows/system32/xinput1_4.dll
 
 COPY --from=download C:/Windows/system32/netapi32.dll C:/Windows/system32/netapi32.dll
