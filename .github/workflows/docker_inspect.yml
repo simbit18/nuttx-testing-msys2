@@ -55,4 +55,8 @@ jobs:
         name: Inspect
         run: |
           docker images
-          docker image inspect IMAGE ${{ env.IMAGE_NAME }}
+          # docker image inspect IMAGE ${{ env.IMAGE_NAME }}
+      -
+        name: Hystory
+        run: |
+          docker history ${{ env.IMAGE_NAME }}
