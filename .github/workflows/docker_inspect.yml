@@ -20,7 +20,7 @@ on:
     paths:
       - '.github/workflows/docker_inspect.yml'
 env:
-   REGISTRY: ghcr.io
+   REGISTRY: ghcr.io/simbit18/nuttx-testing-ci
 permissions:
   packages: write
   contents: read
@@ -29,7 +29,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     env:
-      IMAGE_TAG: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
+      IMAGE_TAG: apache-nuttx-ci-linux:latest
     steps:
       -
         name: Checkout
