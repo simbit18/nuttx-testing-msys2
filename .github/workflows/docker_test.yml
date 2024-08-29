@@ -41,6 +41,10 @@ jobs:
           arm-none-eabi-gcc --version
           aarch64-none-elf-gcc --version
           avr32-gcc --version
+          bloaty --version
+          rustc --version
+          zig version
+          ldc2 --version
       - uses: actions/checkout@v3
       - name: Python Setup
         uses: actions/setup-python@v4
@@ -53,3 +57,7 @@ jobs:
         run: |
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+      - name: Post-build Disk Stats
+        if: always()
+        run: |
+          df -h
