@@ -59,4 +59,5 @@ jobs:
       -
         name: Hystory
         run: |
-          docker history ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
+          docker pull ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
+          docker history apache-nuttx-ci-linux:latest
