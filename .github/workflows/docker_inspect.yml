@@ -55,4 +55,4 @@ jobs:
         name: Inspect
         run: |
           docker images
-          docker image inspect ${{ env.IMAGE_NAME }}
+          docker image inspect IMAGE ${{ env.IMAGE_NAME }}
