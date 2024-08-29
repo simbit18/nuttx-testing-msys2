@@ -45,6 +45,7 @@ jobs:
           rustc --version
           zig version
           ldc2 --version
+          rx-elf-gcc --version
       - uses: actions/checkout@v3
       - name: Python Setup
         uses: actions/setup-python@v4
