@@ -59,4 +59,4 @@ jobs:
       -
         name: Hystory
         run: |
-          docker history ${{ env.IMAGE_NAME }}
+          docker history ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
