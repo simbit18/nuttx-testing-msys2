@@ -30,15 +30,15 @@ RUN \
         -Path 'C:\Temp\msys2-base.exe' \
         -Verbose ;
 
-FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
+FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
-COPY msvcp140.dll /Windows/System32/
+# COPY msvcp140.dll /Windows/System32/
 
-COPY vcruntime140.dll /Windows/System32/
+#COPY vcruntime140.dll /Windows/System32/
 
 RUN dir windows\system32
 
-COPY --from=download ["/temp/msys64", "/msys64"]
+# COPY --from=download ["/temp/msys64", "/msys64"]
 
 
 # In order to set system PATH, ContainerAdministrator must be used
@@ -50,7 +50,6 @@ USER ContainerUser
 COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
 
 COPY --from=download ["/temp/msys64", "/msys64"]
-
 
 RUN bash -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
     bash -l -c "pacman -Syu --needed --noconfirm --noprogressbar"
