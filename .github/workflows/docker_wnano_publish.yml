@@ -27,8 +27,8 @@ jobs:
       env:
         IMAGE_TAG: ghcr.io/${{ github.repository }}/docker-nano-msys2
       steps:
-        - name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v3
+        - name: Checkout
+          uses: actions/checkout@v4
 
         - name: Login to GitHub Container Registry
           uses: docker/login-action@v3
@@ -39,18 +39,28 @@ jobs:
         - name: Pre-build Disk Stats
           run: |
            df -h
+        - name: Build
+         shell: cmd
+         run: >
+           docker build
+           --build-arg VERSION=ltsc2022
+           -t ghcr.io/${{ github.repository_owner }}/${{ vars.IMG_NAME }}:ltsc2022
+           ../docker/winnano
         # - name: Build the WinNano-nuttx-docker Docker image
           # run: |
            # docker build ./docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
            # docker run ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
            # docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
         - name: Push Docker image
-          uses: docker/build-push-action@v6
-          with:
-            context: docker/winnano
-            platforms: linux/amd64
-            push: ${{ github.ref == 'refs/heads/master' }}
-            tags: ${{ env.IMAGE_TAG }}
+          shell: cmd
+          run: |
+            docker push ghcr.io/${{ github.repository_owner }}/${{ vars.IMG_NAME }} --all-tags
+          # uses: docker/build-push-action@v6
+          # with:
+            # context: docker/winnano
+            # platforms: linux/amd64
+            # push: ${{ github.ref == 'refs/heads/master' }}
+            # tags: ${{ env.IMAGE_TAG }}
           ## uses: docker/build-push-action@v6
           ## with:
           ##  context: docker/winnano
