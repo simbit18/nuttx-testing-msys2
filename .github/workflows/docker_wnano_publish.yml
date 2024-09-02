@@ -44,7 +44,7 @@ jobs:
           run: >
             docker build
             --build-arg VERSION=ltsc2022
-            -t ghcr.io/${{ github.repository_owner }}/${{ vars.IMG_NAME }}:ltsc2022
+            -t ghcr.io/${{ github.repository_owner }}/docker-nano-msys2:last
             ./docker/winnano
         # - name: Build the WinNano-nuttx-docker Docker image
           # run: |
@@ -54,7 +54,7 @@ jobs:
         - name: Push Docker image
           shell: cmd
           run: |
-            docker push ghcr.io/${{ github.repository_owner }}/${{ vars.IMG_NAME }} --all-tags
+            docker push ghcr.io/${{ github.repository_owner }}/docker-nano-msys2 --all-tags
           # uses: docker/build-push-action@v6
           # with:
             # context: docker/winnano
@@ -66,6 +66,10 @@ jobs:
           ##  context: docker/winnano
           ##  push: ${{ github.ref == 'refs/heads/master' }}
           ##  tags: ${{ env.IMAGE_TAG }}
+       - name: Tag latest Windows version
+         shell: cmd
+         run: |
+           docker tag ghcr.io/${{ github.repository_owner }}/docker-nano-msys2:last ghcr.io/${{ github.repository_owner }}/$docker-nano-msys2
         - name: Post-build Disk Stats
           if: always()
           run: |
