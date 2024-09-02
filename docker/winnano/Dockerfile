@@ -1,5 +1,5 @@
 ARG IMAGE_OS_VERSION=ltsc2022
-FROM FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} as installer-env
+FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} as installer-env
 
 # ENV APPVEYOR_BUILD_AGENT_VERSION=7.0.3212
 
