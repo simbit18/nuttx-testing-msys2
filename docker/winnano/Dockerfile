@@ -40,8 +40,32 @@ RUN dir windows\system32
 
 COPY --from=download ["/temp/msys64", "/msys64"]
 
-RUN SETX PATH "C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
 
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
+
+USER ContainerUser
+
+COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
+
+COPY --from=download ["/temp/msys64", "/msys64"]
+
+
+RUN bash -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
+    bash -l -c "pacman -Syu --needed --noconfirm --noprogressbar"
+#    bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
+
+
+RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
+    setx HOME "C:\msys64\home\ContainerUser"
+
+# RUN SETX PATH 
+#"C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
+
+ENV MSYSTEM=MSYS
+WORKDIR C:\\msys64\\home\\ContainerUser\\
+CMD ["bash", "-l"]
 # Test application
 RUN \
     bash \
