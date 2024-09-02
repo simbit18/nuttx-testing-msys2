@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - 'tools/ci/docker/winnano/**'
+      - 'docker/winnano/**'
       - '.github/workflows/docker_win_publish.yml'
 env:
    REGISTRY: ghcr.io
