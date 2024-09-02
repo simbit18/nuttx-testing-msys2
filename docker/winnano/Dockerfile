@@ -3,11 +3,11 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} as installer-env
 
 # ENV APPVEYOR_BUILD_AGENT_VERSION=7.0.3212
 
-COPY ./scripts/nano ./scripts
+COPY /scripts/nano ./scripts
 
 USER ContainerAdministrator
 
-#RUN pwsh ./scripts/create_appveyor_user.ps1
+RUN pwsh /scripts/create_appveyor_user.ps1
 
 #USER appveyor
 
