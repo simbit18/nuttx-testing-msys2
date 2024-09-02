@@ -39,15 +39,15 @@ jobs:
             tio
             zlib-devel
             cmake
+            ninja
             python-pip 
             vim
             curl
-          # ninja
 
       - name: pip3 install
         run: |
           python3 -m venv --system-site-packages /usr/local
-          pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt ninja kconfiglib
+          pip3 install --root-user-action=ignore --no-cache-dir setuptools wheel pyelftools cxxfilt kconfiglib
 
       - name: Install kconfig-frontends
         run: |
