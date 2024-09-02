@@ -39,10 +39,10 @@ jobs:
             tio
             zlib-devel
             cmake
-            # ninja
             python-pip 
             vim
             curl
+          # ninja
 
       - name: pip3 install
         run: |
