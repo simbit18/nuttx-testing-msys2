@@ -40,7 +40,6 @@ jobs:
           run: |
            df -h
         - name: Build
-          shell: cmd
           run: |
             docker build
             --build-arg VERSION=3.20.2
