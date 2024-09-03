@@ -30,12 +30,12 @@ RUN \
         -Path 'C:\Temp\msys2-base.exe' \
         -Verbose ;
 
+RUN dir & dir Windows
+RUN dir windows\system32
+
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
-# COPY msvcp140.dll /Windows/System32/
-
-#COPY vcruntime140.dll /Windows/System32/
-
+RUN dir & dir Windows
 RUN dir windows\system32
 
 # COPY --from=download ["/temp/msys64", "/msys64"]
@@ -45,12 +45,11 @@ RUN dir windows\system32
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
 
-# USER ContainerUser
+USER ContainerUser
 
 COPY win32u.dll /Windows/System32/
 COPY gdi32full.dll /Windows/System32/
-COPY msvcp_win.dll /Windows/System32/
-
+# COPY msvcp_win.dll /Windows/System32/
 
 
 COPY --from=download ["/windows/system32/kernel32.dll", "/windows/system32/kernel32.dll"]
@@ -58,8 +57,6 @@ COPY --from=download ["/windows/system32/user32.dll", "/windows/system32/user32.
 COPY --from=download ["/windows/system32/gdi32.dll", "/windows/system32/gdi32.dll"]
 
 COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
-
-
 
 COPY --from=download ["/temp/msys64", "/msys64"]
 
