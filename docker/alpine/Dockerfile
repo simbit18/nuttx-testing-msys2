@@ -202,6 +202,9 @@ RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -q
   texinfo \
   wget \
   bzip2
+  
+RUN mkdir -p /tools
+WORKDIR /tools
 
 # Download toolchain source code
 RUN mkdir -p /tools/renesas-tools/source/binutils && \
