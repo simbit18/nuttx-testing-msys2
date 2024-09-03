@@ -81,7 +81,8 @@ jobs:
       - name: Push Linux image
         uses: docker/build-push-action@v5
         with:
-          context: tools
+          context: docker/alpine
+          # context: tools nuttx ubuntu
           platforms: linux/amd64
           push: ${{ github.ref == 'refs/heads/master' }}
           tags: ${{ env.IMAGE_TAG }}
