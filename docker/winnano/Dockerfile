@@ -45,7 +45,7 @@ RUN dir windows\system32
 USER ContainerAdministrator
 RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
 
-USER ContainerUser
+# USER ContainerUser
 
 COPY win32u.dll /Windows/System32/
 COPY gdi32full.dll /Windows/System32/
