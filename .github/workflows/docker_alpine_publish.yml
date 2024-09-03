@@ -42,7 +42,7 @@ jobs:
         - name: Build
           run: |
             docker build
-            --build-arg VERSION=3.20.2
+            --build-arg VERSION=3
             -t ghcr.io/${{ github.repository_owner }}/docker-test-alpine:last
             ./docker/alpine
         - name: Push Docker image
