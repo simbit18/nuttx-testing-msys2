@@ -16,29 +16,12 @@
 FROM ubuntu:22.04 AS builder-base
 # NOTE WE ARE NOT REMOVEING APT CACHE.
 # This should only be used for temp build images that artifacts will be copied from
-RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
+apt-get update -qq && apt-get install -y -qq \
   curl \
   patch \
-  xz-utils \
+  xz-utils
   bison \
-  clang \
-  cmake \
   flex \
-  g++ \
-  gawk \
-  git \
-  gperf \
-  libncurses5-dev \
-  make \
-  ninja-build \
-  nodejs \
-  npm \
-  unzip\
-  gcc \
-  m4 \
-  texinfo \
-  wget \
-  bzip2
 
 FROM alpine:3.20.2 AS download-base
 # NOTE WE ARE NOT REMOVEING APT CACHE.
@@ -55,25 +38,19 @@ RUN apk --no-cache --update add \
 # Base image that should be used to prepare tools from nuttx-tools
 ###############################################################################
 FROM builder-base AS nuttx-tools
-
-# RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
-#  curl \
-#  patch \
-#  xz-utils \
-#  bison \
-#  clang \
-#  cmake \
-#  flex \
-#  g++ \
-#  gawk \
-#  git \
-#  gperf \
-#  libncurses5-dev \
-#  make \
-#  ninja-build \
-#  nodejs \
-#  npm \
-#  unzip
+RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
+  clang \
+  cmake \
+  g++ \
+  gawk \
+  git \
+  gperf \
+  libncurses5-dev \
+  make \
+  ninja-build \
+  nodejs \
+  npm \
+  unzip
 
 RUN mkdir -p /tools
 WORKDIR /tools
@@ -216,17 +193,15 @@ RUN mkdir -p pinguino-compilers && \
 # FROM nuttx-toolchain-base AS nuttx-toolchain-renesas
 FROM builder-base  AS nuttx-toolchain-renesas
 # Build Renesas RX GCC toolchain
-# RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
-#  bison \
-#  flex \
-#  g++ \
-#  gcc \
-#  libncurses5-dev \
-#  m4 \
-#  make \
-#  texinfo \
-#  wget \
-#  bzip2
+RUN apt-get update -qq && DEBIAN_FRONTEND="noninteractive" apt-get install -y -qq \
+  g++ \
+  gcc \
+  libncurses5-dev \
+  m4 \
+  make \
+  texinfo \
+  wget \
+  bzip2
 
 # Download toolchain source code
 RUN mkdir -p /tools/renesas-tools/source/binutils && \
