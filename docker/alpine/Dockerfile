@@ -19,7 +19,7 @@ FROM ubuntu:22.04 AS builder-base
 RUN apt-get update -qq && apt-get install -y -qq \
   curl \
   patch \
-  xz-utils
+  xz-utils \
   bison \
   flex
 
