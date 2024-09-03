@@ -16,7 +16,7 @@
 FROM ubuntu:22.04 AS builder-base
 # NOTE WE ARE NOT REMOVEING APT CACHE.
 # This should only be used for temp build images that artifacts will be copied from
-apt-get update -qq && apt-get install -y -qq \
+RUN apt-get update -qq && apt-get install -y -qq \
   curl \
   patch \
   xz-utils
