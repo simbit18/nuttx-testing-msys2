@@ -1,63 +1,72 @@
-
 ARG IMAGE_OS_VERSION=ltsc2022
-FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} as installer-env
+FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS download
 
-# ENV APPVEYOR_BUILD_AGENT_VERSION=7.0.3212
+SHELL ["powershell", "-Command"]
 
-RUN mkdir scripts
-# WORKDIR /scripts
-COPY ./scripts/nano/install_path_utils.ps1 ./scripts/install_path_utils.ps1
-
-USER ContainerAdministrator
-
-RUN pwsh /scripts/create_appveyor_user.ps1
-
-#USER appveyor
-
-RUN powershell ./scripts/install_path_utils.ps1
-RUN powershell ./scripts/install_powershell_core.ps1
-RUN powershell ./scripts/install_7zip.ps1
-RUN powershell ./scripts/install_git.ps1
-# RUN powershell ./scripts/install_appveyor_build_agent_docker.ps1
+# Retrieve msys2
+RUN \
+    if(!(Test-Path -Path 'C:\Temp')) \
+    { \
+        New-Item \
+            -Path 'C:\Temp' \
+            -ItemType Directory \
+            -Verbose ; \
+    } ; \
+    \
+    Invoke-WebRequest \
+        -Uri $('https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-x86_64-latest.sfx.exe') \
+        -OutFile $('C:\Temp\msys2-base.exe') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Start-Process \
+        -FilePath $('C:\Temp\msys2-base.exe') \
+        -ArgumentList '-y -oC:\Temp\' \
+        -NoNewWindow \
+        -Wait \
+        -Verbose ; \
+    \
+    Remove-Item \
+        -Path 'C:\Temp\msys2-base.exe' \
+        -Verbose ;
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
+# COPY msvcp140.dll /Windows/System32/
+
+#COPY vcruntime140.dll /Windows/System32/
+
+RUN dir windows\system32
+
+# COPY --from=download ["/temp/msys64", "/msys64"]
+
+
+# In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl"
 
-ENV ProgramFiles="C:\Program Files" \
-  LOCALAPPDATA="C:\Users\ContainerAdministrator\AppData\Local" \
-  PSModuleAnalysisCachePath="$LOCALAPPDATA\Microsoft\Windows\PowerShell\docker\ModuleAnalysisCache" \
-  PSCORE="$ProgramFiles\PowerShell\pwsh.exe"
+USER ContainerUser
 
-COPY --from=installer-env ["C:/Program Files/PowerShell/7", "C:/Program Files/PowerShell"]
-COPY --from=installer-env ["C:/Program Files/7-Zip", "C:/Program Files/7-Zip"]
-COPY --from=installer-env ["C:/Program Files/Git", "C:/Program Files/Git"]
-# COPY --from=installer-env ["C:/Program Files/AppVeyor/BuildAgent", "C:/Program Files/AppVeyor/BuildAgent"]
+COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
 
-# Set the path
-RUN setx /M PATH "%PATH%;C:\Program Files\7-Zip;C:\Program Files\Git\cmd;C:\Program Files\Git\usr\bin;C:\Program Files\PowerShell"
+COPY --from=download ["/temp/msys64", "/msys64"]
 
-# intialize powershell module cache
-RUN pwsh \
-  -NoLogo \
-  -NoProfile \
-  -Command " \
-  $stopTime = (get-date).AddMinutes(15); \
-  $ErrorActionPreference = 'Stop' ; \
-  $ProgressPreference = 'SilentlyContinue' ; \
-  while(!(Test-Path -Path $env:PSModuleAnalysisCachePath)) {  \
-  Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
-  if((get-date) -gt $stopTime) { throw 'timout expired'} \
-  Start-Sleep -Seconds 6 ; \
-  }"
+RUN sh.exe --login -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
+    sh.exe --login -c "pacman -Syu --needed --noconfirm --noprogressbar"
+#    bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
 
-# ENTRYPOINT [ "C:\\Program Files\\AppVeyor\\BuildAgent\\appveyor-build-agent.exe" ]
 
+RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
+    setx HOME "C:\msys64\home\ContainerUser"
+
+# RUN SETX PATH 
+#"C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin;C:\msys64\usr\bin\site_perl;C:\msys64\usr\bin\vendor_perl;C:\msys64\usr\bin\core_perl;%PATH%"
+
+ENV MSYSTEM=MSYS
+WORKDIR C:\\msys64\\home\\ContainerUser\\
+CMD ["sh", "-l"]
 # Test application
 RUN \
-    7z \
-        b
-
-RUN \
-    git \
+    sh \
         --version
+
