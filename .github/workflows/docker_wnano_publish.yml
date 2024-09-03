@@ -41,7 +41,7 @@ jobs:
            df -h
         - name: Build
           shell: cmd
-          run: >
+          run: |
             docker build
             --build-arg VERSION=ltsc2022
             -t ghcr.io/${{ github.repository_owner }}/docker-nano-msys2:last
