@@ -53,9 +53,9 @@ COPY msvcp_win.dll /Windows/System32/
 
 
 
-COPY --from=download ["C:/Windows/system32/kernel32.dll C:/Windows/system32/kernel32.dll"]
-COPY --from=download ["C:/Windows/system32/user32.dll C:/Windows/system32/user32.dll"]
-COPY --from=download ["C:/Windows/system32/gdi32.dll C:/Windows/system32/gdi32.dll"]
+COPY --from=download ["/windows/system32/kernel32.dll", "/windows/system32/kernel32.dll"]
+COPY --from=download ["/windows/system32/user32.dll", "/windows/system32/user32.dll"]
+COPY --from=download ["/windows/system32/gdi32.dll", "/windows/system32/gdi32.dll"]
 
 COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
 
