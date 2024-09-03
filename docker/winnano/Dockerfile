@@ -47,12 +47,24 @@ RUN setx /M PATH "%PATH%;C:\msys64\usr\local\bin;C:\msys64\usr\bin;C:\msys64\bin
 
 USER ContainerUser
 
+COPY win32u.dll /Windows/System32/
+COPY gdi32full.dll /Windows/System32/
+COPY msvcp_win.dll /Windows/System32/
+
+
+
+COPY --from=download ["C:/Windows/system32/kernel32.dll C:/Windows/system32/kernel32.dll"]
+COPY --from=download ["C:/Windows/system32/user32.dll C:/Windows/system32/user32.dll"]
+COPY --from=download ["C:/Windows/system32/gdi32.dll C:/Windows/system32/gdi32.dll"]
+
 COPY --from=download ["/windows/system32/netapi32.dll", "/windows/system32/netapi32.dll"]
+
+
 
 COPY --from=download ["/temp/msys64", "/msys64"]
 
-RUN sh.exe --login -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
-    sh.exe --login -c "pacman -Syu --needed --noconfirm --noprogressbar"
+# RUN sh -l -c "pacman -Syuu --needed --noconfirm --noprogressbar" && \
+#     sh -l -c "pacman -Syu --needed --noconfirm --noprogressbar"
 #    bash -l -c "rm -fr /C/Users/ContainerUser/* /var/cache/pacman/pkg/*"
 
 
@@ -64,8 +76,15 @@ RUN mklink /J C:\\msys64\\home\\ContainerUser C:\\Users\\ContainerUser && \
 
 ENV MSYSTEM=MSYS
 WORKDIR C:\\msys64\\home\\ContainerUser\\
-CMD ["sh", "-l"]
+# CMD ["bash", "-l"]
 # Test application
+RUN \
+    ls \
+        --version
+
+RUN \
+    bash \
+        --version
 RUN \
     sh \
         --version
