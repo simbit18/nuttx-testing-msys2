@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} as installer-env
 
 # ENV APPVEYOR_BUILD_AGENT_VERSION=7.0.3212
 
-RUN mkdir -p /scripts
+RUN mkdir /scripts
 # WORKDIR /scripts
 COPY ./scripts/nano/install_path_utils.ps1 ./scripts/install_path_utils.ps1
 
