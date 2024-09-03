@@ -21,7 +21,7 @@ apt-get update -qq && apt-get install -y -qq \
   patch \
   xz-utils
   bison \
-  flex \
+  flex
 
 FROM alpine:3.20.2 AS download-base
 # NOTE WE ARE NOT REMOVEING APT CACHE.
