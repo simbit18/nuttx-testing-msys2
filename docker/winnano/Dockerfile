@@ -30,12 +30,12 @@ RUN \
         -Path 'C:\Temp\msys2-base.exe' \
         -Verbose ;
 
-RUN dir & dir Windows
+RUN dir
 RUN dir windows\system32
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION}
 
-RUN dir & dir Windows
+RUN dir
 RUN dir windows\system32
 
 # COPY --from=download ["/temp/msys64", "/msys64"]
