@@ -40,7 +40,7 @@ jobs:
      with:
       # Custom
       base_ref: simbit18-speed4
-      app_name: master
+      app_name: simbit18-speed
       platforms_ref: '["docker"]'
       # master
       #base_ref: main
