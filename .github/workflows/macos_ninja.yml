@@ -1,0 +1,88 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: macOS nuttx ninja
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/macos_ninja.yml'
+
+jobs:
+  build_macos_ninja:
+    runs-on: macos-13
+    steps:
+      - name: System Information
+        run: |
+          ## system_profiler SPSoftwareDataType
+          bash --version
+          gcc -v
+          xcodebuild -version
+          ##  brew install dmd
+          ## brew install dub
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - name: Checkout Source Files
+        run: |
+          echo 'Checkout Source Files'
+          mkdir nuttxspace
+          ls -a
+          cd nuttxspace
+          ## git clone https://github.com/apache/incubator-nuttx nuttx
+          ## git clone https://github.com/apache/incubator-nuttx-apps apps
+          ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx.git nuttx
+          ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx-apps.git apps
+          git clone --depth 1 --single-branch --branch simbit18-sethos https://github.com/simbit18/nuttx.git nuttx
+          git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+          ls -a
+          echo 'Copy tools'
+          cp -f ../tools/macos/install_tools.sh install_tools.sh
+          ls -a
+          ./install_tools.sh
+      - name: Build
+        run: |
+          echo 'Build'
+          source ./nuttxspace/tools/env.sh
+          ## Move to nuttx
+          cd nuttxspace/nuttx
+          ls -a
+
+          ## Show the riscv-none-elf-gcc version
+          riscv-none-elf-gcc --version
+
+          ## Configure the build
+          ## ./tools/configure.sh -g rv-virt:nsh
+          cmake -B build -DBOARD_CONFIG=rv-virt:nsh -GNinja
+          ## cmake -B build -DBOARD_CONFIG=rv-virt:nsh
+
+          mkdir nuttxrvvirt
+
+          ## Preserve the build config
+          cp build/.config nuttxrvvirt/nuttx.config
+
+          ## cmake --build build -v
+          cmake --build build
+
+          ls -a build
+          cp build/nuttx nuttxrvvirt/nuttx
+          cp build/defconfig nuttxrvvirt/defconfig
+          ## cp System.map nuttxrvvirt/System.map
+          #zip -r nuttxrvvirt.zip nuttxrvvirt
