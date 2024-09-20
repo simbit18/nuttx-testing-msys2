@@ -36,6 +36,7 @@ jobs:
         run: |
           echo "$GITHUB_PATH"
           echo "$PATH"
+          ls "$GITHUB_PATH"
           ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
