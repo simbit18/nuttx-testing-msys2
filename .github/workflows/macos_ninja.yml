@@ -50,7 +50,7 @@ jobs:
           ## git clone https://github.com/apache/incubator-nuttx-apps apps
           ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx-apps.git apps
-          git clone --depth 1 --single-branch --branch simbit18-sethos https://github.com/simbit18/nuttx.git nuttx
+          git clone --depth 1 --single-branch --branch simbit18-sethost https://github.com/simbit18/nuttx.git nuttx
           git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           ls -a
           echo 'Copy tools'
