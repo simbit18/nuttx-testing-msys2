@@ -30,6 +30,7 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
+          pwd
           ##  brew install dmd
           ## brew install dub
       - name: Set Environment Variables
