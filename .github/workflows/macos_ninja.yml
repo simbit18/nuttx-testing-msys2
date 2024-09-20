@@ -30,7 +30,9 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
+          ls /Users/runner/work/nuttx-testing-msys2
           pwd
+          ls /Users/runner/work/nuttx-testing-msys2/nuttx-testing-msys2
           ##  brew install dmd
           ## brew install dub
       - name: Set Environment Variables
