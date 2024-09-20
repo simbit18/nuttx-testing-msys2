@@ -100,7 +100,7 @@ jobs:
     with:
       # testlist_names: '["msys2", "arm-01"]'
       # testlist_names: '["arm-02", "arm-05", "arm-07", "arm-08", "arm-10", "arm-12", "other", "risc-v", "sim-01", "sim-02"]'
-      testlist_names: '["msys2"]'
+      testlist_names: '["cmake"]'
   fedora:
     needs: Fetch-Source
     if: contains(fromJSON(inputs.platforms_ref), 'fedora')
@@ -117,7 +117,7 @@ jobs:
     with:
       # testlist_names: '["msys2", "arm-01"]'
       # testlist_names: '["msys2-01", "msys2-02"]'
-      testlist_names: '["msys2"]'
+      testlist_names: '["cmake"]'
   macos:
     if: contains(fromJSON(inputs.platforms_ref), 'macos')
     needs: Fetch-Source
@@ -125,7 +125,7 @@ jobs:
     secrets: inherit
     with:
       # testlist_names: '["msys2", "arm-01"]'
-      testlist_names: '["msys2"]'
+      testlist_names: '["cmake"]'
   rocky:
     if: contains(fromJSON(inputs.platforms_ref), 'rocky')
     needs: Fetch-Source

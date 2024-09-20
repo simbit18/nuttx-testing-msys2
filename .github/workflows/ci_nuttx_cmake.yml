@@ -39,8 +39,8 @@ jobs:
      uses: ./.github/workflows/ci_fetch_cmake.yml
      with:
       # Custom
-      base_ref: simbit18-cmake-ninja
-      app_name: simbit18-cmake-ninja
+      base_ref: simbit18-sethost
+      app_name: master
       platforms_ref: '["docker", "macos", "msys2"]'
       # master
       #base_ref: main
