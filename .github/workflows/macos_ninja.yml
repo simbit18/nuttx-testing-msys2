@@ -85,8 +85,8 @@ jobs:
           ## Preserve the build config
           cp build/.config nuttxrvvirt/nuttx.config
 
-          ## cmake --build build -v
-          cmake --build build
+          cmake --build build -v
+          ## cmake --build build
 
           ls -a build
           cp build/nuttx nuttxrvvirt/nuttx
