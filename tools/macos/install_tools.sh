@@ -141,6 +141,42 @@ ninja_brew() {
   command ninja --version
 }
 
+python_tools() {
+  # Python User Env
+  export PIP_USER=yes
+  export PYTHONUSERBASE=${NUTTXTOOLS}/pylocal
+  echo "export PIP_USER=yes" >> "${NUTTXTOOLS}"/env.sh
+  echo "export PYTHONUSERBASE=${NUTTXTOOLS}/pylocal" >> "${NUTTXTOOLS}"/env.sh
+  add_path "${PYTHONUSERBASE}"/bin
+
+  # workaround for Cython issue
+  # https://github.com/yaml/pyyaml/pull/702#issuecomment-1638930830
+  pip3 install "Cython<3.0"
+  git clone https://github.com/yaml/pyyaml.git && \
+  cd pyyaml && \
+  git checkout release/5.4.1 && \
+  sed -i.bak 's/Cython/Cython<3.0/g' pyproject.toml && \
+  python setup.py sdist && \
+  pip3 install --pre dist/PyYAML-5.4.1.tar.gz
+  cd ..
+  rm -rf pyyaml
+
+  pip3 install \
+    cmake-format \
+    cvt2utf \
+    cxxfilt \
+    esptool==4.8.dev4 \
+    imgtool==1.9.0 \
+    kconfiglib \
+    pexpect==4.8.0 \
+    pyelftools \
+    pyserial==3.5 \
+    pytest==6.2.5 \
+    pytest-json==0.4.0 \
+    pytest-ordering==0.6 \
+    pytest-repeat==0.9.1
+}
+
 riscv_gcc_toolchain() {
   add_path "${NUTTXTOOLS}"/riscv-none-elf-gcc/bin
 
@@ -183,7 +219,7 @@ util_linux() {
 install_build_tools() {
   mkdir -p "${NUTTXTOOLS}"
   echo "#!/usr/bin/env sh" > "${NUTTXTOOLS}"/env.sh
-install="arm_gcc_toolchain arm64_gcc_toolchain elf_toolchain gen_romfs gperf kconfig_frontends ninja_brew riscv_gcc_toolchain rust u_boot_tools util_linux "
+install="arm_gcc_toolchain arm64_gcc_toolchain elf_toolchain gen_romfs gperf kconfig_frontends ninja_brew python_tools riscv_gcc_toolchain rust u_boot_tools util_linux "
 
   oldpath=$(cd . && pwd -P)
   for func in ${install}; do
