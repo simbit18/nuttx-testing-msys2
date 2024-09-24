@@ -98,8 +98,9 @@ jobs:
           # Configure Git on <your os> to properly handle line endings
           ## git config --unset core.filemode
           ## git config --global core.filemode false
-          git config --global --add safe.directory /github/workspace/sources/nuttx
-          git config --global --add safe.directory /github/workspace/sources/apps
+          ## git config --global --add safe.directory /github/workspace/sources/nuttx
+          ## git config --global --add safe.directory /github/workspace/sources/apps
+          git config --global --add safe.directory '*'
           cd sources/nuttx/tools/ci
           ./cibuild.sh -g -d -i -c -A -N -R testlist/${{matrix.boards}}.dat
           ##./cibuild.sh -g -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
