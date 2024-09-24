@@ -62,6 +62,8 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
+          git config --global --add safe.directory /github/workspace/sources/nuttx
+          git config --global --add safe.directory /github/workspace/sources/apps
           cd sources/nuttx/tools/ci
           # debug
           #./cibuild.sh -d -i -c -A -R testlist/${{matrix.boards}}.dat
