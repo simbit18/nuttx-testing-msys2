@@ -148,11 +148,12 @@ jobs:
             ninja
             python-pip 
             vim
-        
+
       - name: pip3 install
         run: |
           echo 'pip3 install'
           uname
+          python3 -m venv --system-site-packages /usr/local
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
       ## - run: git config --global core.autocrlf false
