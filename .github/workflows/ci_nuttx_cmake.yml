@@ -39,7 +39,7 @@ jobs:
      uses: ./.github/workflows/ci_fetch_cmake.yml
      with:
       # Custom
-      base_ref: simbit18-sethost
+      base_ref: simbit18-20241003
       app_name: master
       platforms_ref: '["docker", "macos", "msys2"]'
       # master
