@@ -111,7 +111,7 @@ jobs:
           ## cp -f ../../fix/1200/lib_exit.c libs/libc/stdlib/lib_exit.c
           
           ## Configure the build
-          ./tools/configure.sh -g sim:nsh
+          ./tools/configure.sh -g sim:windows64
           
           ## mkdir nuttxmsys2
           
