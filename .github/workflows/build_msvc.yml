@@ -34,39 +34,35 @@ jobs:
         run: |
           OS_REF=""
           APPS_REF=""
-
-          REF="refs/heads/simbit18-new"
-          # REF="refs/heads/master"
+          REF="refs/heads/master"
           echo "Working with ref: $REF"
-
       - name: Checkout nuttx repo
         uses: actions/checkout@v4
         with:
-          repository: simbit18/nuttx
-          ref: simbit18-new
-          # ref:  master
+          repository: apache/nuttx
+          ref: master
           path: sources/nuttx
-          fetch-depth: 1
+          fetch-depth: 2
       - name: Checkout nuttx repo tags
         run: git -C sources/nuttx fetch --tags
 
       - name: Checkout apps repo
         uses: actions/checkout@v4
         with:
-          repository: simbit18/nuttx-apps
-          ref: simbit18-new
-          # ref: master
+          repository: apache/nuttx-apps
+          ref: master
           path: sources/apps
-          fetch-depth: 1
+          fetch-depth: 2
 
       - name: Tar sources
         run: tar zcf sources.tar.gz sources
 
       - name: Archive Source Bundle
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: source-bundle
           path: sources.tar.gz
+
 # Build with MSVC in Windows native
   msvc:
     needs: Fetch-Source
