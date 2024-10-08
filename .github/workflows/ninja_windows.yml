@@ -76,7 +76,7 @@ jobs:
           dir
           dir Debug
           copy /Y .\Debug\nuttx.exe .\nuttxmsvc\nuttx.exe
-          7z a ./nuttxmsvc_nsh32.zip ./nuttxmsvc
+          7z a ./nuttxmsvc_${{ matrix.arch }}.zip ./nuttxmsvc
         shell: cmd
 
       - name: Tests
