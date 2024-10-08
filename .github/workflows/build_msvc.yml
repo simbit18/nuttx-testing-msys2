@@ -96,6 +96,8 @@ jobs:
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
+          git config --global --add safe.directory '*'
+          cd sources/nuttx
           cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G"Visual Studio 17 2022" -A Win32
           cmake --build vs2022
       - uses: actions/upload-artifact@v4
