@@ -56,10 +56,10 @@ jobs:
           pip install kconfiglib
           mkdir nuttxspace
           cd nuttxspace
-          :: git clone --depth 1 https://github.com/apache/nuttx nuttx
-          :: git clone --depth 1 https://github.com/apache/nuttx-apps apps
-          git clone --depth 1 --single-branch --branch simbit18-20241003 https://github.com/simbit18/nuttx.git nuttx
-          git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+          git clone --depth 1 https://github.com/apache/nuttx nuttx
+          git clone --depth 1 https://github.com/apache/nuttx-apps apps
+          :: git clone --depth 1 --single-branch --branch simbit18-20241003 https://github.com/simbit18/nuttx.git nuttx
+          :: git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           
           dir
         shell: cmd
