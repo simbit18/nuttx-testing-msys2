@@ -76,7 +76,6 @@ jobs:
           cmake --version
           choco install ninja
         # Set up Python environment and install kconfiglib
-      - name: Set up Python and install kconfiglib
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10' # specify the desired Python version
@@ -93,8 +92,7 @@ jobs:
 
       - name: Extract sources
         run: tar zxf sources.tar.gz
-
-      - name: Run Builds
+        
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
