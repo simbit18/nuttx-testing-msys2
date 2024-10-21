@@ -136,7 +136,8 @@ jobs:
         cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
         
         ## Run the build
-        cmake --build build -v
+        cmake --build build
+        ## cmake --build build -v
 
         ## Preserve the build config
         ### cp f4x1re/.config nuttx.config
