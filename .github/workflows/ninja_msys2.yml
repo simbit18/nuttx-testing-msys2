@@ -123,7 +123,8 @@ jobs:
           ## git clone https://github.com/apache/incubator-nuttx-apps apps
           #-------
           # Branch
-          git clone --depth 1 --single-branch --branch simbit18-cmake-ninja https://github.com/simbit18/nuttx.git nuttx
+          # git clone --depth 1 --single-branch --branch simbit18-cmake-ninja https://github.com/simbit18/nuttx.git nuttx
+          git clone --depth 1 https://github.com/simbit18/nuttx.git nuttx
           git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           ## cd nuttx
           ## ls -a
