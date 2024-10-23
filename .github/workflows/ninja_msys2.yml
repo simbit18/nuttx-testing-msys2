@@ -42,7 +42,7 @@ jobs:
             python-pip
             vim
             curl
-            # ninja
+# ninja
 
       - name: pip3 install
         run: |
