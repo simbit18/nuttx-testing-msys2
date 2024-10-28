@@ -134,11 +134,11 @@ jobs:
 
         # refresh
         
-        ./tools/refresh.sh --debug --defaults c5471evm/nsh
-    
+        #./tools/refresh.sh --debug --defaults c5471evm/nsh
+
         ## cmake Configure the build 
         # cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
-        
+
         ## cmake Run the build
         # cmake --build build
         ## verbose
@@ -149,6 +149,17 @@ jobs:
 
         ## Run the build
         ### cmake --build f4x1re -v
+
+
+        ## Configure the build
+        tools/configure.sh -l c5471evm:nsh
+
+        ## Preserve the build config
+        cp .config nuttx.config
+
+        ## Run the build
+        make
+
 
         ## Show the size
         ### arm-none-eabi-size f4x1re/nuttx

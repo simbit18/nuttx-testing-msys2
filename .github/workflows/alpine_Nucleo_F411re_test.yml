@@ -132,7 +132,7 @@ jobs:
 
         ## Configure the build
         cmake -B f4x1re -DBOARD_CONFIG=nucleo-f4x1re:f411-nsh -GNinja
-        	
+        
         ## Preserve the build config
         cp f4x1re/.config nuttx.config
 
