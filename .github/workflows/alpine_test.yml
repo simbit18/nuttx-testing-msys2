@@ -119,7 +119,7 @@ jobs:
         ## git clone --depth 1 https://github.com/apache/nuttx-apps.git apps
         ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
         ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
-        git clone --depth 1 --single-branch --branch simbit18-endif https://github.com/simbit18/nuttx.git nuttx
+        git clone --depth 1 https://github.com/simbit18/nuttx.git nuttx
         git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
 
     - name: Build
@@ -132,11 +132,16 @@ jobs:
         arm-none-eabi-gcc --version
         arm-none-eabi-c++ --version
 
-        ## Configure the build
-        cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
+        # refresh
         
-        ## Run the build
-        cmake --build build
+        ./tools/refresh.sh --debug --defaults nucleo-l152re/nsh
+    
+        ## cmake Configure the build 
+        # cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
+        
+        ## cmake Run the build
+        # cmake --build build
+        ## verbose
         ## cmake --build build -v
 
         ## Preserve the build config
