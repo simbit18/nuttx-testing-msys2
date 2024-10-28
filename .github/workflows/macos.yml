@@ -22,7 +22,7 @@ on:
 
 jobs:
   build_macos:
-    runs-on: macos-13-xlarge
+    runs-on: macos-13
     steps:
       - name: System Information
         run: |
