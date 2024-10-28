@@ -32,7 +32,7 @@ jobs:
           gcc -v
           xcodebuild -version
           brew install dmd
-          brew install dub
+          # brew install dub
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
