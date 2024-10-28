@@ -22,7 +22,7 @@ on:
 
 jobs:
   build_macos:
-    runs-on: macOS-latest
+    runs-on: macos-13
     steps:
       - name: System Information
         run: |
@@ -54,7 +54,7 @@ jobs:
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
   build_macos_large:
-    runs-on: macos-14-large
+    runs-on: macos-13-xlarge
     steps:
       - name: System Information
         run: |
