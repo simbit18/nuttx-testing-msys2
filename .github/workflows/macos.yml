@@ -54,7 +54,7 @@ jobs:
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
   build_macos_large:
-    runs-on: macos-13-xlarge
+    runs-on: macos-latest-large
     steps:
       - name: System Information
         run: |
