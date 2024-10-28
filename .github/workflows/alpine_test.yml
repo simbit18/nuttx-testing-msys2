@@ -134,7 +134,7 @@ jobs:
 
         # refresh
         
-        ./tools/refresh.sh --debug --defaults nucleo-l152re/nsh
+        ./tools/refresh.sh --debug --defaults c5471evm/nsh
     
         ## cmake Configure the build 
         # cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
