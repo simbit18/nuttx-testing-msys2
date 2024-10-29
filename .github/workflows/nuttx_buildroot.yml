@@ -13,13 +13,14 @@ on:
       - '.github/workflows/nuttx_buildroot.yml'
 
 jobs:
+  # Label of the container job
   build:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     steps:
 
     - name: Install Build Tools
-      run:  |
+      run: |
         sudo apt -y update
         sudo apt -y install \
         bison flex gettext texinfo libncurses5-dev libncursesw5-dev \
@@ -29,9 +30,9 @@ jobs:
         kconfig-frontends \
         wget u-boot-tools
 
-      - name: Clone the NuttX buildroot module
-        run: |
-          git clone --depth 1 https://bitbucket.org/nuttx/buildroot.git buildroot
+    - name: Clone the NuttX buildroot module
+      run: |
+        git clone --depth 1 https://bitbucket.org/nuttx/buildroot.git buildroot
           ls -a
     # - name: Checkout Source Files
       # run:  |
