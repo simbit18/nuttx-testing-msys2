@@ -132,10 +132,6 @@ jobs:
         arm-none-eabi-gcc --version
         arm-none-eabi-c++ --version
 
-        # refresh
-        
-        #./tools/refresh.sh --debug --defaults c5471evm/nsh
-
         ## cmake Configure the build 
         # cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
 
@@ -154,12 +150,24 @@ jobs:
         ## Configure the build
         tools/configure.sh -l c5471evm:nsh
 
-        ## Preserve the build config
-        cp .config nuttx.config
+        ## Preserve the build config 1
+        cp .config nuttx1.config
+        
+        echo "  Disabling original toolchain"
+        kconfig-tweak --file .config -d CONFIG_ARM_TOOLCHAIN_BUILDROOT
+        
+        echo "  Enable ARM_TOOLCHAIN_GNU_EABI"
+        kconfig-tweak --file .config -e CONFIG_ARM_TOOLCHAIN_GNU_EABI
+        
+        ## Preserve the build config 2
+        cp .config nuttx2.config
 
         ## Run the build
         make
-
+        
+        # refresh
+        
+        ./tools/refresh.sh --debug --defaults c5471evm/nsh
 
         ## Show the size
         ### arm-none-eabi-size f4x1re/nuttx
