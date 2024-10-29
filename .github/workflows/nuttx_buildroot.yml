@@ -33,7 +33,8 @@ jobs:
     - name: Clone the NuttX buildroot module
       run: |
         git clone --depth 1 https://bitbucket.org/nuttx/buildroot.git buildroot
-          ls -a
+        ls -a
+        mkdir -p archive
     # - name: Checkout Source Files
       # run:  |
         # mkdir nuttx
