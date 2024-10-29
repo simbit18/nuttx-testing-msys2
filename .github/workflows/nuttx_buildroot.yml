@@ -1,6 +1,6 @@
 ## Building the Nuttx Toolchain - Buildroot
 
-name: Building the Nuttx Toolchain - Buildroot
+name: Building the Nuttx Toolchain Buildroot
 
 permissions:
   ## Allow publishing of GitHub Release
