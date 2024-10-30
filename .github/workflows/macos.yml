@@ -81,7 +81,8 @@ jobs:
           python-version: '3.10'
       - name: Run Builds
         run: |
-          python3 -m venv --system-site-packages /usr/local
+          python3 venv --system-site-packages
+          source venv/bin/activate
           pip3 install --root-user-action=ignore --no-cache-dir "Cython<3.0"
       - name: Install Dependencies
              # --lhelper will eliminate a warning with arm64 and libusb
