@@ -55,6 +55,7 @@ jobs:
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
   build_macos_large:
     runs-on: macos-14
+    needs: xcode-debug
     steps:
       - name: System Information
         run: |
