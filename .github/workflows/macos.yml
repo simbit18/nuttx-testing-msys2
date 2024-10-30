@@ -64,7 +64,8 @@ jobs:
           gcc -v
           xcodebuild -version
           brew install gperf
-          pip3 install "Cython<3.0"
+          python3 -m venv --system-site-packages /usr/local
+          pip3 install --root-user-action=ignore --no-cache-dir "Cython<3.0"
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
