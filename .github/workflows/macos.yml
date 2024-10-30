@@ -41,7 +41,7 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Python Setup
         uses: actions/setup-python@v4
         with:
@@ -64,6 +64,7 @@ jobs:
           gcc -v
           xcodebuild -version
           brew install gperf
+          
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
@@ -74,7 +75,7 @@ jobs:
           ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
           ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
           ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Python Setup
         uses: actions/setup-python@v4
         with:
