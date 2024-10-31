@@ -76,6 +76,7 @@ jobs:
           uname -a
           bash --version
           gcc -v
+          clang -v
           xcodebuild -version
           #brew install dmd
           #brew install dub
