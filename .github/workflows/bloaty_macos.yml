@@ -57,7 +57,7 @@ jobs:
     needs: Fetch-Source
     permissions:
       contents: write
-    runs-on: macos-latest
+    runs-on: macos-13
     env:
         namejob: macBloaty
     steps:
