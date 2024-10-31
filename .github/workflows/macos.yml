@@ -35,6 +35,9 @@ jobs:
           xcodebuild -version
           brew install dmd
           brew install dub
+          gperf --version
+          brew install gperf
+          gperf --version
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -72,7 +75,10 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
+          gperf --version
           brew install gperf
+          gperf --version
+          
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
@@ -113,7 +119,9 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
+          gperf --version
           brew install gperf
+          gperf --version
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
