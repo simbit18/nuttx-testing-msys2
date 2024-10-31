@@ -30,6 +30,7 @@ jobs:
           uname -a
           uname -s
           uname -v
+          uname -m
           bash --version
           gcc -v
           xcodebuild -version
@@ -76,6 +77,7 @@ jobs:
           uname -a
           uname -s
           uname -v
+          uname -m
           bash --version
           gcc -v
           xcodebuild -version
@@ -123,6 +125,7 @@ jobs:
           uname -a
           uname -s
           uname -v
+          uname -m
           bash --version
           gcc -v
           xcodebuild -version
