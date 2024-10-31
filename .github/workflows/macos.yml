@@ -41,7 +41,7 @@ jobs:
           gperf --version
           brew install binutils
           pwd objcopy
-          ls -a /opt/homebrew/opt/binutils/bin
+          ls -a /usr/local/opt/binutils/bin
           # objcopy --version
       - name: Set Environment Variables
         run: |
