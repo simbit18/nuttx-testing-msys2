@@ -28,6 +28,8 @@ jobs:
         run: |
           ## system_profiler SPSoftwareDataType
           uname -a
+          uname -s
+          uname -v
           bash --version
           gcc -v
           xcodebuild -version
@@ -46,6 +48,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+      - name: pip3 install
+        run: |
+          python3 -m venv --system-site-packages nxvenv
+          # source venv/bin/activate
+          pip3 install --root-user-action=ignore --no-cache-dir "Cython<3.0"
       - name: Install Dependencies
              # --lhelper will eliminate a warning with arm64 and libusb
         run: bash --version
@@ -53,13 +60,15 @@ jobs:
         run: |
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
-  build_macos_large:
+  build_macos_14:
     runs-on: macos-14
     steps:
       - name: System Information
         run: |
           ## system_profiler SPSoftwareDataType
           uname -a
+          uname -s
+          uname -v
           bash --version
           gcc -v
           xcodebuild -version
@@ -79,9 +88,50 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Run Builds
+      - name: pip3 install
         run: |
-          python3 -m venv --system-site-packages pippo
+          python3 -m venv --system-site-packages nxvenv
+          # source venv/bin/activate
+          pip3 install --root-user-action=ignore --no-cache-dir "Cython<3.0"
+      - name: Install Dependencies
+             # --lhelper will eliminate a warning with arm64 and libusb
+                  
+        run: bash --version
+      - name: Build
+        run: |
+          bash --version
+          ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
+  build_macos_14_arm64:
+    runs-on: macos-14-arm64
+    steps:
+      - name: System Information
+        run: |
+          ## system_profiler SPSoftwareDataType
+          uname -a
+          uname -s
+          uname -v
+          bash --version
+          gcc -v
+          xcodebuild -version
+          brew install gperf
+          # brew install dmd
+          # brew install dub
+      - name: Set Environment Variables
+        run: |
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          ## echo "INSTALL_REF=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+          ## echo "INSTALL_NAME=lite-xl-${GITHUB_REF##*/}-macos-${{ matrix.arch }}" >> "$GITHUB_ENV"
+          ## if [[ $(uname -m) != ${{ matrix.arch }} ]]; then echo "ARCH=--cross-arch ${{ matrix.arch }}" >> "$GITHUB_ENV"; fi
+      - uses: actions/checkout@v4
+      - name: Python Setup
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: pip3 install
+        run: |
+          python3 -m venv --system-site-packages nxvenv
           # source venv/bin/activate
           pip3 install --root-user-action=ignore --no-cache-dir "Cython<3.0"
       - name: Install Dependencies
