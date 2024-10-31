@@ -101,7 +101,7 @@ jobs:
           cd sources/nuttx-testing-msys2/gperf
           #gcc ./exception_setjmp.c -o exception_setjmp
           ## ls -a $GITHUB_WORKSPACE/bloaty
-         #./exception_setjmp
+          #./exception_setjmp
           ./gperf.sh
           # echo 'source'
           # source sources/tools/env.sh
