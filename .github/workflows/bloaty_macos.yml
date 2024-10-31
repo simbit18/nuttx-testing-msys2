@@ -77,8 +77,8 @@ jobs:
           bash --version
           gcc -v
           xcodebuild -version
-          brew install dmd
-          brew install dub
+          #brew install dmd
+          #brew install dub
       - name: Restore Tools Cache
         id: cache-tools
         uses: actions/cache@v4
