@@ -116,6 +116,19 @@ autoconf_brew() {
   command autoconf --version
 
 }
+
+automake_brew() {
+  if ! type automake > /dev/null 2>&1; then
+    echo "no automake !!!"
+    brew install automake
+  else
+    echo "ok automake !!!"
+  fi
+
+  command automake --version
+
+}
+
 main() {
   mkdir -p "${WDTOOLS}"
   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
@@ -128,6 +141,7 @@ main() {
   cd "${oldpath}"
   gperf
   autoconf_brew
+  automake_brew
   kconfig_frontends
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
