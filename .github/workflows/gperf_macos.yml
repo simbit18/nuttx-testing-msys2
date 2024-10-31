@@ -126,7 +126,7 @@ jobs:
           ## git clone --depth 1 https://github.com/apache/nuttx-apps.git apps
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
-          git clone --depth 1 https://github.com/simbit18/nuttx.git nuttx
+          git clone --depth 1 --single-branch --branch simbit18-20241031 https://github.com/simbit18/nuttx.git nuttx
           git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
       - name: Build
         run: |
