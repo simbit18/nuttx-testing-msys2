@@ -2,6 +2,7 @@
 
 set -e
 set -o xtrace
+osarch=$(uname -m)
 
 WD=$(cd "$(dirname "$0")" && pwd)
 WORKSPACE=$(cd "${WD}"/../../ && pwd -P)
