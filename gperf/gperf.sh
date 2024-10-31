@@ -18,19 +18,19 @@ check_cmd() {
 }
 
 kconfig_frontends() {
-  add_path "${NUTTXTOOLS}"/kconfig-frontends/bin
+  add_path "${WDTOOLS}"/kconfig-frontends/bin
 
-  if [ ! -f "${NUTTXTOOLS}/kconfig-frontends/bin/kconfig-conf" ]; then
-    git clone --depth 1 https://bitbucket.org/nuttx/tools.git "${NUTTXTOOLS}"/nuttx-tools
-    cd "${NUTTXTOOLS}"/nuttx-tools/kconfig-frontends
-    ./configure --prefix="${NUTTXTOOLS}"/kconfig-frontends \
+  if [ ! -f "${WDTOOLS}/kconfig-frontends/bin/kconfig-conf" ]; then
+    git clone --depth 1 https://bitbucket.org/nuttx/tools.git "${WDTOOLS}"/nuttx-tools
+    cd "${WDTOOLS}"/nuttx-tools/kconfig-frontends
+    ./configure --prefix="${WDTOOLS}"/kconfig-frontends \
       --disable-kconfig --disable-nconf --disable-qconf \
       --disable-gconf --disable-mconf --disable-static \
       --disable-shared --disable-L10n
     # Avoid "aclocal/automake missing" errors
     touch aclocal.m4 Makefile.in
     make install
-    cd "${NUTTXTOOLS}"
+    cd "${WDTOOLS}"
     rm -rf nuttx-tools
   fi
 }
