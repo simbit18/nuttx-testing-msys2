@@ -133,7 +133,8 @@ jobs:
           ## Move to nuttx
           cd nuttxspace/nuttx
           ls
-
+          source ${{github.workspace}}/sources/tools/env.sh
+          #source /Users/runner/work/nuttx-testing-msys2/nuttx-testing-msys2/sources/tools/env.sh
           ## Show the GCC version
           arm-none-eabi-gcc --version
           arm-none-eabi-c++ --version
