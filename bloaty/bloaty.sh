@@ -29,7 +29,7 @@ bloaty_test() {
     mkdir -p "${WDTOOLS}"/bloaty
     # cmake -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -DCMAKE_SYSTEM_PREFIX_PATH="${WDTOOLS}"/bloaty
     # make install -j 4
-    cmake -B build/bloaty -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${WDTOOLS}"/bloaty
+    cmake -B build/bloaty -GNinja -D BLOATY_PREFER_SYSTEM_CAPSTONE=NO -D CMAKE_INSTALL_PREFIX="${WDTOOLS}"/bloaty
     cmake --build build/bloaty
     cmake --build build/bloaty --target install
     cd "${WDTOOLS}"
@@ -56,6 +56,18 @@ bloaty_brew() {
   command bloaty --version
 
 }
+
+ninja_brew() {
+  if ! type ninja > /dev/null 2>&1; then
+    echo "no ninja !!!"
+    brew install ninja
+  else
+    echo "ok ninja !!!"
+  fi
+
+  command ninja --version
+
+}
 main() {
   mkdir -p "${WDTOOLS}"
   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
@@ -66,6 +78,7 @@ main() {
   
   oldpath=$(cd . && pwd -P)
   cd "${oldpath}"
+  ninja_brew
   bloaty_test
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
