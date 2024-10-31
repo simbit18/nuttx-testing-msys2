@@ -17,6 +17,43 @@ check_cmd() {
   command -v "$1" > /dev/null 2>&1
 }
 
+arm_gcc_toolchain() {
+  add_path "${WDTOOLS}"/gcc-arm-none-eabi/bin
+
+  if [ ! -f "${WDTOOLS}/gcc-arm-none-eabi/bin/arm-none-eabi-gcc" ]; then
+    local basefile
+    basefile=arm-gnu-toolchain-13.2.rel1-darwin-x86_64-arm-none-eabi
+    cd "${WDTOOLS}"
+    curl -O -L -s https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/${basefile}.tar.xz
+    xz -d ${basefile}.tar.xz
+    tar xf ${basefile}.tar
+    mv ${basefile} gcc-arm-none-eabi
+    rm ${basefile}.tar
+  fi
+
+  command arm-none-eabi-gcc --version
+}
+
+binutils() {
+  add_path "${WDTOOLS}"/bintools/bin
+
+  if ! type objcopy > /dev/null 2>&1; then
+    brew install binutils
+    mkdir -p "${WDTOOLS}"/bintools/bin
+    # It is possible we cached prebuilt but did brew install so recreate
+    # symlink if it exists
+    if [ "X$osarch" == "Xarm64" ]; then
+      rm -f "${WDTOOLS}"/bintools/bin/objcopy
+      ln -s /opt/homebrew/opt/binutils/bin/objcopy "${WDTOOLS}"/bintools/bin/objcopy
+    else
+      rm -f "${WDTOOLS}"/bintools/bin/objcopy
+      ln -s /usr/local/opt/binutils/bin/objcopy "${WDTOOLS}"/bintools/bin/objcopy
+    fi
+  fi
+
+  command objcopy --version
+}
+
 kconfig_frontends() {
   add_path "${WDTOOLS}"/kconfig-frontends/bin
 
@@ -52,6 +89,14 @@ gperf() {
   fi
 
   command gperf --version
+}
+
+elf_toolchain() {
+  if ! type x86_64-elf-gcc > /dev/null 2>&1; then
+    brew install x86_64-elf-gcc
+  fi
+
+  command x86_64-elf-gcc --version
 }
 bloaty_test() {
   add_path "${WDTOOLS}"/bloaty/bin
@@ -129,6 +174,59 @@ automake_brew() {
 
 }
 
+u_boot_tools() {
+  if ! type mkimage > /dev/null 2>&1; then
+    brew install u-boot-tools
+  fi
+}
+
+util_linux() {
+  if ! type flock > /dev/null 2>&1; then
+    brew tap discoteq/discoteq
+    brew install flock
+  fi
+
+  command flock --version
+}
+
+python_tools() {
+  # Python User Env
+  export PIP_USER=yes
+  export PYTHONUSERBASE=${WDTOOLS}/pylocal
+  echo "export PIP_USER=yes" >> "${WDTOOLS}"/env.sh
+  echo "export PYTHONUSERBASE=${WDTOOLS}/pylocal" >> "${WDTOOLS}"/env.sh
+  add_path "${PYTHONUSERBASE}"/bin
+  
+  python3 -m venv --system-site-packages nxvenv
+  # workaround for Cython issue
+  # https://github.com/yaml/pyyaml/pull/702#issuecomment-1638930830
+  pip3 install "Cython<3.0"
+  git clone https://github.com/yaml/pyyaml.git && \
+  cd pyyaml && \
+  git checkout release/5.4.1 && \
+  sed -i.bak 's/Cython/Cython<3.0/g' pyproject.toml && \
+  python setup.py sdist && \
+  pip3 install --pre dist/PyYAML-5.4.1.tar.gz
+  cd ..
+  rm -rf pyyaml
+
+  pip3 install \
+    cmake-format \
+    construct \
+    cvt2utf \
+    cxxfilt \
+    esptool==4.8.dev4 \
+    imgtool==1.9.0 \
+    kconfiglib \
+    pexpect==4.8.0 \
+    pyelftools \
+    pyserial==3.5 \
+    pytest==6.2.5 \
+    pytest-json==0.4.0 \
+    pytest-ordering==0.6 \
+    pytest-repeat==0.9.1
+}
+
 main() {
   mkdir -p "${WDTOOLS}"
   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
@@ -139,14 +237,20 @@ main() {
   
   oldpath=$(cd . && pwd -P)
   cd "${oldpath}"
+  arm_gcc_toolchain
+  binutils
   gperf
   autoconf_brew
-  automake_brew
+  # automake_brew
+  elf_toolchain
   kconfig_frontends
+  python_tools
+  u_boot_tools
+  util_linux
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
   source "${WDTOOLS}"/env.sh
-  gperf --version
+  # gperf --version
 
 }
 main
