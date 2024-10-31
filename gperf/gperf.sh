@@ -104,6 +104,18 @@ ninja_brew() {
   command ninja --version
 
 }
+
+autoconf_brew() {
+  if ! type autoconf > /dev/null 2>&1; then
+    echo "no autoconf !!!"
+    brew install autoconf
+  else
+    echo "ok autoconf !!!"
+  fi
+
+  command autoconf --version
+
+}
 main() {
   mkdir -p "${WDTOOLS}"
   echo "#!/usr/bin/env sh" > "${WDTOOLS}"/env.sh
@@ -115,6 +127,7 @@ main() {
   oldpath=$(cd . && pwd -P)
   cd "${oldpath}"
   gperf
+  autoconf_brew
   kconfig_frontends
   echo "PATH=${PATH}" >> "${WDTOOLS}"/env.sh
   echo "export PATH" >> "${WDTOOLS}"/env.sh
