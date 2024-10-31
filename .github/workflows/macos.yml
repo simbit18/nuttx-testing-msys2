@@ -40,7 +40,8 @@ jobs:
           gperf --version
           brew install binutils
           pwd objcopy
-          objcopy --version
+          ls -a /opt/homebrew/opt/binutils/bin
+          # objcopy --version
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -84,6 +85,7 @@ jobs:
           brew install binutils
           # objcopy --version
           pwd objcopy
+          ls -a /opt/homebrew/opt/binutils/bin
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
