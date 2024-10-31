@@ -38,6 +38,9 @@ jobs:
           gperf --version
           brew install gperf
           gperf --version
+          brew install binutils
+          pwd objcopy
+          objcopy --version
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -79,7 +82,7 @@ jobs:
           brew install gperf
           gperf --version
           brew install binutils
-          objcopy --version
+          # objcopy --version
           pwd objcopy
           # brew install dmd
           # brew install dub
