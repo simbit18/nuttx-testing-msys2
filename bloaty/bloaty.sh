@@ -46,7 +46,7 @@ bloaty_test() {
 }
 
 bloaty_brew() {
-  if ! type avr-gcc > /dev/null 2>&1; then
+  if ! type bloaty > /dev/null 2>&1; then
     echo "no bloaty !!!"
     brew install bloaty
   else
