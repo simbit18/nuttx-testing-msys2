@@ -1,0 +1,119 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Gperf macOS
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/gperf_macos.yml'
+
+jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # 
+          # master
+          REF="refs/heads/main"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-testing-msys2
+          # master
+          ref:  main
+          path: sources/nuttx-testing-msys2
+          fetch-depth: 2
+      - name: Checkout nuttx-testing-msys2 repo tags
+        run: git -C sources/nuttx-testing-msys2 fetch --tags
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+  gperf_macos:
+    needs: Fetch-Source
+    permissions:
+      contents: write
+    runs-on: macos-13
+    env:
+        namejob: macGperf
+    steps:
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: |
+          tar zxf sources.tar.gz
+          # ls -a source
+      - name: System Information
+        run: |
+          uname -a
+          bash --version
+          gcc -v
+          xcodebuild -version
+          #brew install dmd
+          #brew install dub
+      - name: Restore Tools Cache
+        id: cache-tools
+        uses: actions/cache@v4
+        env:
+          cache-name: ${{ env.namejob }}-cache-tools
+        with:
+          path: ./sources/tools
+          key: ${{ env.namejob }}-tools-${{ hashFiles('./sources/nuttx-testing-msys2/gperf/gperf.sh') }}
+      - name: Export gperf Repo SHA
+        run: echo "gperf_sha=`git -C sources/gperf rev-parse HEAD`" >> $GITHUB_ENV
+
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Builds
+        run: |
+          echo 'Build'
+          cd sources/nuttx-testing-msys2/gperf
+          #gcc ./exception_setjmp.c -o exception_setjmp
+          ## ls -a $GITHUB_WORKSPACE/bloaty
+         #./exception_setjmp
+          ./gperf.sh
+          # echo 'source'
+          # source sources/tools/env.sh
+          echo 'PATH'
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## bloaty -n 20 -d sections,symbols /exception_setjmp
+      - name: Test Bloaty
+        run: |
+          #ls -a ${{github.workspace}}
+          #ls -a ${{github.workspace}}/sources
+          ls -a ${{github.workspace}}/sources/tools
+          # echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $env:GITHUB_PATH
+          echo "$GITHUB_PATH"
+          # bloaty --version
