@@ -78,7 +78,9 @@ jobs:
           gperf --version
           brew install gperf
           gperf --version
-          
+          brew install binutils
+          objcopy --version
+          pwd objcopy
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
