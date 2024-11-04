@@ -198,7 +198,12 @@ python_tools() {
   echo "export PYTHONUSERBASE=${WDTOOLS}/pylocal" >> "${WDTOOLS}"/env.sh
   add_path "${PYTHONUSERBASE}"/bin
   
-  python3 -m venv --system-site-packages nxvenv
+  if [ "X$osarch" == "Xarm64" ]; then
+    python3 -m venv --system-site-packages /opt/homebrew
+  else
+    python3 -m venv --system-site-packages /usr/local
+  fi
+  
   # workaround for Cython issue
   # https://github.com/yaml/pyyaml/pull/702#issuecomment-1638930830
   pip3 install "Cython<3.0"
