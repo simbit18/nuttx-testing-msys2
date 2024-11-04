@@ -39,7 +39,7 @@ jobs:
         cd buildroot
         ls -a
         cp configs/arm-defconfig .config
-        make
+        make V=1
     # - name: Checkout Source Files
       # run:  |
         # mkdir nuttx
