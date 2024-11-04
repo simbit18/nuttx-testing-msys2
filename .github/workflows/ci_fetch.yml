@@ -17,7 +17,7 @@ on:
       base_ref:
         type: string
         required: true
-      ref_name:
+      app_name:
         type: string
         required: true
       testlist_names:
@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: simbit18/nuttx
-          ref: ${{ inputs.ref_name }}
+          ref: ${{ inputs.base_ref }}
           # master
           #ref:  master
           path: sources/nuttx
@@ -67,7 +67,7 @@ jobs:
           repository: simbit18/nuttx-apps
           # ref: simbit18-platforms
           #ref: simbit18-20240221
-          ref: ${{ inputs.ref_name }}
+          ref: ${{ inputs.app_name }}
           # master
           # ref: master
           path: sources/apps
