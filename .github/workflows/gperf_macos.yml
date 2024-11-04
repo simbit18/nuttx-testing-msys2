@@ -155,7 +155,7 @@ jobs:
 
 
           ## Configure the build
-          tools/configure.sh -l nucleo-f4x1re:f411-nsh
+          tools/configure.sh -m nucleo-f4x1re:f411-nsh
           
           ## Run the build
           make
