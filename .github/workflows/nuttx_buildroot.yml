@@ -32,9 +32,14 @@ jobs:
 
     - name: Clone the NuttX buildroot module
       run: |
+        mkdir -p nuttx-git
         git clone --depth 1 https://bitbucket.org/nuttx/buildroot.git buildroot
         ls -a
         mkdir -p archive
+        cd buildroot
+        ls -a
+        cp configs/arm-defconfig .config
+        make
     # - name: Checkout Source Files
       # run:  |
         # mkdir nuttx
