@@ -24,10 +24,10 @@ on:
       
   workflow_call:
     inputs:
-      ref_name:
+      base_ref:
         type: string
         required: true
-      base_ref:
+      app_name:
         type: string
         required: true
       platforms_ref:
@@ -44,7 +44,7 @@ jobs:
      with:
       # Custom
       base_ref: simbit18-20240306
-      ref_name: simbit18-20240306
+      app_name: simbit18-20240306
       platforms_ref: '["alpine", "docker", "macos", "msys2"]'
       # master
       #base_ref: main
