@@ -44,8 +44,8 @@ jobs:
       # base_ref: simbit18-20240306
       # ref_name: simbit18-20240306
       # New Board msys2
-      base_ref: simbit18-avr
-      ref_name: simbit18-avr
+      base_ref: simbit18-20241031
+      ref_name: simbit18-20241031
       # test
       # base_ref: simbit18-legacy
       # ref_name: simbit18-legacy
