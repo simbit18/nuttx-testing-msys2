@@ -19,25 +19,25 @@ on:
       - '.github/workflows/ci_nuttx_avr.yml'
   workflow_call:
     inputs:
-      ref_name:
+      base_ref:
         type: string
         required: true
-      base_ref:
+      app_name:
         type: string
         required: true
       platforms_ref:
         type: string
         required: true
-        
+
 permissions:
   contents: read
   
 concurrency:
-  group: ${{ github.workflow }}-${{ inputs.ref_name || github.ref }}
+  group: ${{ github.workflow }}-${{ inputs.base_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
-   NuttXBoard:
+   NuttX:
      uses: ./.github/workflows/ci_fetch.yml
      with:
       # Custom
@@ -45,7 +45,7 @@ jobs:
       # ref_name: simbit18-20240306
       # New Board msys2
       base_ref: simbit18-20241031
-      ref_name: simbit18-20241031
+      app_name: master
       # test
       # base_ref: simbit18-legacy
       # ref_name: simbit18-legacy
