@@ -200,8 +200,8 @@ python_tools() {
   
   if [ "X$osarch" == "Xarm64" ]; then
     python3 -m venv --system-site-packages /opt/homebrew
-  else
-    python3 -m venv --system-site-packages /usr/local
+  # else
+  #   python3 -m venv --system-site-packages /usr/local
   fi
   
   # workaround for Cython issue
