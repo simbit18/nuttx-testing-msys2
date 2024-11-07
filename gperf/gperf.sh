@@ -243,9 +243,9 @@ main() {
   
   oldpath=$(cd . && pwd -P)
   cd "${oldpath}"
-  which virtualenv
   which python3
   which brew
+  which virtualenv
   arm_gcc_toolchain
   binutils
   gperf
