@@ -245,7 +245,7 @@ main() {
   cd "${oldpath}"
   which python3
   which brew
-  which virtualenv
+  # which virtualenv macos-13 non installato
   arm_gcc_toolchain
   binutils
   gperf
