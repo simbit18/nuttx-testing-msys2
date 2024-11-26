@@ -21,7 +21,7 @@ on:
       - '.github/workflows/docker_msys2.yml'
 jobs:
   build_docker_msys2:
-    container: ghcr.io/msys2/msys2-docker-experimental:latest
+    container: ghcr.io/msys2/msys2-docker-experimental:latest msys2 -c "uname -a"
     runs-on: ubuntu-latest
     steps:
       - name: System Information
