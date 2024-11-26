@@ -67,7 +67,7 @@ jobs:
           python3 -m venv --system-site-packages /usr/local
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
-      ## - run: git config --global core.autocrlf false
+      - run: git config --global core.autocrlf false
       - name: Download Source Artifact
         uses: actions/download-artifact@v4
         with:
