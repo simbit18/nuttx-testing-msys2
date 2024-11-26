@@ -21,7 +21,7 @@ on:
       - '.github/workflows/docker_msys2.yml'
 jobs:
   build_docker_msys2:
-    container: ghcr.io/msys2/msys2-docker-experimental:latest msys2 -c "uname -a"
+    container: ghcr.io/msys2/msys2-docker-experimental:latest
     runs-on: ubuntu-latest
     steps:
       - name: System Information
@@ -29,6 +29,7 @@ jobs:
           ## system_profiler SPSoftwareDataType
           bash --version
           uname -a
+          WINEDEBUG="-all" WINEPATH="C:\\msys64\\usr\\bin" MSYSTEM="${MSYSTEM:-UCRT64}" xvfb-run -a wine bash.exe -l "uname -a"
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
