@@ -60,8 +60,7 @@ jobs:
          cmake \
          xxd \
          python3 \
-         py3-pip \
-         gcc-xtensa-esp32-elf
+         py3-pip
         
     - name: Install and Upgrade ARM Compiler Packages
       run :  |
