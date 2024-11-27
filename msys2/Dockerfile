@@ -60,6 +60,7 @@ RUN sed -i /root/.wine/drive_c/msys64/etc/pacman.conf -e 's/^CheckSpace/#CheckSp
 
 # WINEDEBUG="-all"
 ENV WINEPATH="C:\\msys64\\usr\\bin"
+ENV MSYSTEM="MSYS"
 # MSYSTEM="${MSYSTEM:-UCRT64}" xvfb-run -a wine bash.exe -l "$@"
 
 # Run for the first time
