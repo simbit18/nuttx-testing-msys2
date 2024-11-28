@@ -43,7 +43,7 @@ jobs:
      uses: ./.github/workflows/ci_fetch.yml
      with:
       # Custom
-      base_ref: simbit18-20240306
+      base_ref: simbit18-20241126
       app_name: simbit18-20240306
       platforms_ref: '["alpine", "docker", "macos", "msys2"]'
       # master
