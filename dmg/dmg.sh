@@ -31,7 +31,7 @@ check_cmd() {
 # minizinc --version
 
 
-arm_clang_toolchain() {
+arm_clang_toolchain1() {
   add_path "${WDTOOLS}"/clang-arm-none-eabi/bin
 
   if [ ! -f "${WDTOOLS}/clang-arm-none-eabi/bin/clang" ]; then
@@ -40,7 +40,6 @@ arm_clang_toolchain() {
     cd "${WDTOOLS}"
     # Download the latest ARM clang toolchain prebuilt by ARM
     curl -O -L -s https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-17.0.1/${basefile}.dmg
-    #mkdir -p "${WDTOOLS}"/clang-arm-none-eabi
     sudo hdiutil attach ${basefile}.dmg
     # ls -a /Volumes/${basefile}
     sudo cp -R /Volumes/${basefile}/${basefile} "${WDTOOLS}"/${basefile}
@@ -51,6 +50,27 @@ arm_clang_toolchain() {
 
   command clang --version
 }
+
+arm_clang_toolchain() {
+  add_path "${WDTOOLS}"/clang-arm-none-eabi/bin
+
+  if [ ! -f "${WDTOOLS}/clang-arm-none-eabi/bin/clang" ]; then
+    local basefile
+    basefile=LLVM-ET-Arm-19.1.1-Darwin-universal
+    cd "${WDTOOLS}"
+    # Download the latest ARM clang toolchain prebuilt by ARM
+    curl -O -L -s https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-19.1.1/${basefile}.dmg
+    sudo hdiutil attach ${basefile}.dmg
+    # ls -a /Volumes/${basefile}
+    sudo cp -R /Volumes/${basefile}/${basefile} "${WDTOOLS}"/${basefile}
+    sudo mv ${basefile} clang-arm-none-eabi
+    ls -a "${WDTOOLS}"/clang-arm-none-eabi
+    rm ${basefile}.dmg
+  fi
+
+  command clang --version
+}
+
 
 main() {
   mkdir -p "${WDTOOLS}"
