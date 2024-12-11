@@ -42,10 +42,10 @@ arm_clang_toolchain() {
     curl -O -L -s https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-17.0.1/${basefile}.dmg
     #mkdir -p "${WDTOOLS}"/clang-arm-none-eabi
     sudo hdiutil attach ${basefile}.dmg
-    ls -a
-    sudo cp -R /Volumes/${basefile} "${WDTOOLS}"/.
-    sudo mv ${basefile} clang-arm-none-eabi
-    ls -a "${WDTOOLS}"/clang-arm-none-eabi
+    ls -a /Volumes/${basefile}
+    # sudo cp -R /Volumes/${basefile} "${WDTOOLS}"/.
+    # sudo mv ${basefile} clang-arm-none-eabi
+    # ls -a "${WDTOOLS}"/clang-arm-none-eabi
     rm ${basefile}.dmg
   fi
 
