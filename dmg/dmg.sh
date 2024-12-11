@@ -40,7 +40,7 @@ arm_clang_toolchain() {
     cd "${WDTOOLS}"
     # Download the latest ARM clang toolchain prebuilt by ARM
     curl -O -L -s https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-17.0.1/${basefile}.dmg
-    mkdir -p "${WDTOOLS}"/clang-arm-none-eabi
+    #mkdir -p "${WDTOOLS}"/clang-arm-none-eabi
     sudo hdiutil attach ${basefile}.dmg
     ls -a
     sudo cp -R /Volumes/${basefile} "${WDTOOLS}"/.
