@@ -43,7 +43,7 @@ arm_clang_toolchain() {
     mkdir -p "${WDTOOLS}"/clang-arm-none-eabi
     sudo hdiutil attach ${basefile}.dmg
     ls -a
-    sudo cp -R /Volumes/${basefile}/${basefile} "${WDTOOLS}"/clang-arm-none-eabi
+    sudo cp -R /Volumes/${basefile}/${basefile} "${WDTOOLS}"/clang-arm-none-eabi/.
     ls -a "${WDTOOLS}"/clang-arm-none-eabi
     rm ${basefile}.dmg
   fi

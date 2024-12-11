@@ -109,7 +109,7 @@ jobs:
           echo "$GITHUB_PATH"
           echo "$PATH"
           ## bloaty -n 20 -d sections,symbols /exception_setjmp
-      - name: Test Bloaty
+      - name: Test Dmg
         run: |
           #ls -a ${{github.workspace}}
           #ls -a ${{github.workspace}}/sources
