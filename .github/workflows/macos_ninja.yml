@@ -91,7 +91,7 @@ jobs:
           # cmake --build build -v
           ## cmake --build build
 
-          ls -a build
+          # ls -a build
           # cp build/nuttx nuttxrvvirt/nuttx
           # cp build/defconfig nuttxrvvirt/defconfig
           
