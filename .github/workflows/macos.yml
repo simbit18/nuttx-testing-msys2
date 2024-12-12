@@ -119,8 +119,8 @@ jobs:
         run: |
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
-  build_macos_13:
-    runs-on: macos-13
+  build_macos_15:
+    runs-on: macos-15
     steps:
       - name: System Information
         run: |
