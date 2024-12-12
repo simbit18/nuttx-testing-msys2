@@ -23,8 +23,6 @@ on:
 jobs:
   build_macos:
     runs-on: macos-13
-    compiler: gcc
-    gcc: 13
     steps:
       - name: System Information
         run: |
@@ -33,6 +31,7 @@ jobs:
           uname -s
           uname -v
           uname -m
+          CC=gcc-13
           bash --version
           gcc -v
           cc -v
