@@ -89,7 +89,7 @@ jobs:
           # objcopy --version
           pwd objcopy
           ls -a /opt/homebrew/opt/binutils/bin
-          autoconf --version
+          # autoconf --version
           # objcopy --version
           # brew install dmd
           # brew install dub
