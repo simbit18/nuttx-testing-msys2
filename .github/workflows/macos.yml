@@ -43,7 +43,7 @@ jobs:
           pwd objcopy
           ls -a /usr/local/opt/binutils/bin
           autoconf --version
-          objcopy --version
+          # objcopy --version
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
@@ -90,7 +90,7 @@ jobs:
           pwd objcopy
           ls -a /opt/homebrew/opt/binutils/bin
           autoconf --version
-          objcopy --version
+          # objcopy --version
           # brew install dmd
           # brew install dub
       - name: Set Environment Variables
