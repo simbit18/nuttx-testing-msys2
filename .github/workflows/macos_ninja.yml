@@ -76,20 +76,25 @@ jobs:
           riscv-none-elf-gcc --version
 
           ## Configure the build
-          ## ./tools/configure.sh -g rv-virt:nsh
-          cmake -B build -DBOARD_CONFIG=sim:lua -GNinja
+          ./tools/configure.sh -m sim:lua
+          #cmake
+          ## cmake -B build -DBOARD_CONFIG=sim:lua -GNinja
           ## cmake -B build -DBOARD_CONFIG=rv-virt:nsh
 
-          mkdir nuttxrvvirt
+          # mkdir nuttxrvvirt
 
           ## Preserve the build config
-          cp build/.config nuttxrvvirt/nuttx.config
-
-          cmake --build build -v
+          # cp .config nuttxrvvirt/nuttx.config
+          # cmake
+          # cp build/.config nuttxrvvirt/nuttx.config
+          # cmake
+          # cmake --build build -v
           ## cmake --build build
 
           ls -a build
-          cp build/nuttx nuttxrvvirt/nuttx
-          cp build/defconfig nuttxrvvirt/defconfig
+          # cp build/nuttx nuttxrvvirt/nuttx
+          # cp build/defconfig nuttxrvvirt/defconfig
+          
+          make V=1 j
           ## cp System.map nuttxrvvirt/System.map
           #zip -r nuttxrvvirt.zip nuttxrvvirt
