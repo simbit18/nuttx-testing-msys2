@@ -95,6 +95,6 @@ jobs:
           # cp build/nuttx nuttxrvvirt/nuttx
           # cp build/defconfig nuttxrvvirt/defconfig
           
-          make V=1 j
+          make V=1 -j
           ## cp System.map nuttxrvvirt/System.map
           #zip -r nuttxrvvirt.zip nuttxrvvirt
