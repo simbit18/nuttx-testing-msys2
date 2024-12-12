@@ -119,8 +119,8 @@ jobs:
         run: |
           bash --version
           ## bash scripts/build.sh --bundle --debug --forcefallback $ARCH
-  build_macos_15:
-    runs-on: macos-15
+  build_macos_13:
+    runs-on: macos-13
     steps:
       - name: System Information
         run: |
@@ -137,6 +137,11 @@ jobs:
           gperf --version
           # brew install dmd
           # brew install dub
+          for compiler in cc c++ gcc g++ clang clang++ \
+          do \
+          which $compiler \
+          $compiler --version \
+          done
       - name: Set Environment Variables
         run: |
           echo "$GITHUB_PATH"
