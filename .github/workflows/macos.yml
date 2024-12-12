@@ -23,6 +23,7 @@ on:
 jobs:
   build_macos:
     runs-on: macos-13
+    compiler: gcc-13
     steps:
       - name: System Information
         run: |
