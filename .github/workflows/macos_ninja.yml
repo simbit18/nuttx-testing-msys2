@@ -53,12 +53,12 @@ jobs:
           mkdir nuttxspace
           ls -a
           cd nuttxspace
-          ## git clone https://github.com/apache/incubator-nuttx nuttx
-          ## git clone https://github.com/apache/incubator-nuttx-apps apps
+          git clone --depth 1 https://github.com/apache/incubator-nuttx nuttx
+          git clone --depth 1 https://github.com/apache/incubator-nuttx-apps apps
           ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx.git nuttx
           ## git clone --single-branch --branch simbit18-20240306 https://github.com/simbit18/nuttx-apps.git apps
-          git clone --depth 1 --single-branch --branch simbit18-20241003 https://github.com/simbit18/nuttx.git nuttx
-          git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+          # git clone --depth 1 https://github.com/simbit18/nuttx.git nuttx
+          # git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           ls -a
           echo 'Copy tools'
           cp -f ../tools/macos/install_tools.sh install_tools.sh
