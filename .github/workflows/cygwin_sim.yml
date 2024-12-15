@@ -37,6 +37,7 @@ jobs:
             make
             gcc-core
             gcc-g++
+            binutils
             gperf
             flex
             git
