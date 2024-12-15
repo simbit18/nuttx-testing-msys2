@@ -92,7 +92,6 @@ jobs:
           make install
 
     - name: Install genromfs
-      shell: C:\cygwin\bin\bash.exe --noprofile --norc -eo pipefail '{0}'
       run: |
           echo 'Install genromfs'
           cd nuttx-tools
