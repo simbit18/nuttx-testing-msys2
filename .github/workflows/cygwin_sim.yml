@@ -90,7 +90,7 @@ jobs:
                       --disable-shared --disable-L10n
           touch aclocal.m4 Makefile.in
           make install
-
+          ls -a
     - name: Install genromfs
       run: |
           echo 'Install genromfs'
@@ -98,6 +98,7 @@ jobs:
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
           make install PREFIX=/opt/nuttxenv
+          ls -a /usr/local/bin
     - name: Copy NXTOOL GENROMFS and clean source files
       run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
@@ -107,7 +108,6 @@ jobs:
           cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
           rm -rf nuttx-tools genromfs-0.5.2
           ls -a
-          
     - name: Checkout Source Files
       run: |
           echo 'Checkout Source Files'
