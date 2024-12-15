@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash.exe --login --norc -eo pipefail -o igncr '{0}'
+        shell: C:\cygwin\bin\bash.exe '{0}'
     env:
       SHELLOPTS: igncr
       CHERE_INVOKING: 1
@@ -23,16 +23,15 @@ jobs:
     - name: Configure git
       run: |
         git config --global core.autocrlf input
-      # shell: cmd
+      shell: pwsh
     - name: Checkout from git
       uses: actions/checkout@v4
-      with: 
-        submodules: 'true'
     # install cygwin and build tools
     - name: Install Cygwin
       uses: cygwin/cygwin-install-action@master
       with:
           platform: x86_64
+          site: https://mirrors.kernel.org/sourceware/cygwin/
           packages: >-
             coreutils
             make
