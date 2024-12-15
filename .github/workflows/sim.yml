@@ -56,6 +56,7 @@ jobs:
           cd nuttx-tools/kconfig-frontends
           ./configure --prefix=/opt/nuttxenv/usr --enable-mconf --disable-gconf --disable-qconf --disable-shared --disable-nconf
           make install
+          ls -a
           
       - name: Install genromfs
         run: |
@@ -64,7 +65,7 @@ jobs:
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
           make install PREFIX=/opt/nuttxenv
-
+          ls -a /opt
       - name: Copy NXTOOL GENROMFS and clean source files
         run: |
           echo 'Copy NXTOOL GENROMFS and clean source files'
