@@ -54,5 +54,6 @@ jobs:
           ls -a
           cd kconfig-frontends-win
           ls -a
-          cmake -B build -G "MinGW Makefiles"
+          # cmake -B build -G "MinGW Makefiles"
+          cmake -B build -GNinja
           cmake --build build -v
