@@ -44,12 +44,12 @@ jobs:
             curl:p
             gcc-libs:p
             gettext:p
-            ncurses:p
             zlib:p
       - name: Checkout Source Files
         run: |
           echo 'Checkout Source Files'
           cmake --help
+          env
           mkdir kconfigspace
           ls -a
           cd kconfigspace
