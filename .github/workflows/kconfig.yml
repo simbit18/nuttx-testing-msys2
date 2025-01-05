@@ -32,6 +32,7 @@ jobs:
           msystem: ${{ matrix.msystem }}
           update: false
           install: >-
+            bison
             flex
             git
 
