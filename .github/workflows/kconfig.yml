@@ -51,3 +51,5 @@ jobs:
           cd kconfigspace
           git clone https://github.com/simbit18/kconfig-frontends-win.git
           ls -a
+          cd kconfig-frontends-win
+          ls -a
