@@ -1,0 +1,53 @@
+name: kconfig MSYS2 UCRT64
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/kconfig.yml'
+
+jobs:
+  nuttx-kconfig-msys2-mingw:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        btype:
+          - Release
+        msystem:
+          # - CLANG64
+          - MINGW64
+          # - MSYS
+          # - UCRT64
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{ matrix.msystem }}
+          update: false
+          install: >-
+            git
+
+          pacboy: >-
+            cc:p
+            cmake:p
+            ninja:p
+            curl:p
+            gcc-libs:p
+            gettext:p
+            ncurses-devel:p
+            zlib:p
+      - name: Checkout Source Files
+        run: |
+          echo 'Checkout Source Files'
+          mkdir kconfigspace
+          ls -a
+          cd kconfigspace
+          git clone https://github.com/simbit18/kconfig-frontends-win.git
+          ls -a
