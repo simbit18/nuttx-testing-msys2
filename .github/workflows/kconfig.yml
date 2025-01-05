@@ -59,6 +59,10 @@ jobs:
           ls -a
           cd kconfig-frontends-win
           ls -a
+          mkdir build
+          cd build
+          cmake -GNinja ..
           # cmake -B build -G "MSYS Makefiles"
-          cmake -B build -GNinja
-          cmake --build build -v
+          # cmake -B build -GNinja
+          # cmake --build build -v
+          cmake --build ..
