@@ -1,4 +1,4 @@
-name: kconfig MSYS2 UCRT64
+name: kconfig MSYS2 MINGW64
 
 permissions:
   ## Allow publishing of GitHub Release
@@ -50,6 +50,7 @@ jobs:
           echo 'Checkout Source Files'
           cmake --help
           env
+          gcc -v
           mkdir kconfigspace
           ls -a
           cd kconfigspace
