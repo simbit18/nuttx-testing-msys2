@@ -39,6 +39,7 @@ jobs:
           pacboy: >-
             cc:p
             gperf:p
+            ncurses:p
             cmake:p
             ninja:p
             curl:p
