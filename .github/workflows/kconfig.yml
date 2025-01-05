@@ -41,7 +41,7 @@ jobs:
             curl:p
             gcc-libs:p
             gettext:p
-            ncurses-devel:p
+            ncurses:p
             zlib:p
       - name: Checkout Source Files
         run: |
