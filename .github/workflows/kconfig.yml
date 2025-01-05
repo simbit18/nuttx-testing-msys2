@@ -46,6 +46,7 @@ jobs:
       - name: Checkout Source Files
         run: |
           echo 'Checkout Source Files'
+          cmake --help
           mkdir kconfigspace
           ls -a
           cd kconfigspace
