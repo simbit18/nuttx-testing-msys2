@@ -65,4 +65,4 @@ jobs:
           # cmake -B build -G "MSYS Makefiles"
           # cmake -B build -GNinja
           # cmake --build build -v
-          cmake --build ..
+          cmake
