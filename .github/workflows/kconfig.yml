@@ -60,8 +60,8 @@ jobs:
           ls -a
           mkdir build
           cd build
-          # cmake -GNinja ..
-          cmake -G "MinGW Makefiles" ..
+          cmake -GNinja ..
+          # cmake -G "MinGW Makefiles" ..
           # cmake -B build -GNinja
           # cmake --build build -v
           cmake --build .
