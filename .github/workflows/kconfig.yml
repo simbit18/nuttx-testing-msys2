@@ -66,6 +66,12 @@ jobs:
           # cmake --build build -v
           cmake --build .
           ls -a
+          
+          mkdir kconfig-frontends-win32
+          cp bin/kconfig-mconf.exe kconfig-frontends-win32/kconfig-mconf.exe
+          cp bin/kconfig-conf.exe kconfig-frontends-win32/kconfig-conf.exe
+          cp /../utils/kconfig-tweak.bat kconfig-frontends-win32/kconfig-tweak.bat
+          zip -r kconfig-frontends-win32.zip kconfig-frontends-win32
       - name: Get Current Date
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
@@ -78,6 +84,6 @@ jobs:
           prerelease: false
           generate_release_notes: false
           files: |
-            kconfigspace/kconfig-frontends-win/build/bin/kconfig-mconf.exe
-            kconfigspace/kconfig-frontends-win/build/bin/kconfig-conf.exe
-            kconfigspace/kconfig-frontends-win/utils/kconfig-tweak.bat
+            kconfigspace/kconfig-frontends-win/build/kconfig-frontends-win32.zip
+            #kconfigspace/kconfig-frontends-win/build/bin/kconfig-conf.exe
+            #kconfigspace/kconfig-frontends-win/utils/kconfig-tweak.bat
