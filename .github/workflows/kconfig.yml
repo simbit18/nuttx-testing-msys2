@@ -65,3 +65,19 @@ jobs:
           # cmake -B build -GNinja
           # cmake --build build -v
           cmake --build .
+          ls -a
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Publish the GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: kconfig-frontends-win-${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+          generate_release_notes: false
+          files: |
+            kconfigspace/kconfig-frontends-win/build/bin/kconfig-mconf.exe
+            kconfigspace/kconfig-frontends-win/build/bin/kconfig-conf.exe
+            kconfigspace/kconfig-frontends-win/build/bin/kconfig-tweak.bat
