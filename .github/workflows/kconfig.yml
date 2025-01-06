@@ -2,7 +2,7 @@ name: kconfig MSYS2 MINGW64
 
 permissions:
   ## Allow publishing of GitHub Release
-  contents: read
+  contents: write
 on: 
   workflow_dispatch:
   push:
