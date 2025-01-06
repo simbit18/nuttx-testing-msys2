@@ -19,7 +19,7 @@ jobs:
           - Release
         msystem:
           # - CLANG64
-          - MINGW64
+          - MINGW32
           # - MSYS
           # - UCRT64
     defaults:
@@ -61,7 +61,7 @@ jobs:
           mkdir build
           cd build
           # cmake -GNinja ..
-          cmake -G "MSYS Makefiles" ..
+          cmake -G "MinGW Makefiles" ..
           # cmake -B build -GNinja
           # cmake --build build -v
           cmake --build .
