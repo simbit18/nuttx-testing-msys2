@@ -80,4 +80,4 @@ jobs:
           files: |
             kconfigspace/kconfig-frontends-win/build/bin/kconfig-mconf.exe
             kconfigspace/kconfig-frontends-win/build/bin/kconfig-conf.exe
-            kconfigspace/kconfig-frontends-win/build/bin/kconfig-tweak.bat
+            kconfigspace/kconfig-frontends-win/utils/kconfig-tweak.bat
