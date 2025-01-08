@@ -86,6 +86,4 @@ jobs:
           prerelease: false
           generate_release_notes: false
           files: |
-            kconfigspace/kconfig-frontends-win/build/kconfig-frontends-win32.zip
-            #kconfigspace/kconfig-frontends-win/build/bin/kconfig-conf.exe
-            #kconfigspace/kconfig-frontends-win/utils/kconfig-tweak.bat
+            kconfigspace/kconfig-frontends-win/kconfig-frontends-win32.zip
