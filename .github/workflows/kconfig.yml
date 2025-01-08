@@ -77,6 +77,8 @@ jobs:
           cp utils/kconfig-tweak.bat kconfig-frontends-win32/kconfig-tweak.bat
           # cp /usr/bin/libsystre-0.dll kconfig-frontends-win32/libsystre-0.dll
           # cp /usr/bin/libtre-5.dll kconfig-frontends-win32/libtre-5.dll
+          cp /mingw64/bin/libsystre-0.dll kconfig-frontends-win32/libsystre-0.dll
+          cp /mingw64/bin/libtre-5.dll kconfig-frontends-win32/libtre-5.dll
           zip -r kconfig-frontends-win32.zip kconfig-frontends-win32
       - name: Get Current Date
         id: date
