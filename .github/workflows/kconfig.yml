@@ -1,4 +1,4 @@
-name: kconfig MSYS2 MINGW64
+name: kconfig-frontends MSYS2 MINGW64
 
 permissions:
   ## Allow publishing of GitHub Release
@@ -71,7 +71,7 @@ jobs:
           # cmake -G "MinGW Makefiles" ..
           cmake -B build -GNinja
           cmake --build build -v
-          mkdir kconfig-frontends-win32
+          mkdir kconfig-frontends-windows-mingw64
           cp build/bin/kconfig-mconf.exe kconfig-frontends-win32/kconfig-mconf.exe
           cp build/bin/kconfig-conf.exe kconfig-frontends-win32/kconfig-conf.exe
           cp utils/kconfig-tweak.bat kconfig-frontends-win32/kconfig-tweak.bat

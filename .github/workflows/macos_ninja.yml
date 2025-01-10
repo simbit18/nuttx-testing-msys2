@@ -76,7 +76,8 @@ jobs:
           riscv-none-elf-gcc --version
 
           ## Configure the build
-          ./tools/configure.sh -m sim:configdata
+          #./tools/configure.sh -m sim:configdata
+          ./tools/configure.sh -m stm32f4discovery:nsh
           #cmake
           ## cmake -B build -DBOARD_CONFIG=sim:lua -GNinja
           ## cmake -B build -DBOARD_CONFIG=rv-virt:nsh
