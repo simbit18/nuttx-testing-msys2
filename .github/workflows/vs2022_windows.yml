@@ -53,17 +53,7 @@ jobs:
           path: sources.tar.gz
   build:
     needs: Fetch-Source
-    strategy:
-      matrix:
-#        os: [windows-2019, windows-2022]
-        os: [windows-2022]
-        arch: [x64
-
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
-    concurrency:
-        group: ${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}-${{ matrix.os }}-${{ matrix.arch }}-Windows
-        cancel-in-progress: true
+    runs-on: windows-latest
     steps:
       - name: Download Source Artifact
         uses: actions/download-artifact@v4
