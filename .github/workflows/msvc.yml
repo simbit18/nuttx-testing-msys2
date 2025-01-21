@@ -86,11 +86,9 @@ jobs:
           path: .
 
       - name: Extract sources
-        shell: bash
         run: |
-          tar zcf sources.tar.gz sources
-          # 7z x sources.tar.gz -y
-          # 7z x sources.tar -y
+          7z x sources.tar.gz -y
+          7z x sources.tar -y
 
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
