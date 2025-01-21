@@ -93,6 +93,7 @@ jobs:
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
+          rustc --version
           choco install ninja
           git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
