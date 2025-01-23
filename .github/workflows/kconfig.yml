@@ -58,9 +58,9 @@ jobs:
           cp /mingw64/bin/libintl-8.dll kconfig-frontends-windows-mingw64/bin/libintl-8.dll
           cp /mingw64/bin/libsystre-0.dll kconfig-frontends-windows-mingw64/bin/libsystre-0.dll
           cp /mingw64/bin/libtre-5.dll kconfig-frontends-windows-mingw64/bin/libtre-5.dll
-          ls -a ../docs
-          cp -f ../docs/kconfig.txt kconfig-frontends-windows-mingw64/share/doc/kconfig.txt
-          cp -f ../docs/kconfig-language.txt kconfig-frontends-windows-mingw64/share/doc/kconfig-language.txt
+          ls -a
+          cp -f docs/kconfig.txt kconfig-frontends-windows-mingw64/share/doc/kconfig.txt
+          cp -f docs/kconfig-language.txt kconfig-frontends-windows-mingw64/share/doc/kconfig-language.txt
           zip -r kconfig-frontends-windows-mingw64.zip kconfig-frontends-windows-mingw64
 
       - name: Publish the GitHub Release
