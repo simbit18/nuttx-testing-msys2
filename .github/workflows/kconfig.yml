@@ -59,6 +59,7 @@ jobs:
           cp /mingw64/bin/libsystre-0.dll kconfig-frontends-windows-mingw64/bin/libsystre-0.dll
           cp /mingw64/bin/libtre-5.dll kconfig-frontends-windows-mingw64/bin/libtre-5.dll
           ls -a
+          mkdir -p kconfig-frontends-windows-mingw64/share/doc
           cp -f docs/kconfig.txt kconfig-frontends-windows-mingw64/share/doc/kconfig.txt
           cp -f docs/kconfig-language.txt kconfig-frontends-windows-mingw64/share/doc/kconfig-language.txt
           zip -r kconfig-frontends-windows-mingw64.zip kconfig-frontends-windows-mingw64
