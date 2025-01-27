@@ -100,7 +100,7 @@ jobs:
           .\cibuild.ps1 -i -A -N testlist\windows.dat
       - uses: actions/upload-artifact@v4
         with:
-          name: msvc-${{matrix.boards}}-builds
+          name: msvc-builds
           path: buildartifacts/
         continue-on-error: true
 
