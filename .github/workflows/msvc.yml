@@ -93,11 +93,12 @@ jobs:
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
-          git config --global core.autocrlf false
+          # git config --global core.autocrlf false
           rustc --version
-          dir ${{github.workspace}}\sources
-          Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
+          # dir ${{github.workspace}}\sources
+          Write-Host -Object "[1] -- ArtifactPath: $ArtifactPath"
           $env:ARTIFACTDIR="${{github.workspace}}\sources\buildartifacts"
+          Write-Host -Object "[2] -- ArtifactPath: $ArtifactPath"
           # choco install ninja
           git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
