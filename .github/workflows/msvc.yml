@@ -93,9 +93,10 @@ jobs:
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
+          git config --global core.autocrlf false
           rustc --version
           # choco install ninja
-          # git config --global --add safe.directory '*'
+          git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
           .\cibuild.ps1 -i -A -N testlist\windows.dat
       - uses: actions/upload-artifact@v4
