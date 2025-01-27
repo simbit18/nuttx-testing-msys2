@@ -47,6 +47,7 @@ jobs:
           dir ${{github.workspace}}
           Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
           $env:ARTIFACTDIR="${{github.workspace}}\buildartifacts"
+          New-Item -Path "${{github.workspace}}\buildartifacts\example.txt" -ItemType File
       - uses: actions/upload-artifact@v4
         with:
           name: msvc-builds
