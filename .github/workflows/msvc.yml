@@ -96,11 +96,11 @@ jobs:
           # git config --global core.autocrlf false
           rustc --version
           # dir ${{github.workspace}}\sources
-          Write-Host "[1] -- ArtifactPath: $ArtifactPath"
+          Write-Host "[1] -- ARTIFACTDIR: $ARTIFACTDIR"
           mkdir ${{github.workspace}}\sources\buildartifacts
           dir "${{github.workspace}}\sources"
           $env:ARTIFACTDIR="${{github.workspace}}\sources\buildartifacts"
-          Write-Host "[2] -- ArtifactPath: $ArtifactPath"
+          Write-Host "[2] -- ARTIFACTDIR: $ARTIFACTDIR"
           # choco install ninja
           git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
