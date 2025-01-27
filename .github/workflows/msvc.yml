@@ -96,8 +96,8 @@ jobs:
           # git config --global core.autocrlf false
           rustc --version
           # dir ${{github.workspace}}\sources
-          # mkdir buildartifacts
           Write-Host -Object "[1] -- ArtifactPath: $ArtifactPath"
+          mkdir buildartifacts
           $env:ARTIFACTDIR="${{github.workspace}}\buildartifacts"
           Write-Host -Object "[2] -- ArtifactPath: $ArtifactPath"
           # choco install ninja
