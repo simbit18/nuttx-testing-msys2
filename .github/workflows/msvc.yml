@@ -104,7 +104,7 @@ jobs:
           # choco install ninja
           # git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
-          .\cibuild.ps1 -i -A -N testlist\windows.dat
+          .\cibuild.ps1 -i -A -C -N testlist\windows.dat
       - uses: actions/upload-artifact@v4
         with:
           name: msvc-builds
