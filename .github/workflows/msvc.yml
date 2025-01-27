@@ -96,7 +96,8 @@ jobs:
           git config --global core.autocrlf false
           rustc --version
           dir ${{github.workspace}}\sources
-          $env:ARTIFACTDIR=${{github.workspace}}\sources\buildartifacts
+          Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
+          $env:ARTIFACTDIR="${{github.workspace}}\sources\buildartifacts"
           # choco install ninja
           git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
