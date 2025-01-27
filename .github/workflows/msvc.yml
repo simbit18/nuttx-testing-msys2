@@ -77,7 +77,9 @@ jobs:
         run: |
           pip install kconfiglib
 
-      - run: git config --global core.autocrlf false
+      - run: |
+          git config --global core.autocrlf false
+          git config --global core.filemode false
 
       - name: Download Source Artifact
         uses: actions/download-artifact@v4
@@ -104,7 +106,8 @@ jobs:
           # choco install ninja
           # git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
-          .\cibuild.ps1 -i -A -C -N testlist\windows.dat
+          #.\cibuild.ps1 -i -A -C -N testlist\windows.dat
+          .\cibuild.ps1 -i -A -N testlist\windows.dat
       - uses: actions/upload-artifact@v4
         with:
           name: msvc-builds
