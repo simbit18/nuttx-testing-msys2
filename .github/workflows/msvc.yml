@@ -100,12 +100,12 @@ jobs:
           git config --global --add safe.directory '*'
           rustc --version
           # dir ${{github.workspace}}\sources
-          # Write-Host "[1] -- ARTIFACTDIR: $ARTIFACTDIR"
+          Write-Host "[1] -- ARTIFACTDIR: $ARTIFACTDIR"
           # mkdir ${{github.workspace}}\sources\buildartifacts
           # dir "${{github.workspace}}\sources"
           # $env:ARTIFACTDIR="${{github.workspace}}\sources\buildartifacts"
           "ARTIFACTDIR=${{github.workspace}}\sources\buildartifacts" >> $env:GITHUB_ENV
-          # Write-Host "[2] -- ARTIFACTDIR: $ARTIFACTDIR"
+          Write-Host "[2] -- ARTIFACTDIR: $ARTIFACTDIR"
           # choco install ninja
           # git config --global --add safe.directory '*'
           cd sources\nuttx\tools\ci
@@ -114,7 +114,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: msvc-builds
-          path: $env:ARTIFACTDIR
-          #path: ./sources/buildartifacts/
+          path: ./sources/buildartifacts/
         continue-on-error: true
 
