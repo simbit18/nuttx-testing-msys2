@@ -48,11 +48,10 @@ jobs:
           Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
           $env:ARTIFACTDIR="${{github.workspace}}\buildartifacts"
           New-Item -Path "${{github.workspace}}\buildartifacts\example.txt" -ItemType File
-          cd ..
-          dir
-          cd ..
-          dir
-          cd ..
+          dir $GITHUB_WORKSPACE
+          dir ..\$GITHUB_WORKSPACE
+          dir ..\..\$GITHUB_WORKSPACE
+          cd $GITHUB_WORKSPACE
           dir
       - uses: actions/upload-artifact@v4
         with:
