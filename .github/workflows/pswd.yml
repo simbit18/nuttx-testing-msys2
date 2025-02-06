@@ -43,6 +43,10 @@ jobs:
       # Build the project using the given CMake commands
       - name: Configure and build with CMake
         run: |
+          where gcc
+          $env:PATH = "C:\msys64\usr\bin;" + $env:PATH
+          ls
+          uname -a
           mkdir buildartifacts
           dir ${{github.workspace}}
           Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
