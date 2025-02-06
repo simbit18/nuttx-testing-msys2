@@ -53,10 +53,9 @@ jobs:
           dir ..\..\$GITHUB_WORKSPACE
           cd $GITHUB_WORKSPACE
           dir
-          cd ..
+          cd  msys64\..\..\$GITHUB_WORKSPACE
           dir
-          cd ..
-          dir
+          echo $GITHUB_PATH
           
       - uses: actions/upload-artifact@v4
         with:
