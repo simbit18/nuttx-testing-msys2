@@ -49,7 +49,8 @@ jobs:
           ls
           uname -a
           where gcc
-          echo %PATH%
+          echo $Env:PATH
+          flock --version
           mkdir buildartifacts
           dir ${{github.workspace}}
           Write-Host -Object "[Pipeline] -- ArtifactPath: $ArtifactPath" -ForegroundColor Green
