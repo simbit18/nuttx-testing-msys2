@@ -44,11 +44,11 @@ RUN \
         -Verbose ; \
     \
     Expand-Archive \
-        -Path "C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" ;
+        -Path "C:\\tools\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" ;
 
 RUN dir "C:\\tools\\gcc-arm-none-eabi"
 
-RUN dir "C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
+RUN dir "C:\\tools\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
 
 RUN \ 
     Move-Item \
