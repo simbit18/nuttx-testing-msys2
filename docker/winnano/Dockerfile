@@ -39,7 +39,7 @@ RUN \
     \
     Invoke-WebRequest \
         -Uri $('https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
-        -OutFile $('C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
+        -OutFile $('C:\\tools\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
         -UseBasicParsing \ 
         -Verbose ; \
     \
