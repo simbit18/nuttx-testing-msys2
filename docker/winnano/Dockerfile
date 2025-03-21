@@ -17,7 +17,7 @@ RUN \
             -ItemType Directory \
             -Verbose ; \
     } ;
-RUN dir windows\system32
+# RUN dir windows\system32
 
 WORKDIR tools
 
