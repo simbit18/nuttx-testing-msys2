@@ -26,17 +26,50 @@ jobs:
           uses: docker/login-action@v3
         
           with:
-            registry: ${{ env.REGISTRY }}
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
-        - name: Pre-build Disk Stats
+            # registry: ${{ env.REGISTRY }}
+            # username: ${{ github.actor }}
+            # password: ${{ secrets.GITHUB_TOKEN }}
+        # - name: Pre-build Disk Stats
+          # run: |
+           # df -h
+        # - name: Build the WinNano-nuttx-docker Docker image
+          # run: |
+           # docker build ./tools/ci/docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+           # docker run ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+           # docker push ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+        # - name: Post-build Disk Stats
+          # if: always()
+          # run: |
+           # df -h
+
+        - name: Build
+          shell: cmd
           run: |
-           df -h
-        - name: Build the WinNano-nuttx-docker Docker image
+            docker build --build-arg VERSION=ltsc2022 -t ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last ./docker/winnano
+        # - name: Build the WinNano-nuttx-docker Docker image
+          # run: |
+           # docker build ./docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+           # docker run ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+           # docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
+        - name: Push Docker image
+          shell: cmd
           run: |
-           docker build ./tools/ci/docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
-           docker run ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
-           docker push ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+            docker push ghcr.io/${{ github.repository_owner }}/docker-nano-msys2 --all-tags
+          # uses: docker/build-push-action@v6
+          # with:
+            # context: docker/winnano
+            # platforms: linux/amd64
+            # push: ${{ github.ref == 'refs/heads/master' }}
+            # tags: ${{ env.IMAGE_TAG }}
+          ## uses: docker/build-push-action@v6
+          ## with:
+          ##  context: docker/winnano
+          ##  push: ${{ github.ref == 'refs/heads/master' }}
+          ##  tags: ${{ env.IMAGE_TAG }}
+        - name: Tag latest Windows version
+          shell: cmd
+          run: |
+            docker tag ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last ghcr.io/${{ github.repository_owner }}/$docker-nano-nuttx
         - name: Post-build Disk Stats
           if: always()
           run: |
