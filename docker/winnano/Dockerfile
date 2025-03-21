@@ -44,12 +44,11 @@ RUN \
         -Verbose ; \
     \
     Expand-Archive \
-        -Path "C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" \
-        -Verbose ; \
+        -Path "C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" ; \
     \
     Move-Item \
         -Path "arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" \
-        -DestinationPath 'gcc-arm-none-eabi' \
+        -Destination 'gcc-arm-none-eabi' \
         -Verbose ; \
     \
     Remove-Item \
