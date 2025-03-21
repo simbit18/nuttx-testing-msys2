@@ -17,8 +17,9 @@ RUN \
             -ItemType Directory \
             -Verbose ; \
     } ;
+RUN dir windows\system32
 
-WORKDIR C:\tools
+WORKDIR tools
 
 # RUN mkdir -p /tools/nuttx-tools
 
