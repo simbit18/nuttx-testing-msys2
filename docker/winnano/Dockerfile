@@ -56,8 +56,6 @@ RUN \
         -Destination 'gcc-arm-none-eabi' \
         -Verbose ;
 
-
-
 RUN \
     Remove-Item \
         'arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi*' \
@@ -78,4 +76,25 @@ LABEL \
     org.label-schema.docker.cmd.test="docker exec $CONTAINER mysql --version" \
     org.label-schema.docker.cmd.debug="docker exec -it $CONTAINER powershell"
 
+RUN \
+    if(!(Test-Path -Path 'C:\tools')) \
+    { \
+        New-Item \
+            -Path 'C:\tools' \
+            -ItemType Directory \
+            -Verbose ; \
+    } ;
+
+# RUN dir windows\system32
+
+WORKDIR "C:\\tools"
+
+# Pull in the tools we just built for nuttx
+
+# ARM GCC toolchain
+COPY --from=nuttx-toolchain-arm /tools/gcc-arm-none-eabi/ gcc-arm-none-eabi/
+
+RUN SETX PATH "/tools/gcc-arm-none-eabi/bin;%PATH%"
+
+RUN arm-none-eabi-gcc --version
 CMD ["powershell"]
