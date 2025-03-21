@@ -1,0 +1,43 @@
+#publish your docker image to github container registry
+name: Docker-Win-Nuttx-Publish
+on:
+  workflow_dispatch:
+  push:
+    # Publish `main` as Docker `latest` image.
+    branches:
+      - master
+    paths:
+      - 'docker/winnano/**'
+      - '.github/workflows/docker_nano_nuttx_publish.yml'
+env:
+   REGISTRY: ghcr.io
+   IMAGE_NAME: ${{ github.repository }}
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+    build:
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Login to GitHub Container Registry
+          uses: docker/login-action@v3
+        
+          with:
+            registry: ${{ env.REGISTRY }}
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+        - name: Pre-build Disk Stats
+          run: |
+           df -h
+        - name: Build the WinNano-nuttx-docker Docker image
+          run: |
+           docker build ./tools/ci/docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+           docker run ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+           docker push ${{ env.REGISTRY }}/${{ github.actor }}/winnano-nuttx-docker:latest
+        - name: Post-build Disk Stats
+          if: always()
+          run: |
+           df -h
