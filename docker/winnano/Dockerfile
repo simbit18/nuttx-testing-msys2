@@ -29,10 +29,10 @@ WORKDIR "C:\\tools"
 FROM nuttx-tools AS nuttx-toolchain-arm
 
 RUN \
-    if(!(Test-Path -Path 'C:\\tools\\clang-arm-none-eabi')) \
+    if(!(Test-Path -Path 'C:\\tools\\gcc-arm-none-eabi')) \
     { \
         New-Item \
-            -Path 'C:\\tools\\clang-arm-none-eabi' \
+            -Path 'C:\\tools\\gcc-arm-none-eabi' \
             -ItemType Directory \
             -Verbose ; \
     } ; \
@@ -47,7 +47,7 @@ RUN \
         -Path "C:\\tools\\rm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" ; \
     \
     Move-Item \
-        -Path "arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi" \
+        -Path "C:\\tools\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi" \
         -Destination 'gcc-arm-none-eabi' \
         -Verbose ; \
     \
