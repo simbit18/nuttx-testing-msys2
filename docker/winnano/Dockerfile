@@ -92,7 +92,7 @@ WORKDIR "C:\\tools"
 # Pull in the tools we just built for nuttx
 
 # ARM GCC toolchain
-COPY --from=nuttx-toolchain-arm /tools/gcc-arm-none-eabi/ gcc-arm-none-eabi/
+COPY --from=nuttx-toolchain-arm /tools/gcc-arm-none-eabi gcc-arm-none-eabi
 
 RUN SETX PATH "/tools/gcc-arm-none-eabi/bin;%PATH%"
 
