@@ -76,6 +76,8 @@ LABEL \
     org.label-schema.docker.cmd.test="docker exec $CONTAINER mysql --version" \
     org.label-schema.docker.cmd.debug="docker exec -it $CONTAINER powershell"
 
+SHELL ["powershell", "-Command"]
+
 RUN \
     if(!(Test-Path -Path 'C:\tools')) \
     { \
@@ -94,7 +96,12 @@ WORKDIR "C:\\tools"
 # ARM GCC toolchain
 COPY --from=nuttx-toolchain-arm /tools/gcc-arm-none-eabi gcc-arm-none-eabi
 
-RUN SETX PATH "/tools/gcc-arm-none-eabi/bin;%PATH%"
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+
+RUN SETX PATH "C:\\tools\\gcc-arm-none-eabi\\bin;%PATH%"
+
+USER ContainerUser
 
 RUN arm-none-eabi-gcc --version
 CMD ["powershell"]
