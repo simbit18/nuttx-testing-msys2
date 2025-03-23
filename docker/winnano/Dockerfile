@@ -94,14 +94,15 @@ WORKDIR "C:\\tools"
 # Pull in the tools we just built for nuttx
 
 # ARM GCC toolchain
-COPY --from=nuttx-toolchain-arm /tools/gcc-arm-none-eabi gcc-arm-none-eabi
+COPY --from=nuttx-toolchain-arm ["/tools/gcc-arm-none-eabi", "gcc-arm-none-eabi"]
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
 
-RUN SETX PATH "C:\\tools\\gcc-arm-none-eabi\\bin;%PATH%"
+RUN SETX PATH "C:\tools\gcc-arm-none-eabi\bin;%PATH%"
 
 USER ContainerUser
 
 RUN arm-none-eabi-gcc --version
+
 CMD ["powershell"]
