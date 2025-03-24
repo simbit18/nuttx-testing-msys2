@@ -30,7 +30,12 @@ RUN \
         -Wait \
         -Verbose ; 
 
-RUN SETX /M PATH "%ProgramFiles%\7-Zip;%PATH%"
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+
+RUN SETX PATH "%ProgramFiles%\7-Zip;%PATH%"
+
+USER ContainerUser
 
 # Test application
 RUN \
