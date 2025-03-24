@@ -110,7 +110,7 @@ RUN dir "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8"
 
 RUN \ 
     Move-Item \
-        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip\mingw64" \
+        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8\mingw64" \
         -Destination 'winlibs-mingw64' \
         -Verbose ;
 
