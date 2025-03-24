@@ -8,6 +8,33 @@ FROM mcr.microsoft.com/windows/servercore:${IMAGE_OS_VERSION} AS nuttx-tools
 # SHELL ["powershell", "-Command"]
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
+RUN \
+    if(!(Test-Path -Path 'C:\Temp')) \
+    { \
+        New-Item \
+            -Path 'C:\Temp' \
+            -ItemType Directory \
+            -Verbose ; \
+    } ; \
+    \
+    Invoke-WebRequest \
+        -Uri $('https://www.7-zip.org/a/7z2409-x64.exe') \
+        -OutFile $('C:\Temp\7z2409-x64.exe') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Start-Process \
+        -FilePath $('C:\Temp\7z2409-x64.exe') \
+        -ArgumentList '/S' \
+        -NoNewWindow \
+        -Wait \
+        -Verbose ; 
+
+# Test application
+RUN \
+    7z \
+        b
+
 # RUN mkdir /tools
 RUN \
     if(!(Test-Path -Path 'C:\tools')) \
