@@ -127,7 +127,7 @@ FROM nuttx-tools AS nuttx-toolchain-arm
 RUN \
     Invoke-WebRequest \
         -Uri $('https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
-        -OutFile $('C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip') \
+        -OutFile $('C:\tools\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
         -UseBasicParsing \ 
         -Verbose ; \
     \
