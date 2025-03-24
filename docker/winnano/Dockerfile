@@ -30,6 +30,8 @@ RUN \
         -Wait \
         -Verbose ; 
 
+RUN SETX /M PATH "%ProgramFiles%\7-Zip;%PATH%"
+
 # Test application
 RUN \
     7z \
