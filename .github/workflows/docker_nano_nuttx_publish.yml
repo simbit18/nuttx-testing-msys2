@@ -1,4 +1,4 @@
-#publish your docker image to github container registry
+# Create and publish a Docker image publish to github container registry
 name: Docker-Win-Nuttx-Publish
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
       - '.github/workflows/docker_nano_nuttx_publish.yml'
 env:
    REGISTRY: ghcr.io
-   IMAGE_NAME: docker-nano-nuttx
+   IMAGE_NAME: ${{ github.repository }}
 
 permissions:
   packages: write
@@ -66,10 +66,10 @@ jobs:
           ##  context: docker/winnano
           ##  push: ${{ github.ref == 'refs/heads/master' }}
           ##  tags: ${{ env.IMAGE_TAG }}
-        - name: Tag latest Windows version
-          #shell: cmd
-          run: |
-            docker tag ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last ghcr.io/${{ github.repository_owner }}/$docker-nano-nuttx
+        # - name: Tag latest Windows version
+          # #shell: cmd
+          # run: |
+            # docker tag ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last ghcr.io/${{ github.repository_owner }}/$docker-nano-nuttx
         - name: Post-build Disk Stats
           if: always()
           run: |
