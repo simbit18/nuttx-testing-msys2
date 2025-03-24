@@ -153,22 +153,22 @@ RUN \
         -Verbose ; \
     \
     Expand-Archive \
-        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip" ;
+        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip" ; \
 
-RUN dir "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8"
+#RUN dir "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8"
 
-RUN \ 
+# RUN \ 
     Move-Item \
         -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8\mingw64" \
         -Destination 'winlibs-mingw64' \
-        -Verbose ;
+        -Verbose ; \
 
-RUN \
+# RUN \
     Remove-Item \
         'winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8*' \
         -Force ;
 
-RUN dir "C:\tools\winlibs-mingw64"
+# RUN dir "C:\tools\winlibs-mingw64"
 
 ###############################################################################
 # Build image for tool required by ARM builds
@@ -220,7 +220,7 @@ LABEL \
 
 # WORKDIR "C:\\tools"
 
-COPY --from=net-sdk ["/dotnet", "/Program Files/dotnet"]
+COPY --from=net-sdk ["/tools/dotnet", "/Program Files/dotnet"]
 
 
 # Pull in the tools we just built for nuttx
