@@ -89,10 +89,13 @@ COPY --from=win-tools ["C:/tools/win-tools", "C:/tools/win-tools"]
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
 
-RUN SETX PATH "C:\tools\win-tools;%PATH%"
+RUN SETX /M PATH "C:\tools\win-tools;%PATH%"
 
 USER ContainerUser
 
+RUN dir tools & dir tools\win-tools
+
+# Test application
 RUN busybox --list
 
 CMD ["powershell"]
