@@ -165,4 +165,7 @@ RUN SETX /M PATH "C:\tools\winlibs-mingw64\bin;%PATH%"
 # Test application
 RUN gcc --version
 
+# Test application
+RUN cmake --help
+
 CMD ["powershell"]
