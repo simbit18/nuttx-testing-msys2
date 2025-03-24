@@ -88,6 +88,39 @@ RUN \
 
 RUN dir "C:\tools\win-tools"
 
+###############################################################################
+# Build image for tool required by winlibs-mingw64
+###############################################################################
+
+FROM nuttx-tools AS winlibs-mingw64
+
+RUN \
+    Invoke-WebRequest \
+        -Uri $('https://github.com/brechtsanders/winlibs_mingw/releases/download/13.2.0posix-18.1.5-11.0.1-msvcrt-r8/winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip') \
+        -OutFile $('C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Expand-Archive \
+        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip" ;
+
+# RUN dir "C:\tools\winlibs"
+
+RUN dir "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8"
+
+RUN \ 
+    Move-Item \
+        -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip\mingw64" \
+        -Destination 'winlibs-mingw64' \
+        -Verbose ;
+
+RUN \
+    Remove-Item \
+        'winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8*' \
+        -Force ;
+
+RUN dir "C:\tools\winlibs-mingw64"
+
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
 LABEL \
@@ -123,5 +156,13 @@ RUN dir tools & dir tools\win-tools
 
 # Test application
 RUN busybox --list
+
+# winlibs
+COPY --from=winlibs ["C:/tools/winlibs-mingw64", "C:/tools/winlibs-mingw64"]
+
+RUN SETX /M PATH "C:\tools\winlibs-mingw64\bin;%PATH%"
+
+# Test application
+RUN gcc --version
 
 CMD ["powershell"]
