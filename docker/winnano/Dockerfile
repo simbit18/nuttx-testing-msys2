@@ -30,8 +30,11 @@ RUN \
         -Wait \
         -Verbose ; \
     \
-    $env:PATH = '"C:\Program Files\7-Zip;"' + $env:PATH ;
-
+    Set-ItemProperty \
+        -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment' \
+        -Name 'Path' \
+        -Value $('C:\Program Files\7-Zip;' + $ENV:Path) \
+        -Verbose ;
 
 # Test application
 RUN \
