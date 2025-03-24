@@ -57,6 +57,29 @@ WORKDIR "C:\tools"
 # RUN mkdir -p /tools/nuttx-tools
 
 ###############################################################################
+# Build image for tool required by .NET SDK
+###############################################################################
+
+FROM nuttx-tools AS net-sdk
+
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        # Retrieve .NET SDK
+        $sdk_version = '8.0.407'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
+        $dotnet_sha512 = 'c36431c5f6fc2b4fc6ed983b33f4ace2b3d9062afafe83e4a17f8e58745100f1714938e62529d3011cc02b4ce5c63db9c9cddf438008aa6e5b4f77507772acb2'; `
+        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        mkdir dotnet; `
+        tar -oxzf dotnet.zip -C dotnet; `
+        Remove-Item -Force dotnet.zip; `
+
+
+###############################################################################
 # Build image for tool required by win tools
 ###############################################################################
 FROM nuttx-tools AS win-tools
@@ -199,6 +222,9 @@ LABEL \
 # RUN dir windows\system32
 
 # WORKDIR "C:\\tools"
+
+COPY --from=net-sdk ["/dotnet", "/Program Files/dotnet"]
+
 
 # Pull in the tools we just built for nuttx
 # In order to set system PATH, ContainerAdministrator must be used
