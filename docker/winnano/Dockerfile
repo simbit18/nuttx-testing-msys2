@@ -19,7 +19,7 @@ RUN \
     } ;
 # RUN dir windows\system32
 
-WORKDIR "C:\\tools"
+WORKDIR "C:\tools"
 
 # RUN mkdir -p /tools/nuttx-tools
 
@@ -38,7 +38,7 @@ RUN \
     Expand-Archive \
         -Path "C:\tools\win-tools-v1.38.0.zip" ;
 
-RUN dir "C:\tools\win-tools"
+# RUN dir "C:\tools\win-tools"
 
 RUN dir "C:\tools\win-tools-v1.38.0"
 
@@ -53,6 +53,7 @@ RUN \
         'win-tools-v1.38.0*' \
         -Force ;
 
+RUN dir "C:\tools\win-tools"
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
