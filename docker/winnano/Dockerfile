@@ -28,14 +28,10 @@ RUN \
         -ArgumentList '/S' \
         -NoNewWindow \
         -Wait \
-        -Verbose ; 
+        -Verbose ; \
+    \
+    $env:PATH = "%ProgramFiles%\7-Zip;" + $env:PATH ;
 
-# In order to set system PATH, ContainerAdministrator must be used
-USER ContainerAdministrator
-
-RUN SETX PATH "%ProgramFiles%\7-Zip;%PATH%"
-
-USER ContainerUser
 
 # Test application
 RUN \
