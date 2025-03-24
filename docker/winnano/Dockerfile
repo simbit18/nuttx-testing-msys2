@@ -30,7 +30,7 @@ RUN \
         -Wait \
         -Verbose ; \
     \
-    $env:PATH = "C:\Program Files\7-Zip;" + $env:PATH ;
+    $env:PATH = '"C:\Program Files\7-Zip;"' + $env:PATH ;
 
 
 # Test application
