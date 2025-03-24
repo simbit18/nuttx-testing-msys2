@@ -29,30 +29,22 @@ WORKDIR "C:\\tools"
 FROM nuttx-tools AS win-tools
 
 RUN \
-    if(!(Test-Path -Path 'C:\\tools\\win-tools')) \
-    { \
-        New-Item \
-            -Path 'C:\\tools\\win-tools' \
-            -ItemType Directory \
-            -Verbose ; \
-    } ; \
-    \
     Invoke-WebRequest \
         -Uri $('https://github.com/simbit18/win-tools/releases/download/win-tools-v1.38.0/win-tools-v1.38.0.zip') \
-        -OutFile $('C:\\tools\\win-tools-v1.38.0.zip') \
+        -OutFile $('C:\tools\win-tools-v1.38.0.zip') \
         -UseBasicParsing \ 
         -Verbose ; \
     \
     Expand-Archive \
-        -Path "C:\\tools\\win-tools-v1.38.0.zip" ;
+        -Path "C:\tools\win-tools-v1.38.0.zip" ;
 
-RUN dir "C:\\tools\\win-tools"
+RUN dir "C:\tools\win-tools"
 
-RUN dir "C:\\tools\\win-tools-v1.38.0"
+RUN dir "C:\tools\win-tools-v1.38.0"
 
 RUN \ 
     Move-Item \
-        -Path "C:\\tools\\win-tools-v1.38.0\\win-tools" \
+        -Path "C:\tools\win-tools-v1.38.0\win-tools" \
         -Destination 'win-tools' \
         -Verbose ;
 
