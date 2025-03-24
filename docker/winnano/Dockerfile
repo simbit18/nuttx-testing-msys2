@@ -92,7 +92,7 @@ RUN dir "C:\tools\win-tools"
 # Build image for tool required by kconfig-frontends
 ###############################################################################
 FROM nuttx-tools AS kconfig-frontends-tools
-https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip
+
 RUN \
     Invoke-WebRequest \
         -Uri $('https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip') \
