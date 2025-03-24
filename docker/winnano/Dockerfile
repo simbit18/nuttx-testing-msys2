@@ -68,10 +68,10 @@ RUN \
         Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; \
         $dotnet_sha512 = 'c36431c5f6fc2b4fc6ed983b33f4ace2b3d9062afafe83e4a17f8e58745100f1714938e62529d3011cc02b4ce5c63db9c9cddf438008aa6e5b4f77507772acb2'; \
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { \
-            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; \
             exit 1; \
         }; \
-        mkdir dotnet; `
+        mkdir dotnet; \
         tar -oxzf dotnet.zip -C dotnet; \
         Remove-Item -Force dotnet.zip; 
 
