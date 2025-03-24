@@ -104,8 +104,6 @@ RUN \
     Expand-Archive \
         -Path "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip" ;
 
-# RUN dir "C:\tools\winlibs"
-
 RUN dir "C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8"
 
 RUN \ 
@@ -120,6 +118,37 @@ RUN \
         -Force ;
 
 RUN dir "C:\tools\winlibs-mingw64"
+
+###############################################################################
+# Build image for tool required by ARM builds
+###############################################################################
+FROM nuttx-tools AS nuttx-toolchain-arm
+
+RUN \
+    Invoke-WebRequest \
+        -Uri $('https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip') \
+        -OutFile $('C:\tools\winlibs-x86_64-posix-seh-gcc-13.2.0-mingw-w64msvcrt-11.0.1-r8.zip') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Expand-Archive \
+        -Path "C:\tools\https://developer.arm.com/-/media/Files/downloads/gnu/13.2.rel1/binrel/arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi.zip" ;
+
+RUN dir "C:\tools\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
+
+RUN \ 
+    Move-Item \
+        -Path "C:\tools\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi" \
+        -Destination 'gcc-arm-none-eabi' \
+        -Verbose ;
+
+RUN \
+    Remove-Item \
+        'arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi*' \
+        -Force ;
+
+RUN dir "C:\tools\gcc-arm-none-eabi"
+
 
 FROM mcr.microsoft.com/windows/nanoserver:${IMAGE_OS_VERSION} AS build
 
@@ -157,15 +186,22 @@ RUN dir tools & dir tools\win-tools
 # Test application
 RUN busybox --list
 
-# winlibs
-COPY --from=winlibs ["C:/tools/winlibs-mingw64", "C:/tools/winlibs-mingw64"]
+# winlibs-mingw64
+COPY --from=winlibs-mingw64 ["C:/tools/winlibs-mingw64", "C:/tools/winlibs-mingw64"]
 
 RUN SETX /M PATH "C:\tools\winlibs-mingw64\bin;%PATH%"
 
 # Test application
 RUN gcc --version
 
-# Test application
 RUN cmake --help
+
+# nuttx-toolchain-arm
+COPY --from=nuttx-toolchain-arm ["C:/tools/gcc-arm-none-eabi", "C:/tools/gcc-arm-none-eabi"]
+
+RUN SETX /M PATH "C:\tools\gcc-arm-none-eabi\bin;%PATH%"
+
+# Test application
+RUN  arm-none-eabi-gcc --version
 
 CMD ["powershell"]
