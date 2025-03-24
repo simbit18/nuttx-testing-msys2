@@ -216,7 +216,7 @@ RUN busybox --list
 
 # kconfig-frontends
 COPY --from=kconfig-frontends-tools ["C:/tools/kconfig-frontends", "C:/tools/kconfig-frontends"]
-RUN SETX /M PATH "C:\tools\kconfig-frontends;%PATH%"
+RUN SETX /M PATH "C:\tools\kconfig-frontends\bin;%PATH%"
 
 RUN dir tools & dir tools\kconfig-frontends
 
