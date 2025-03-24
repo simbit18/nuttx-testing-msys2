@@ -62,7 +62,7 @@ WORKDIR "C:\tools"
 
 FROM nuttx-tools AS net-sdk
 
-RUN powershell -Command " `
+RUN `
         # Retrieve .NET SDK
         $sdk_version = '8.0.407'; `
         Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
