@@ -89,6 +89,37 @@ RUN \
 RUN dir "C:\tools\win-tools"
 
 ###############################################################################
+# Build image for tool required by kconfig-frontends
+###############################################################################
+FROM nuttx-tools AS kconfig-frontends-tools
+https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip
+RUN \
+    Invoke-WebRequest \
+        -Uri $('https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip') \
+        -OutFile $('C:\tools\kconfig-frontends-windows-mingw64.zip') \
+        -UseBasicParsing \ 
+        -Verbose ; \
+    \
+    Expand-Archive \
+        -Path "C:\tools\kconfig-frontends-windows-mingw64.zip" ;
+
+RUN dir "C:\tools\kconfig-frontends-windows-mingw64"
+
+RUN \ 
+    Move-Item \
+        -Path "C:\tools\kconfig-frontends-windows-mingw64\kconfig-frontends-windows-mingw64" \
+        -Destination 'kconfig-frontends' \
+        -Verbose ;
+
+RUN \
+    Remove-Item \
+        'kconfig-frontends-windows-mingw64*' \
+        -Force ;
+
+RUN dir "C:\tools\kconfig-frontends"
+
+
+###############################################################################
 # Build image for tool required by winlibs-mingw64
 ###############################################################################
 
@@ -170,21 +201,24 @@ LABEL \
 # WORKDIR "C:\\tools"
 
 # Pull in the tools we just built for nuttx
-
-# win-tools
-COPY --from=win-tools ["C:/tools/win-tools", "C:/tools/win-tools"]
-
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
 
+# win-tools
+COPY --from=win-tools ["C:/tools/win-tools", "C:/tools/win-tools"]
 RUN SETX /M PATH "C:\tools\win-tools;%PATH%"
 
-USER ContainerUser
-
-RUN dir tools & dir tools\win-tools
+# RUN dir tools & dir tools\win-tools
 
 # Test application
 RUN busybox --list
+
+
+# kconfig-frontends
+COPY --from=kconfig-frontends-tools ["C:/tools/kconfig-frontends", "C:/tools/kconfig-frontends"]
+RUN SETX /M PATH "C:\tools\kconfig-frontends;%PATH%"
+
+RUN dir tools & dir tools\kconfig-frontends
 
 # winlibs-mingw64
 COPY --from=winlibs-mingw64 ["C:/tools/winlibs-mingw64", "C:/tools/winlibs-mingw64"]
@@ -203,5 +237,7 @@ RUN SETX /M PATH "C:\tools\gcc-arm-none-eabi\bin;%PATH%"
 
 # Test application
 RUN  arm-none-eabi-gcc --version
+
+USER ContainerUser
 
 CMD ["powershell"]
