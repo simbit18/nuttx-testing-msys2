@@ -45,7 +45,7 @@ jobs:
         - name: Build
           # shell: cmd
           run: |
-            docker build --build-arg VERSION=ltsc2022 -t ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last ./docker/winnano
+            docker build --build-arg VERSION=ltsc2022 -t ghcr.io/${{ github.repository_owner }}/docker-nano-nuttx:last -m 2GB ./docker/winnano 
         # - name: Build the WinNano-nuttx-docker Docker image
           # run: |
            # docker build ./docker/winnano --tag ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}:latest
