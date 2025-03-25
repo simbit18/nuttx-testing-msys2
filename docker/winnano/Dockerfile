@@ -251,7 +251,7 @@ RUN SETX /M PATH "C:\tools\winlibs-mingw64\bin;%PATH%"
 # Test application
 RUN gcc --version
 
-RUN cmake --help
+# RUN cmake --help
 
 # nuttx-toolchain-arm
 COPY --from=nuttx-toolchain-arm ["C:/tools/gcc-arm-none-eabi", "C:/tools/gcc-arm-none-eabi"]
