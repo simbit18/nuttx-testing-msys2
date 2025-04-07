@@ -50,11 +50,11 @@ jobs:
           # echo %PATH%
           $env:PATH
           # gcc -v
-          where gcc
+          where.exe gcc
           cmake --version
-          where ninja
+          where.exe cmake
           # choco install ninja
-          where ninja
+          # where.exe ninja
           pip install kconfiglib
           # mkdir nuttxspace
           # cd nuttxspace
