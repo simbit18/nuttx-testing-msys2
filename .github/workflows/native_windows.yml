@@ -51,6 +51,9 @@ jobs:
           $env:PATH
           # gcc -v
           where.exe gcc
+          Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
+          where.exe mingw32-make
+          where.exe make
           cmake --version
           where.exe cmake
           # choco install ninja
