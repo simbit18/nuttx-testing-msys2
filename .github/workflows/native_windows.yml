@@ -64,7 +64,7 @@ jobs:
           # :: git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
           
           # dir
-        # shell: cmd
+          shell: cmd
 
       # - name: Build
         # run: |
