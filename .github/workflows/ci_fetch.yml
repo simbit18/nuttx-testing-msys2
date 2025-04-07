@@ -117,6 +117,13 @@ jobs:
       # testlist_names: '["msys2", "arm-01"]'
       # testlist_names: '["msys2-01", "msys2-02"]'
       testlist_names: '["msys2"]'
+  msvc:
+    needs: Fetch-Source
+    if: contains(fromJSON(inputs.platforms_ref), 'msvc')
+    uses: ./.github/workflows/ci_msvc.yml
+    secrets: inherit
+    with:
+      testlist_names: '["windows"]'
   macos:
     if: contains(fromJSON(inputs.platforms_ref), 'macos')
     needs: Fetch-Source
