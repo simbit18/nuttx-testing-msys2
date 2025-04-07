@@ -47,12 +47,13 @@ jobs:
 #          Copy-Item -Path ".\temp" -Destination "C:\_" -Recurse
       - name: Checkout Source Files
         run: |
-          echo %PATH%
-          gcc -v
+          # echo %PATH%
+          set
+          # gcc -v
           where gcc
           cmake --version
           where ninja
-          choco install ninja
+          # choco install ninja
           where ninja
           pip install kconfiglib
           # mkdir nuttxspace
