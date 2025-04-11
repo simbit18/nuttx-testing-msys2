@@ -46,6 +46,7 @@ jobs:
           where.exe gcc
           dir "${{github.workspace}}"
           copy "${{github.workspace}}\native\nuttx_native_arm.bat" nuttx_native_arm.bat
+          curl -L https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip -o kconfig-frontends-windows-mingw64.zip
           nuttx_native_arm.bat
           # Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
           # where.exe mingw32-make
