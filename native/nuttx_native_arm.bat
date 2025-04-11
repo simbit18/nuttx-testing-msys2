@@ -26,7 +26,7 @@
       echo. download %win_tools_basefile%.%archive%
       curl -L https://github.com/simbit18/win-tools/releases/download/win-tools-v1.38.0/%win_tools_basefile%.%archive% -o %win_tools_basefile%.%archive%
       tar zxf %win_tools_basefile%.%archive%
-      move /y %win_tools_basefile% "kconfig-frontends"
+      move /y %win_tools_basefile% "win-tools"
       if not ERRORLEVEL 0 goto error
       del /q /f "%install_dir%\%win_tools_basefile%.%archive%"
       if not ERRORLEVEL 0 goto error

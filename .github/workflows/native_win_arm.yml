@@ -56,7 +56,11 @@ jobs:
           dir
           move /y kconfig-frontends-windows-mingw64 "kconfig-frontends"
           dir
+          curl -L https://github.com/simbit18/win-tools/releases/download/win-tools-v1.38.0/win-tools-v1.38.0.zip -o win-tools-v1.38.0.zip
+          7z x win-tools-v1.38.0.zip -y
+          move /y win-tools-v1.38.0 "win-tools"
           del /q /f "*.zip%"
+          dir
           rem cd "${{github.workspace}}
           rem nuttx_native_arm.bat
           rem Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
