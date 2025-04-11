@@ -56,8 +56,9 @@ jobs:
           dir
           move /y kconfig-frontends-windows-mingw64 "kconfig-frontends"
           dir
+          del /q /f "*.zip%"
           rem cd "${{github.workspace}}
-          nuttx_native_arm.bat
+          rem nuttx_native_arm.bat
           rem Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
           rem where.exe mingw32-make
           rem where.exe make
