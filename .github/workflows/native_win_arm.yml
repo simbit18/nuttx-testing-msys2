@@ -44,7 +44,7 @@ jobs:
           $env:PATH
           # gcc -v
           where.exe gcc
-          dir "${{github.workspace}}
+          dir "${{github.workspace}}"
           # Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
           # where.exe mingw32-make
           # where.exe make
