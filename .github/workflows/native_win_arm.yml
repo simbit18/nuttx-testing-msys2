@@ -49,6 +49,10 @@ jobs:
           mkdir tools
           cd tools
           curl -L https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/kconfig-frontends-windows-mingw64.zip -o kconfig-frontends-windows-mingw64.zip
+          7z x kconfig-frontends-windows-mingw64.zip -y
+          dir
+          move /y kconfig-frontends-windows-mingw64 "kconfig-frontends"
+          dir
           cd "${{github.workspace}}
           nuttx_native_arm.bat
           # Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
