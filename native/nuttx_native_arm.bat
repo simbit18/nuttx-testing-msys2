@@ -55,6 +55,7 @@ echo.
       if not ERRORLEVEL 0 goto error
       del /q /f "%install_dir%\%arm_basefile%.%archive%"
       if not ERRORLEVEL 0 goto error
+      arm-none-eabi-gcc --version
     )
 echo.
 
