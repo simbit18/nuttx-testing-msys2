@@ -1,0 +1,88 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Native Windows ARM
+
+permissions:
+  ## Allow publishing of GitHub Release
+  contents: write
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/native_win_arm.yml'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+#        os: [windows-2019, windows-2022]
+        os: [windows-2022]
+        arch: [x64, x86]
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    concurrency:
+        group: ${{ github.ref }}-${{ github.base_ref }}-${{ github.head_ref }}-${{ matrix.os }}-${{ matrix.arch }}-Windows
+        cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+      - name: Checkout Source Files
+        run: |
+          $env:PATH
+          # gcc -v
+          where.exe gcc
+          dir "${{github.workspace}}
+          # Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
+          # where.exe mingw32-make
+          # where.exe make
+          # cmake --version
+          # where.exe cmake
+          # choco install ninja
+          # where.exe ninja
+          # pip install kconfiglib
+          # mkdir nuttxspace
+          # cd nuttxspace
+          # git clone --depth 1 https://github.com/apache/nuttx nuttx
+          # git clone --depth 1 https://github.com/apache/nuttx-apps apps
+          # dir
+          # shell: cmd
+
+      # - name: Build
+        # run: |
+          # cd ${{github.workspace}}\nuttxspace\nuttx
+          # dir
+          # cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          # :: cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja --check-system-vars --debug-trycompile
+          # cmake --build vs2022 -v
+          # cd vs2022
+          # mkdir nuttxmsvc
+          # dir
+          # dir Debug
+          # copy /Y .\Debug\nuttx.exe .\nuttxmsvc\nuttx.exe
+          # 7z a ./nuttxmsvc_${{ matrix.arch }}.zip ./nuttxmsvc
+        # shell: cmd
+
+      # - name: Tests
+        # run: |
+          # gcc -v
+          # cmake --version
+
+      # - name: Upload Artifacts
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: nuttx-${{ matrix.os }}-${{ matrix.arch }}
+          # path: ./nuttxspace/nuttx/vs2022/nuttxmsvc_${{ matrix.arch }}.zip
+
