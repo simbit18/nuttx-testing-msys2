@@ -41,10 +41,12 @@ jobs:
           submodules: true
       - name: Checkout Source Files
         run: |
-          $env:PATH
+          # $env:PATH
           # gcc -v
           where.exe gcc
           dir "${{github.workspace}}"
+          copy "${{github.workspace}}\native\nuttx_native_arm.bat" nuttx_native_arm.bat
+          nuttx_native_arm.bat
           # Copy-Item -Path C:\mingw64\bin\mingw32-make.exe -Destination C:\mingw64\bin\make.exe
           # where.exe mingw32-make
           # where.exe make
@@ -58,7 +60,7 @@ jobs:
           # git clone --depth 1 https://github.com/apache/nuttx nuttx
           # git clone --depth 1 https://github.com/apache/nuttx-apps apps
           # dir
-          # shell: cmd
+        shell: cmd
 
       # - name: Build
         # run: |
