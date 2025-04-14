@@ -105,6 +105,12 @@ jobs:
         shell: cmd
       - name: Build
         run: |
+          set BB_OVERRIDE_APPLETS=make ar
+          set BB_GLOBBING=0
+          set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
+          set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
+          set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
+          rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
           dir
           make
