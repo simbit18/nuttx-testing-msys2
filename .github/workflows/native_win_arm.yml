@@ -82,10 +82,28 @@ jobs:
       - name: Checkout Source Files
         run: |
           rem arm-none-eabi-gcc --version
-          set
           dir
+          cd nuttxspace
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
+        shell: cmd
+      - name: Build
+        run: |
+          set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
+          set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
+          set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
+          set
+          cd ${{github.workspace}}\nuttxspace\nuttx
+          dir
+          # cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          # :: cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja --check-system-vars --debug-trycompile
+          # cmake --build vs2022 -v
+          # cd vs2022
+          # mkdir nuttxmsvc
+          # dir
+          # dir Debug
+          # copy /Y .\Debug\nuttx.exe .\nuttxmsvc\nuttx.exe
+          # 7z a ./nuttxmsvc_${{ matrix.arch }}.zip ./nuttxmsvc
         shell: cmd
       # - name: Build
         # run: |
