@@ -87,6 +87,7 @@ jobs:
           dir
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
+        shell: cmd
       # - name: Build
         # run: |
           # cd ${{github.workspace}}\nuttxspace\nuttx
