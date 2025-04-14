@@ -94,7 +94,7 @@ jobs:
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
           rem arm-none-eabi-gcc --version
-          copy "${{github.workspace}}\native\configure.bat" "tools\nuttx_native_arm.bat"
+          copy "${{github.workspace}}\native\configure.bat" "${{github.workspace}}\nuttxspace\nuttx\tools\nuttx_native_arm.bat"
           .\tools\configure -n nucleo-l152re:nsh
         shell: cmd
       # - name: Build
