@@ -92,10 +92,11 @@ jobs:
           set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
           set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
           set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
-          set
+          rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
-          dir
-          arm-none-eabi-gcc --version
+          rem dir
+          rem arm-none-eabi-gcc --version
+          .\tools\configure -n nucleo-l152re:nsh
         shell: cmd
       # - name: Build
         # run: |
