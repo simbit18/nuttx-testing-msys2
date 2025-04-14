@@ -92,7 +92,7 @@ jobs:
           echo "${{github.workspace}}\nuttxspace\tools\win-tools" >> "$GITHUB_PATH"
           echo "${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin" >> "$GITHUB_PATH"
           echo "${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin" >> "$GITHUB_PATH"
-          rem set
+          set
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
           rem arm-none-eabi-gcc --version
