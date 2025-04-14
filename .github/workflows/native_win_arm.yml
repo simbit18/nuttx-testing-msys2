@@ -83,7 +83,7 @@ jobs:
         shell: cmd
       - name: Checkout Source Files
         run: |
-          arm-none-eabi-gcc --version
+          rem arm-none-eabi-gcc --version
           dir
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
