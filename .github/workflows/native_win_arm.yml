@@ -43,8 +43,8 @@ jobs:
         run: |
           rem $env:PATH
           rem gcc -v
-          where.exe gcc
-          where.exe curl
+          rem where.exe gcc
+          rem where.exe curl
           dir "${{github.workspace}}"
           
           mkdir nuttxspace
@@ -81,8 +81,6 @@ jobs:
         shell: cmd
       - name: Checkout Source Files
         run: |
-          rem arm-none-eabi-gcc --version
-          dir
           cd nuttxspace
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
@@ -96,6 +94,7 @@ jobs:
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
           rem arm-none-eabi-gcc --version
+          copy "${{github.workspace}}\native\configure.bat" "tools\nuttx_native_arm.bat"
           .\tools\configure -n nucleo-l152re:nsh
         shell: cmd
       # - name: Build
