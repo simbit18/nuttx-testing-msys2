@@ -61,7 +61,10 @@ echo.
 echo.
 
     rem set
-    rem cd /D %work_dir%
+    cd /D %work_dir%
+    git clone --depth 1 https://github.com/apache/nuttx nuttx
+    git clone --depth 1 https://github.com/apache/nuttx-apps apps
+    dir
 echo //-------------------------------------------------------------------------//
 echo // SUCCESS
 echo //-------------------------------------------------------------------------//
