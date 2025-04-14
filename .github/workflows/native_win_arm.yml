@@ -87,11 +87,11 @@ jobs:
         shell: cmd
       - name: Configuration
         run: |
-          BB_OVERRIDE_APPLETS=make ar >> $env:GITHUB_ENV
-          BB_GLOBBING=0 >> $env:GITHUB_ENV
-          PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH% >> $env:GITHUB_ENV
-          PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH% >> $env:GITHUB_ENV
-          PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH% >> $env:GITHUB_ENV
+          echo "BB_OVERRIDE_APPLETS=make ar" >> $GITHUB_ENV
+          echo "BB_GLOBBING=0" >> $GITHUB_ENV
+          echo "PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%" >> $GITHUB_ENV
+          echo "PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%" >> $GITHUB_ENV
+          echo "PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%" >> $GITHUB_ENV
           rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
