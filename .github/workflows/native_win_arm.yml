@@ -99,7 +99,9 @@ jobs:
           copy "${{github.workspace}}\native\configure.bat" tools\configure.bat
           copy "${{github.workspace}}\native\Config.mk" tools\Config.mk
           copy "${{github.workspace}}\native\Win.mk" tools\Win.mk
+          copy "${{github.workspace}}\native\Make.defs" tools\Make.defs
           .\tools\configure -n nucleo-l152re:nsh
+          make
         shell: cmd
       # - name: Build
         # run: |
