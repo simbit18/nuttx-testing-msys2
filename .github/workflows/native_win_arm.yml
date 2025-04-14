@@ -89,9 +89,9 @@ jobs:
         run: |
           echo "BB_OVERRIDE_APPLETS=make ar" >> $GITHUB_ENV
           echo "BB_GLOBBING=0" >> $GITHUB_ENV
-          echo "PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%" >> $GITHUB_ENV
-          echo "PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%" >> $GITHUB_ENV
-          echo "PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%" >> $GITHUB_ENV
+          echo "${{github.workspace}}\nuttxspace\tools\win-tools" >> "$GITHUB_PATH"
+          echo "${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin" >> "$GITHUB_PATH"
+          echo "${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin" >> "$GITHUB_PATH"
           rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
