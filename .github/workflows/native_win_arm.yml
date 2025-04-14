@@ -101,7 +101,7 @@ jobs:
           copy "${{github.workspace}}\native\Win.mk" tools\Win.mk
           copy "${{github.workspace}}\native\Make.defs" tools\Make.defs
           .\tools\configure -n nucleo-l152re:nsh
-          make
+          make.exe
         shell: cmd
       # - name: Build
         # run: |
