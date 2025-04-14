@@ -85,7 +85,7 @@ jobs:
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
         shell: cmd
-      - name: Build
+      - name: Configuration
         run: |
           set BB_OVERRIDE_APPLETS=make ar
           set BB_GLOBBING=0
@@ -102,6 +102,12 @@ jobs:
           copy "${{github.workspace}}\native\Make.defs" tools\Make.defs
           .\tools\configure -n nucleo-l152re:nsh
           make.exe
+        shell: cmd
+      - name: Build
+        run: |
+          cd ${{github.workspace}}\nuttxspace\nuttx
+          dir
+          make
         shell: cmd
       # - name: Build
         # run: |
