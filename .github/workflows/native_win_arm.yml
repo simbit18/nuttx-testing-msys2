@@ -95,6 +95,8 @@ jobs:
           rem dir
           rem arm-none-eabi-gcc --version
           copy "${{github.workspace}}\native\configure.bat" tools\configure.bat
+          copy "${{github.workspace}}\native\Config.mk" tools\Config.mk
+          copy "${{github.workspace}}\native\Win.mk" tools\Win.mk
           .\tools\configure -n nucleo-l152re:nsh
         shell: cmd
       # - name: Build
