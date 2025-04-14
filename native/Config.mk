@@ -588,6 +588,19 @@ define CATFILE
 endef
 endif
 
+# MKDIRECTORY -  Create one directory
+#
+# USAGE: $(call MKDIRECTORY,dest)
+
+ifeq ($(CONFIG_WINDOWS_NATIVE),y)
+define MKDIRECTORY
+	$(Q) if not exist $1 (mkdir $1)
+endef
+else
+define MKDIRECTORY
+	$(Q) mkdir -p $1
+endef
+endif
 # RWILDCARD - Recursive wildcard used to get lists of files from directories
 #
 # USAGE:  FILELIST = $(call RWILDCARD,<dir>,<wildcard-filename)
