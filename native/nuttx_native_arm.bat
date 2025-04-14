@@ -62,8 +62,8 @@ echo.
 
     rem set
     cd /D %work_dir%
-    git clone --depth 1 https://github.com/apache/nuttx nuttx
-    git clone --depth 1 https://github.com/apache/nuttx-apps apps
+    rem git clone --depth 1 https://github.com/apache/nuttx nuttx
+    rem git clone --depth 1 https://github.com/apache/nuttx-apps apps
     dir
 echo //-------------------------------------------------------------------------//
 echo // SUCCESS
