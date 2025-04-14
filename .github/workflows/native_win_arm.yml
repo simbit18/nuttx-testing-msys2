@@ -78,12 +78,11 @@ jobs:
           rem cd nuttxspace
           rem git clone --depth 1 https://github.com/apache/nuttx nuttx
           rem git clone --depth 1 https://github.com/apache/nuttx-apps apps
-          
-          rem arm-none-eabi-gcc --version
         shell: cmd
       - name: Checkout Source Files
         run: |
           rem arm-none-eabi-gcc --version
+          set
           dir
           git clone --depth 1 https://github.com/apache/nuttx nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps apps
