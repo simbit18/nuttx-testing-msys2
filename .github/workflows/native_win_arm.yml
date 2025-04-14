@@ -87,11 +87,11 @@ jobs:
         shell: cmd
       - name: Configuration
         run: |
-          set BB_OVERRIDE_APPLETS=make ar
-          set BB_GLOBBING=0
-          set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
-          set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
-          set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
+          BB_OVERRIDE_APPLETS=make ar >> $env:GITHUB_ENV
+          BB_GLOBBING=0 >> $env:GITHUB_ENV
+          PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH% >> $env:GITHUB_ENV
+          PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH% >> $env:GITHUB_ENV
+          PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH% >> $env:GITHUB_ENV
           rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
           rem dir
@@ -101,15 +101,14 @@ jobs:
           copy "${{github.workspace}}\native\Win.mk" tools\Win.mk
           copy "${{github.workspace}}\native\Make.defs" tools\Make.defs
           .\tools\configure -n nucleo-l152re:nsh
-          make.exe
         shell: cmd
       - name: Build
         run: |
-          set BB_OVERRIDE_APPLETS=make ar
-          set BB_GLOBBING=0
-          set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
-          set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
-          set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
+          rem set BB_OVERRIDE_APPLETS=make ar
+          rem set BB_GLOBBING=0
+          rem set PATH=${{github.workspace}}\nuttxspace\tools\win-tools;%PATH%
+          rem set PATH=${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin;%PATH%
+          rem set PATH=${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin;%PATH%
           rem set
           cd ${{github.workspace}}\nuttxspace\nuttx
           dir
