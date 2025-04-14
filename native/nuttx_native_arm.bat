@@ -21,7 +21,7 @@
     set arm_basefile=arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi
 
     rem ======================== win_tools
-    set PATH="%install_dir%\win-tools;%PATH%
+    set PATH="%install_dir%\win-tools;%PATH%"
     if not exist "%install_dir%\win-tools\busybox.exe" (
       echo. download %win_tools_basefile%.%archive%
       curl -L https://github.com/simbit18/win-tools/releases/download/win-tools-v1.38.0/%win_tools_basefile%.%archive% -o %win_tools_basefile%.%archive%
@@ -33,7 +33,7 @@
     )
 echo.
     rem ======================== kconfig_frontends
-    set PATH="%install_dir%\kconfig-frontends\bin;%PATH%
+    set PATH="%install_dir%\kconfig-frontends\bin;%PATH%"
     if not exist "%install_dir%\kconfig-frontends\bin\kconfig-conf.exe" (
       echo. download %kconfig_basefile%.%archive%
       curl -L https://github.com/simbit18/kconfig-frontends-windows-mingw64/releases/download/kconfig-frontends-4.11.0/%kconfig_basefile%.%archive% -o %kconfig_basefile%.%archive%
@@ -45,7 +45,7 @@ echo.
     )
 echo.
     rem ======================== ARM
-    set PATH="%install_dir%\gcc-arm-none-eabi\bin;%PATH%
+    set PATH="%install_dir%\gcc-arm-none-eabi\bin;%PATH%"
     if not exist "%install_dir%\gcc-arm-none-eabi\bin\arm-none-eabi-gcc.exe" (
       echo. download %arm_basefile%.%archive%
       REM goto end
