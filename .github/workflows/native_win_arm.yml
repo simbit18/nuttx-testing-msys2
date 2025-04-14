@@ -78,11 +78,11 @@ jobs:
           rem cd nuttxspace
           rem git clone --depth 1 https://github.com/apache/nuttx nuttx
           rem git clone --depth 1 https://github.com/apache/nuttx-apps apps
-          echo "BB_OVERRIDE_APPLETS=make ar" >> $GITHUB_ENV
-          echo "BB_GLOBBING=0" >> $GITHUB_ENV
-          echo "${{github.workspace}}\nuttxspace\tools\win-tools" >> "$GITHUB_PATH"
-          echo "${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin" >> "$GITHUB_PATH"
-          echo "${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin" >> "$GITHUB_PATH"
+          echo "BB_OVERRIDE_APPLETS=make ar" >> "%GITHUB_ENV%"
+          echo "BB_GLOBBING=0" >> "%GITHUB_ENV%"
+          echo "${{github.workspace}}\nuttxspace\tools\win-tools" >> "%GITHUB_PATH%"
+          echo "${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin" >> "%GITHUB_PATH%"
+          echo "${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin" >> "%GITHUB_PATH%"
         shell: cmd
       - name: Checkout Source Files
         run: |
@@ -92,8 +92,8 @@ jobs:
         shell: cmd
       - name: Configuration
         run: |
-          rem echo "BB_OVERRIDE_APPLETS=make ar" >> $GITHUB_ENV
-          rem echo "BB_GLOBBING=0" >> $GITHUB_ENV
+          rem echo "BB_OVERRIDE_APPLETS=make ar" >> "%GITHUB_ENV%"
+          rem echo "BB_GLOBBING=0" >> "%GITHUB_ENV%"
           rem echo "${{github.workspace}}\nuttxspace\tools\win-tools" >> "$GITHUB_PATH"
           rem echo "${{github.workspace}}\nuttxspace\tools\kconfig-frontends\bin" >> "$GITHUB_PATH"
           rem echo "${{github.workspace}}\nuttxspace\tools\gcc-arm-none-eabi\bin" >> "$GITHUB_PATH"
