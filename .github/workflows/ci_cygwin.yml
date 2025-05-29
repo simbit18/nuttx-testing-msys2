@@ -28,6 +28,9 @@ jobs:
     runs-on: windows-latest
     env:
         namejob: Cygwin
+        SHELLOPTS: igncr
+        CHERE_INVOKING: 1
+        CYGWIN_NOWINPATH: 1
     strategy:
       fail-fast: false
       matrix:
