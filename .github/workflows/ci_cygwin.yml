@@ -34,31 +34,49 @@ jobs:
         boards: ${{ fromJson(inputs.testlist_names) }}
     defaults:
       run:
-        shell: bash.exe --login --norc -eo pipefail -o igncr '{0}'
+        shell: C:\cygwin\bin\bash.exe '{0}'
     steps:
-      - uses: actions/checkout@v4
-        with: 
-          submodules: 'true'
-      - uses: cygwin/cygwin-install-action@master
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf input
+        shell: pwsh
+      - name: Checkout from git
+        uses: actions/checkout@v4
+      # install cygwin and build tools
+      - name: Install Cygwin
+        uses: cygwin/cygwin-install-action@master
         with:
-          platform: x64
+          platform: x86_64
+          site: https://mirrors.kernel.org/sourceware/cygwin/
           packages: >-
-            base-devel
-            gcc
+            coreutils
+            make
+            gcc-core
+            gcc-g++
+            binutils
             gperf
-            automake
-            autoconf
+            flex
             git
-            python3
-            ncurses-devel
+            bison
+            byacc
+            gdb
             unzip
-            zip
-            tio
+            awk
+            automake-1.15
+            autoconf
+            wget
+            xxd
+            libmpc-devel
+            libncurses-devel
+            libmpfr-devel
+            libiconv-devel
             zlib-devel
+            patch
+            python3
             cmake
             ninja
-            python-pip 
-            vim
+            curl
+            python-pip
         
       - name: pip3 install
         run: |
@@ -66,7 +84,7 @@ jobs:
           uname
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
           
-      ## - run: git config --global core.autocrlf false
+      - run: git config --global core.autocrlf false
       - name: Download Source Artifact
         uses: actions/download-artifact@v4
         with:
@@ -97,14 +115,15 @@ jobs:
           # Configure Git on <your os> to properly handle line endings
           ## git config --unset core.filemode
           ## git config --global core.filemode false
-          git config --global --add safe.directory /github/workspace/sources/nuttx
-          git config --global --add safe.directory /github/workspace/sources/apps
+          ## git config --global --add safe.directory /github/workspace/sources/nuttx
+          ## git config --global --add safe.directory /github/workspace/sources/apps
+          git config --global --add safe.directory '*'
           cd sources/nuttx/tools/ci
           ## ./cibuild.sh -g -d -i -c -A -R testlist/${{matrix.boards}}.dat
-          ./cibuild.sh -c -d -i -c -A -C -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -c -d -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.namejob }}-builds
+          name: ${{ env.namejob }}-${{matrix.boards}}-builds
           path: buildartifacts/
         continue-on-error: true
       # # - name: Create file status_job2.txt and write the job status into it
