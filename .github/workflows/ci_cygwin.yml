@@ -105,7 +105,16 @@ jobs:
 
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
-
+      - name: Check ENV
+        # shell: cmd
+        run: |
+          echo "PATH=%PATH%"
+          ls -a
+          export PATH="/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          # export MAKEFLAGS=-j$(nproc)
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          uname -a
       - name: Run Builds
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
