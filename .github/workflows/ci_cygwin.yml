@@ -110,6 +110,7 @@ jobs:
         run: |
           echo "::add-matcher::sources/nuttx/.github/gcc.json"
           export ARTIFACTDIR=`pwd`/buildartifacts
+          ls
           ## git config --global core.autocrlf true
           ## git config --global core.autocrlf input
           # Configure Git on <your os> to properly handle line endings
@@ -119,8 +120,9 @@ jobs:
           ## git config --global --add safe.directory /github/workspace/sources/apps
           git config --global --add safe.directory '*'
           cd sources/nuttx/tools/ci
+          pwd
           ## ./cibuild.sh -g -d -i -c -A -R testlist/${{matrix.boards}}.dat
-          ./cibuild.sh -c -d -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
+          ./cibuild.sh -c -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.namejob }}-${{matrix.boards}}-builds
