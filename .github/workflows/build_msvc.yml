@@ -104,7 +104,7 @@ jobs:
           ::no  cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja
           :: cmake --build vs2022
           dir vs2022
-          copy vs2022\.config ${{github.workspace}}\sources\buildartifacts\.config
+          copy ${{github.workspace}}\sources\nuttx\vs2022\.config ${{github.workspace}}\sources\buildartifacts\.config
         shell: cmd
       - uses: actions/upload-artifact@v4
         with:
