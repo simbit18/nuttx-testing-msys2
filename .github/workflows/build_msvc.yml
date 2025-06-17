@@ -95,7 +95,7 @@ jobs:
       - name: Configure and build with CMake
         run: |
           echo %PATH%
-          "ARTIFACTDIR=${{github.workspace}}\sources\buildartifacts" >> $env:GITHUB_ENV
+          "ARTIFACTDIR=${{github.workspace}}\sources\nuttx\vs2022" >> $env:GITHUB_ENV
           mkdir ${{github.workspace}}\sources\buildartifacts
           dir
           :: git config --global --add safe.directory '*'
@@ -104,10 +104,10 @@ jobs:
           ::no  cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja
           :: cmake --build vs2022
           dir vs2022
-          copy ${{github.workspace}}\sources\nuttx\vs2022\.config ${{github.workspace}}\sources\buildartifacts\.config
+          :: copy ${{github.workspace}}\sources\nuttx\vs2022\.config ${{github.workspace}}\sources\buildartifacts\.config
         shell: cmd
       - uses: actions/upload-artifact@v4
         with:
           name: msvc-builds
-          path: ./sources/buildartifacts/
+          path: ./sources/nuttx/vs2022
         continue-on-error: true
