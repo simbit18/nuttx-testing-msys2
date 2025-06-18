@@ -39,8 +39,8 @@ jobs:
       - name: Checkout nuttx repo
         uses: actions/checkout@v4
         with:
-          repository: apache/nuttx
-          ref: master
+          repository: Fix-Point/nuttx
+          ref: fix-wqueue-compilation
           path: sources/nuttx
           fetch-depth: 2
       - name: Checkout nuttx repo tags
@@ -100,7 +100,7 @@ jobs:
           dir
           :: git config --global --add safe.directory '*'
           cd sources\nuttx
-          cmake -B vs2022 -DBOARD_CONFIG=sim/windows -G "Visual Studio 17 2022" -A Win32
+          cmake -B vs2022 -DBOARD_CONFIG=sim/windows64 -G "Visual Studio 17 2022" -A Win32
           ::no  cmake -B vs2022 -DBOARD_CONFIG=sim/windows -GNinja
           :: cmake --build vs2022
           dir vs2022
