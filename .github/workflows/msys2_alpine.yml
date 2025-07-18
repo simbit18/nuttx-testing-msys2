@@ -87,7 +87,7 @@ jobs:
         
       - name: Upload file status_job1.txt as an artifact
         if: always()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: pass_status_job1
           path: status_job1.txt
@@ -250,8 +250,8 @@ jobs:
         run: |
           echo 'pip3 install'
           uname
+          python3 -m venv --system-site-packages /usr/local
           pip3 install --root-user-action=ignore --no-cache-dir pyelftools cxxfilt kconfiglib
-          
       ## - run: git config --global core.autocrlf false
       - name: Download Source Artifact
         uses: actions/download-artifact@v4
