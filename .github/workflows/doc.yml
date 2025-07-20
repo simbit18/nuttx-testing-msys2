@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  # repository_dispatch:
+    # types: docs
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - master
+  # schedule:
+    # - cron: '0 0 * * *' 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # - name: Checkout Site
+      # uses: actions/checkout@v4
+    # - run: |
+        # git fetch --prune --unshallow
+
+    - name: Checkout NuttX repo
+      uses: actions/checkout@v4
+      with:
+        repository: apache/nuttx
+        fetch-depth: 0
+        ref: master
+        path: nuttx
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'
+    - name: Build docs
+      run: |
+        echo "======================================================="
+        echo " Install Pipenv"
+        echo "======================================================="
+
+        pip3 install pipenv
+
+        echo "======================================================="
+        echo " Setup nuttx/Documentation"
+        echo "======================================================="
+
+        cd nuttx/Documentation
+        DOCDIR=../../docs
+        rm -rf $DOCDIR
+
+        echo "======================================================="
+        echo " Select nuttx/Documentation version candidates"
+        echo "======================================================="
+
+        NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
+        export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
+        
+        echo " ==> BUILD NUTTX DOCUMENTATION FOR: $NUTTX_VERSIONS (and master)."
+
+        for nuttx_version in $NUTTX_TAGS master; do
+
+          echo " ===> BUILDING DOCUMENTATION FOR NuttX $nuttx_version."
+
+          git checkout -f $nuttx_version
+
+          # NuttX uses Sphinx as documentation generator. Sphinx needs Python.
+          # Sphinx may have different dependencies for different NuttX release.
+          # Manage Python packages with PipEnv per release deinfed in Pipfile.
+          echo " ====> PIPENV INSTALL."
+
+          pipenv install
+
+          if [ "$nuttx_version" = "master" ]; then
+            OUTDIR="$DOCDIR/latest"
+          else
+            OUTDIR="$DOCDIR/${nuttx_version#nuttx-}"
+          fi
+
+          echo " ====> OUTDIR IS: $OUTDIR."
+
+          echo " ====> STARTING SPHINX BUILD."
+
+          pipenv run make html BUILDDIR="$OUTDIR"
+
+          echo " ====> COPY RESULTS."
+
+          mv $OUTDIR/html/* $OUTDIR
+
+          echo " ====> BUILD LOCATION CLEANUP."
+
+          rm -rf $OUTDIR/{html,doctrees}
+
+          echo " ====> PIPENV CLEANUP."
+
+          # Uninstall pipenv packages (cached packages are preserved).
+          pipenv uninstall --all
+
+        done
+
+        cd ../..
+
+        echo  " ========== DOCUMENTATION BUILD FINISHED ==========="
+
+
+    # - name: Install Ruby tools
+      # run: |
+        # sudo apt-get -y install rubygems ruby-dev zlib1g-dev
+    
+    # - name: Build Site
+      # run: |
+        # export GEM_HOME=$HOME/.gem
+        # export PATH=$PATH:$GEM_HOME/bin
+        # username="`git log -1 --pretty=format:'%an'`"
+        # email="`git log -1 --pretty=format:'%ae'`"
+        # git config --global user.name "$username"
+        # git config --global user.email "$email"
+        # ./publish.sh
+
+    - name: Upload artifact of staged site
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-site
+        path: content
+
+    # - name: Publish Site
+      # if: (github.event_name == 'push' || github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' ) && github.ref == 'refs/heads/master'
+      # run: |
+        # git push origin asf-site:asf-site
