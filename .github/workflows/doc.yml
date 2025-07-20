@@ -36,7 +36,7 @@ jobs:
         echo " Install Pipenv"
         echo "======================================================="
 
-        pip3 install pipenv
+        pip3 install --user pipenv
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
