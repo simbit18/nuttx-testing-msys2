@@ -50,7 +50,8 @@ jobs:
         echo " Select nuttx/Documentation version candidates"
         echo "======================================================="
 
-        NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
+        # NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
+        NUTTX_TAGS=10.0.0,10.0.1,10.1.0,10.2.0,10.3.0,11.0.0,12.0.0,12.1.0,12.2.0,12.2.1,12.3.0,12.4.0,12.5.0,12.5.1,12.6.0,12.7.0,12.8.0,12.9.0,12.10.0
         # NUTTX_TAGS=$(git tag -l 'nuttx-12.4.0' | fgrep -v RC)
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
