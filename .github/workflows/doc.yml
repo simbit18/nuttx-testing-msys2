@@ -50,7 +50,8 @@ jobs:
         echo " Select nuttx/Documentation version candidates"
         echo "======================================================="
 
-        NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
+        # NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
+        NUTTX_TAGS=$(git tag -l 'nuttx-12.4.0' | fgrep -v RC)
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
         echo " ==> BUILD NUTTX DOCUMENTATION FOR: $NUTTX_VERSIONS (and master)."
@@ -88,7 +89,9 @@ jobs:
           
           ls -a $OUTDIR
 
-          rm -rf $OUTDIR/{html,doctrees,_tags}
+          rm -rf $OUTDIR/{html,doctrees}
+          
+          ls -a $OUTDIR
 
           echo " ====> PIPENV CLEANUP."
 
