@@ -74,6 +74,8 @@ jobs:
           else
             OUTDIR="$DOCDIR/${nuttx_version#nuttx-}"
           fi
+          
+          mkdir -p $OUTDIR
           BUILDTMPDIR="$DOCDIR/buildtmp"
           
           echo " ====> OUTDIR IS: $OUTDIR."
