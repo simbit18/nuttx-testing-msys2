@@ -85,6 +85,8 @@ jobs:
           mv $OUTDIR/html/* $OUTDIR
 
           echo " ====> BUILD LOCATION CLEANUP."
+          
+          ls -a $OUTDIR
 
           rm -rf $OUTDIR/{html,doctrees}
 
