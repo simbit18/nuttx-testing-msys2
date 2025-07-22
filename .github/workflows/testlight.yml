@@ -14,7 +14,13 @@ name: Testlight
 
 permissions:
   contents: read
-on: 
+on:
+
+  pull_request:
+    paths-ignore:
+      - 'tools/**'
+      - 'bloaty/**'
+
   workflow_dispatch:
   push:
     paths:
