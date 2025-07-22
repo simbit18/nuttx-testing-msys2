@@ -12,6 +12,7 @@
 #
 name: Testlight
 
+# Sets permissions
 permissions:
   contents: read
 
@@ -22,6 +23,7 @@ on:
       - 'tools/**'
       - 'bloaty/**'
 
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   push:
     paths:
