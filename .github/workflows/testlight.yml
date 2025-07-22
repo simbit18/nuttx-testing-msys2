@@ -21,7 +21,6 @@ on:
       - 'tools/**'
       - 'bloaty/**'
 
-  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/Testlight.yml'
