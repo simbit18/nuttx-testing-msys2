@@ -26,6 +26,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   push:
+    paths-ignore:
+      - 'AUTHORS'
     branches: ["main"]
    # paths:
    #   - '.github/workflows/Testlight.yml'
