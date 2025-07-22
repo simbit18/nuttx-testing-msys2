@@ -51,7 +51,7 @@ jobs:
         echo "======================================================="
 
         # NUTTX_TAGS=$(git tag -l 'nuttx-1?.*' | fgrep -v RC)
-        NUTTX_TAGS=$(git tag -l --sort=taggerdate 'nuttx-12.*.*' | fgrep -v RC)
+        NUTTX_TAGS=$(git tag -l --sort=taggerdate 'nuttx-1?.*' | fgrep -v RC)
         # NUTTX_TAGS=$(git tag -l 'nuttx-12.4.0' | fgrep -v RC)
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
