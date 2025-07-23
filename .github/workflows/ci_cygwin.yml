@@ -113,7 +113,7 @@ jobs:
         run: |
           echo "PATH=%PATH%"
           ls -a
-          export PATH="/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          # export PATH="/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
           # export MAKEFLAGS=-j$(nproc)
           echo "$GITHUB_PATH"
           echo "$PATH"
