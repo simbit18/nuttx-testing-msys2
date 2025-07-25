@@ -1,0 +1,177 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Test Cygwin
+
+permissions:
+  contents: read
+on: 
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/test_cygwin.yml'
+
+jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          # 
+          # master
+          REF="refs/heads/main"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v4
+        with:
+          repository: simbit18/nuttx-testing-msys2
+          # master
+          ref:  main
+          path: sources/nuttx-testing-msys2
+          fetch-depth: 2
+      - name: Checkout nuttx-testing-msys2 repo tags
+        run: git -C sources/nuttx-testing-msys2 fetch --tags
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+  Test_cygwin:
+    needs: Fetch-Source
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    env:
+        namejob: Cygwin
+        SHELLOPTS: igncr
+        CHERE_INVOKING: 1
+        CYGWIN_NOWINPATH: 1
+    defaults:
+      run:
+        shell: C:\cygwin\bin\bash.exe '{0}'
+    steps:
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: |
+          tar zxf sources.tar.gz
+          # ls -a source
+      - name: System Information
+        run: |
+          uname -a
+          bash --version
+          gcc -v
+          # clang -v
+          # xcodebuild -version
+          #brew install dmd
+          #brew install dub
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf input
+        shell: pwsh
+      - name: Checkout from git
+        uses: actions/checkout@v4
+      # install cygwin and build tools
+      - name: Install Cygwin
+        uses: cygwin/cygwin-install-action@master
+        with:
+          platform: x86_64
+          site: https://mirrors.kernel.org/sourceware/cygwin/
+          packages: >-
+            coreutils
+            make
+            git
+            unzip
+            awk
+            wget
+            patch
+            curl
+      # Released version of Cython has issues with Python 11. Set runner to use Python 3.10
+      # https://github.com/cython/cython/issues/4500
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run Builds
+        run: |
+          echo 'Build'
+          cd sources/nuttx-testing-msys2/cygwin
+          #gcc ./exception_setjmp.c -o exception_setjmp
+          ## ls -a $GITHUB_WORKSPACE/bloaty
+          #./exception_setjmp
+          ./test.sh
+          # echo 'source'
+          # source sources/tools/env.sh
+          echo 'PATH'
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          ## bloaty -n 20 -d sections,symbols /exception_setjmp
+      - name: Test Bloaty
+        run: |
+          #ls -a ${{github.workspace}}
+          #ls -a ${{github.workspace}}/sources
+          ls -a ${{github.workspace}}/sources/tools
+          # echo "${{github.workspace}}/sources/tools/bloaty/bin" >> $env:GITHUB_PATH
+          echo "$GITHUB_PATH"
+          # bloaty --version
+      - name: Checkout Source Files
+        run:  |
+          mkdir nuttxspace
+          cd nuttxspace
+          ## git clone --depth 1 https://github.com/apache/nuttx.git nuttx
+          ## git clone --depth 1 https://github.com/apache/nuttx-apps.git apps
+          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx.git nuttx
+          ## git clone --single-branch --branch simbit18-alpine https://github.com/simbit18/nuttx-apps.git apps
+          # git clone --depth 1 --single-branch --branch simbit18-20241031 https://github.com/simbit18/nuttx.git nuttx
+          # git clone --depth 1 https://github.com/simbit18/nuttx-apps.git apps
+      - name: Build
+        run: |
+          ## Move to nuttx
+          cd nuttxspace/nuttx
+          ls
+          source ${{github.workspace}}/sources/tools/env.sh
+          #source /Users/runner/work/nuttx-testing-msys2/nuttx-testing-msys2/sources/tools/env.sh
+          ## Show the GCC version
+          arm-none-eabi-gcc --version
+          arm-none-eabi-c++ --version
+
+          ## cmake Configure the build 
+          # cmake -B build -DBOARD_CONFIG=nucleo-f767zi:nsh -GNinja
+
+          ## cmake Run the build
+          # cmake --build build
+          ## verbose
+          ## cmake --build build -v
+
+          ## Preserve the build config
+          ### cp f4x1re/.config nuttx.config
+
+          ## Run the build
+          ### cmake --build f4x1re -v
+
+
+          ## Configure the build
+          # tools/configure.sh -m nucleo-f4x1re:f411-nsh
+          
+          ## Run the build
+          # make
