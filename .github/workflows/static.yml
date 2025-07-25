@@ -29,7 +29,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    if: github.repository == 'lvgl/lvgl'
+    if: github.repository == 'simbit18/nuttx-testing-msys2'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
