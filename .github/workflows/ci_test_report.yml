@@ -62,6 +62,46 @@ jobs:
           echo "| Environment         | ${{ inputs.environment }} |"
           echo "| Cluster             | ${{ inputs.cluster }} |"
         } >> $GITHUB_STEP_SUMMARY
+
+  generate-markdown-content:
+    name: Test markdown
+    runs-on: ubuntu-latest
+    steps:
+    - name: Generate Markdown content
+      run: echo "## Markdown content" >> content.md
+    - name: Export Markdown content to job summary
+      run: cat content.md >> $GITHUB_STEP_SUMMARY
+    - name: Add Markdown content as comment to pull request
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs')
+          const body = fs.readFileSync('content.md', 'utf-8')
+          comments = await github.paginate(
+              github.rest.issues.listComments({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              })
+            )
+          matches = comments.filter(comment => comment.body && comment.body.includes('Markdown content'))
+          comment = matches[0]
+          if (comment) {
+             github.rest.issues.updateComment({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               comment_id: comment.id.toString(),
+               body: body,
+             })
+           } else {
+             github.rest.issues.createComment({
+               issue_number: context.issue.number,
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               body: body,
+             })
+           }
+
   build-and-test-linux-script:
     name: Test Linux
     runs-on: ubuntu-latest
