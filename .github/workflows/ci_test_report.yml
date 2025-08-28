@@ -62,18 +62,27 @@ jobs:
           echo "| Environment         | ${{ inputs.environment }} |"
           echo "| Cluster             | ${{ inputs.cluster }} |"
         } >> $GITHUB_STEP_SUMMARY
-  test:
-    name: Test
+
+  generate-markdown-commit:
+    name: Test markdown commit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: subdir/package-lock.json
-      - run: npm ci
-      - run: npm test
+    - name: Generate Markdown content
+      run: echo "## Markdown content" >> content.md
+    - name: Export Markdown content to job summary
+      run: cat content.md >> $GITHUB_STEP_SUMMARY
+    - name: Add Markdown content as comment to pull request
+      uses: actions/github-script@v7
+      id: my-script
+      with:
+        result-encoding: string
+        retries: 3
+        script: |
+          github.rest.issues.get({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          })
 
   generate-markdown-content:
     name: Test markdown
