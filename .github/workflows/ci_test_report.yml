@@ -58,9 +58,9 @@ jobs:
           echo "### :rocket: Workflow inputs"
           echo "| Arg                 | Value |"
           echo "| ------------------- | ----- |"
-          echo "| Print inputs        | ${{ inputs.print-inputs }} |"
-          echo "| Environment         | ${{ inputs.environment }} |"
-          echo "| Cluster             | ${{ inputs.cluster }} |"
+          echo "| Print inputs        | :x: ${{ inputs.print-inputs }} |"
+          echo "| Environment         | :heavy_check_mark: ${{ inputs.environment }} |"
+          echo "| Cluster             | :x: ${{ inputs.cluster }} |"
         } >> $GITHUB_STEP_SUMMARY
 
   generate-markdown-commit:
