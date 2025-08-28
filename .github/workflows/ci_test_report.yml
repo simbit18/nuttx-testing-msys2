@@ -69,11 +69,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          package-manager-cache: false
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: subdir/package-lock.json
       - run: npm ci
-      - run: npm run mocha
+      - run: npm test
 
   generate-markdown-content:
     name: Test markdown
