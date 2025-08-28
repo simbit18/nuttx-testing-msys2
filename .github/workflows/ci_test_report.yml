@@ -71,7 +71,7 @@ jobs:
         with:
           cache-dependency-path: subdir/package-lock.json
           node-version: 20
-          cache: npm
+          cache: 'npm'
       - run: npm ci
       - run: npm run mocha
 
