@@ -46,13 +46,14 @@ jobs:
           echo "| Environment         | ${{ inputs.environment }} |"
           echo "| Cluster             | ${{ inputs.cluster }} |"
         } >> $GITHUB_STEP_SUMMARY
+
   build-and-test-macos:
     name: Test macOS
     runs-on: macos-13
     steps:
     - name: Adding markdown bash
       run: |
-        echo '### Hello world macOS 1! ' >> $GITHUB_STEP_SUMMARY
+        echo '### Hello world macOS 1! :pout: :partying_face: ' >> $GITHUB_STEP_SUMMARY
         cat $GITHUB_STEP_SUMMARY
         {
           echo "### :rocket: Workflow inputs"
