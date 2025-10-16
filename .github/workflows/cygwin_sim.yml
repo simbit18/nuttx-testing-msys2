@@ -91,10 +91,10 @@ jobs:
           touch aclocal.m4 Makefile.in
           make install
           ls -a
-          mkdir -p nuttxspace
-          cd nuttxspace
-          mkdir -p tools
-          pwd
+          # mkdir -p nuttxspace
+          # cd nuttxspace
+          # mkdir -p tools
+          # pwd
     - name: Install genromfs
       run: |
           export PATH="/usr/bin:/usr/local/bin:$(cygpath "${SYSTEMROOT}")/System32"
@@ -107,12 +107,15 @@ jobs:
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
-          make install PREFIX=/usr/local
+          make
+          ls -a
+          cp genromfs.exe /usr/bin
+          # make install PREFIX=/usr/local
           # make install
-          echo '/usr/local/bin List Files'
-          ls -a /usr/local/bin
-          # echo '/usr/bin List Files'
-          # ls -a /usr/bin
+          # echo '/usr/local/bin List Files'
+          # ls -a /usr/local/bin
+          echo '/usr/bin List Files'
+          ls -a /usr/bin
     # - name: Copy NXTOOL GENROMFS and clean source files
       # run: |
           # echo 'Copy NXTOOL GENROMFS and clean source files'
