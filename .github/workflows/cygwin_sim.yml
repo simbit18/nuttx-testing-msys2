@@ -91,6 +91,10 @@ jobs:
           touch aclocal.m4 Makefile.in
           make install
           ls -a
+          mkdir -p nuttxspace
+          cd nuttxspace
+          mkdir -p tools
+          pwd
     - name: Install genromfs
       run: |
           export PATH="/usr/bin:/usr/local/bin:$(cygpath "${SYSTEMROOT}")/System32"
