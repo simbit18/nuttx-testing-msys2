@@ -93,26 +93,34 @@ jobs:
           ls -a
     - name: Install genromfs
       run: |
+          export PATH="/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          export MAKEFLAGS=-j$(nproc)
+          echo "$GITHUB_PATH"
+          echo "$PATH"
+          uname -a
+          gcc -v
           echo 'Install genromfs'
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
-          make install PREFIX=/opt/nuttxenv
-          ls -a /usr/local/bin
-    - name: Copy NXTOOL GENROMFS and clean source files
-      run: |
-          echo 'Copy NXTOOL GENROMFS and clean source files'
-          # cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
-          # cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
-          # cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
-          cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
-          cp /usr/local/bin/kconfig-conf.exe /usr/bin
-          cp /usr/local/bin/kconfig-tweak /usr/bin
-          rm -rf nuttx-tools genromfs-0.5.2
-          echo 'list files ...'
-          ls -a
-          echo 'list files -> /usr/bin'
+          # make install PREFIX=/opt/nuttxenv
+          make install
+          # ls -a /usr/local/bin
           ls -a /usr/bin
+    # - name: Copy NXTOOL GENROMFS and clean source files
+      # run: |
+          # echo 'Copy NXTOOL GENROMFS and clean source files'
+          # # cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
+          # # cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
+          # # cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
+          # cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
+          # cp /usr/local/bin/kconfig-conf.exe /usr/bin
+          # cp /usr/local/bin/kconfig-tweak /usr/bin
+          # rm -rf nuttx-tools genromfs-0.5.2
+          # echo 'list files ...'
+          # ls -a
+          # echo 'list files -> /usr/bin'
+          # ls -a /usr/bin
     - name: Checkout Source Files
       run: |
           echo 'Checkout Source Files'
