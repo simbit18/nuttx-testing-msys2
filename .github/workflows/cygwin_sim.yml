@@ -103,7 +103,7 @@ jobs:
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
-          make install PREFIX=/usr/local/bin
+          make install PREFIX=/usr/local
           # make install
           echo '/usr/local/bin List Files'
           ls -a /usr/local/bin
@@ -144,8 +144,8 @@ jobs:
     - name: Build
       run: |
           echo 'Build'
-          export PATH="/usr/bin:/usr/local/bin:$(cygpath "${SYSTEMROOT}")/System32"
-          export MAKEFLAGS=-j$(nproc)
+          export PATH="/usr/bin:/usr/local/bin:/usr/local/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          # export MAKEFLAGS=-j$(nproc)
           echo "$GITHUB_PATH"
           echo "$PATH"
 
