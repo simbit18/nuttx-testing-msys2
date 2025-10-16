@@ -103,26 +103,26 @@ jobs:
           cd nuttx-tools
           tar xzf genromfs-0.5.2.tar.gz
           cd genromfs-0.5.2
-          # make install PREFIX=/opt/nuttxenv
-          make install
-          echo '/usr/local/bin List Files'
-          ls -a /usr/local/bin
-          echo '/usr/bin List Files'
-          ls -a /usr/bin
-    # - name: Copy NXTOOL GENROMFS and clean source files
-      # run: |
-          # echo 'Copy NXTOOL GENROMFS and clean source files'
-          # # cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
-          # # cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
-          # # cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
-          # cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
-          # cp /usr/local/bin/kconfig-conf.exe /usr/bin
-          # cp /usr/local/bin/kconfig-tweak /usr/bin
-          # rm -rf nuttx-tools genromfs-0.5.2
-          # echo 'list files ...'
-          # ls -a
-          # echo 'list files -> /usr/bin'
+          make install PREFIX=/opt/nuttxenv
+          # make install
+          # echo '/usr/local/bin List Files'
+          # ls -a /usr/local/bin
+          # echo '/usr/bin List Files'
           # ls -a /usr/bin
+    - name: Copy NXTOOL GENROMFS and clean source files
+      run: |
+          echo 'Copy NXTOOL GENROMFS and clean source files'
+          # cp /opt/nuttxenv/usr/bin/kconfig-conf.exe /usr/bin
+          # cp /opt/nuttxenv/usr/bin/kconfig-mconf.exe /usr/bin
+          # cp /opt/nuttxenv/usr/bin/kconfig-tweak /usr/bin
+          cp /opt/nuttxenv/usr/bin/genromfs.exe /usr/bin
+          cp /usr/local/bin/kconfig-conf.exe /usr/bin
+          cp /usr/local/bin/kconfig-tweak /usr/bin
+          rm -rf nuttx-tools genromfs-0.5.2
+          echo 'list files ...'
+          ls -a
+          echo 'list files -> /usr/bin'
+          ls -a /usr/bin
     - name: Checkout Source Files
       run: |
           echo 'Checkout Source Files'
@@ -144,6 +144,10 @@ jobs:
     - name: Build
       run: |
           echo 'Build'
+          export PATH="/usr/bin:/usr/local/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          export MAKEFLAGS=-j$(nproc)
+          echo "$GITHUB_PATH"
+          echo "$PATH"
 
           ## Move to nuttx
           cd nuttxspace/nuttx
