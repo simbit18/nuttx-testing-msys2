@@ -25,7 +25,7 @@ jobs:
         git config --global core.autocrlf input
       shell: pwsh
     - name: Checkout from git
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     # install cygwin and build tools
     - name: Install Cygwin
       uses: cygwin/cygwin-install-action@master
@@ -93,7 +93,7 @@ jobs:
           ls -a
     - name: Install genromfs
       run: |
-          export PATH="/usr/bin:$(cygpath "${SYSTEMROOT}")/System32"
+          export PATH="/usr/bin:/usr/local/bin:$(cygpath "${SYSTEMROOT}")/System32"
           export MAKEFLAGS=-j$(nproc)
           echo "$GITHUB_PATH"
           echo "$PATH"
@@ -105,7 +105,9 @@ jobs:
           cd genromfs-0.5.2
           # make install PREFIX=/opt/nuttxenv
           make install
-          # ls -a /usr/local/bin
+          echo '/usr/local/bin List Files'
+          ls -a /usr/local/bin
+          echo '/usr/bin List Files'
           ls -a /usr/bin
     # - name: Copy NXTOOL GENROMFS and clean source files
       # run: |
@@ -124,6 +126,8 @@ jobs:
     - name: Checkout Source Files
       run: |
           echo 'Checkout Source Files'
+          echo "$GITHUB_PATH"
+          echo "$PATH"
           mkdir nuttxspace
           ls -a
           cd nuttxspace
