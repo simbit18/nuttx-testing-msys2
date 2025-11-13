@@ -8,11 +8,9 @@ on:
 
 jobs:
   test-only:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v5
-      - name: Test
+      - name: Test  🛎
         run: |
           echo 'Test unicode'
           mkdir test-uni
