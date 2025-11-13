@@ -1,0 +1,23 @@
+name: Unicode
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-only:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v5
+      - name: Test
+        run: |
+          echo 'Test unicode'
+          mkdir test-uni
+          ls -a 
+          cp -f unicode/test.sh test-uni/test.sh
+          cd test-uni
+          ls -a
+          ./test.sh
