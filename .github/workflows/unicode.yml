@@ -10,12 +10,17 @@ jobs:
   test-only:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - name: Test  🛎
         run: |
           echo 'Test unicode'
-          mkdir test-uni
+          mkdir -p test-uni
           ls -a 
           cp -f unicode/test.sh test-uni/test.sh
           cd test-uni
           ls -a
           ./test.sh
+
+      - name: Build
+        run: |
+          echo 'ok'
