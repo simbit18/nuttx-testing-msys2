@@ -1,0 +1,210 @@
+name: manually build NuttX for docker
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      config-name:
+        description: input the config name to be built
+        required: true
+
+      repo-nuttx:
+        description: choose which target arch to be built for
+        type: choice
+        options:
+          - apache/nuttx
+          - simbit18/nuttx
+
+      branch-nuttx:
+        description: choose which nuttx branch
+        type: choice
+        options:
+          - master
+
+      repo-apps:
+        description: choose which repository nuttx-apps
+        type: choice
+        options:
+          - apache/nuttx-apps
+          - simbit18/nuttx-apps
+
+      branch-apps:
+        description: choose which nuttx-apps branch
+        type: choice
+        options:
+          - master
+
+      log-level:
+        description: choose a log-level
+        type: choice
+        options:
+          - 0
+          - 1
+
+      artifact:
+        description: create artifact
+        type: boolean
+        default: false
+
+jobs:
+  Fetch-Source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine Target Branches
+        id: gittargets
+        shell: bash
+        run: |
+          OS_REF=""
+          APPS_REF=""
+          REF="refs/heads/master"
+          echo "Working with ref: $REF"
+      - name: Checkout nuttx repo
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ github.event.inputs.repo-nuttx }}
+          ref: ${{ github.event.inputs.branch-nuttx }}
+          path: sources/nuttx
+          fetch-depth: 1
+      - name: Checkout nuttx repo tags
+        run: git -C sources/nuttx fetch --tags
+
+      - name: Checkout apps repo
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ github.event.inputs.repo-apps }}
+          ref: ${{ github.event.inputs.branch-apps }}
+          path: sources/apps
+          fetch-depth: 1
+
+      - name: Tar sources
+        run: tar zcf sources.tar.gz sources
+
+      - name: Archive Source Bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle
+          path: sources.tar.gz
+
+  LinuxMake:
+    needs: Fetch-Source
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+      GH_JOB_NAME: ${{ github.job }}
+
+    steps:
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Pull
+        run: docker pull ghcr.io/apache/nuttx/apache-nuttx-ci-linux
+
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+
+      - name: Run builds
+        uses: ./sources/nuttx/.github/actions/ci-container
+        env:
+          BLOBDIR: /tools/blobs
+        with:
+          run: |
+            echo "Job: ${{ env.GH_JOB_NAME }}"
+            echo "::add-matcher::sources/nuttx/.github/gcc.json"
+            export ARTIFACTDIR=`pwd`/buildartifacts
+            echo "ARTIFACTDIR: $ARTIFACTDIR"
+            git config --global --add safe.directory /github/workspace/sources/nuttx
+            git config --global --add safe.directory /github/workspace/sources/apps
+            cd sources/nuttx
+            # commit hash
+            # git checkout ${{ env.COMMIT_HASH }}
+            ./tools/configure.sh -l ${{ env.BOARD_CONFIG_NAME }}
+            # make -j
+            make V=${{ github.event.inputs.log-level }}
+            artifactconfigdir=$ARTIFACTDIR/$(echo ${{ github.event.inputs.config-name }} | sed "s/:/\//")/
+            echo "artifactconfigdir: $artifactconfigdir"
+            mkdir -p $artifactconfigdir
+            xargs -I "{}" cp "{}" $artifactconfigdir < nuttx.manifest
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: linux-${{ github.job }}-builds
+          path: buildartifacts/
+        continue-on-error: true
+
+  LinuxCMake:
+    needs: Fetch-Source
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+      GH_JOB_NAME: ${{ github.job }}
+
+    steps:
+      - name: Download Source Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: source-bundle
+          path: .
+
+      - name: Extract sources
+        run: tar zxf sources.tar.gz
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker Pull
+        run: docker pull ghcr.io/apache/nuttx/apache-nuttx-ci-linux
+
+      - name: Export NuttX Repo SHA
+        run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
+
+      - name: Run builds
+        uses: ./sources/nuttx/.github/actions/ci-container
+        env:
+          BLOBDIR: /tools/blobs
+        with:
+          run: |
+            echo "Job: ${{ env.GH_JOB_NAME }}"
+            echo "Job2: ${{ github.job }}"
+            echo "::add-matcher::sources/nuttx/.github/gcc.json"
+            export ARTIFACTDIR=`pwd`/buildartifacts
+            sourceworkspace=/github/workspace/sources
+            git config --global --add safe.directory /github/workspace/sources/nuttx
+            git config --global --add safe.directory /github/workspace/sources/apps
+            cd sources/nuttx
+            # cmake -B build -DBOARD_CONFIG=at32f437-mini:systemview -GNinja
+            # cmake -B build -DBOARD_CONFIG=thingy91/nsh_rtt -GNinja
+            cmake -B build -DBOARD_CONFIG=${{ github.event.inputs.config-name }} -GNinja
+            cmake --build build
+            artifactconfigdir=$ARTIFACTDIR/$(echo ${{ github.event.inputs.config-name }} | sed "s/:/\//")/
+            echo "artifactconfigdir: $artifactconfigdir"
+            mkdir -p $artifactconfigdir
+            cd build
+            xargs -I "{}" cp "{}" $artifactconfigdir < $sourceworkspace/nuttx/build/nuttx.manifest
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: linux-${{ github.job }}-builds
+          path: buildartifacts/
+        continue-on-error: true
