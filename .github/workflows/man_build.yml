@@ -133,7 +133,7 @@ jobs:
             cd sources/nuttx
             # commit hash
             # git checkout ${{ env.COMMIT_HASH }}
-            ./tools/configure.sh -l ${{ env.BOARD_CONFIG_NAME }}
+            ./tools/configure.sh -l ${{ github.event.inputs.config-name }}
             # make -j
             make V=${{ github.event.inputs.log-level }}
             artifactconfigdir=$ARTIFACTDIR/$(echo ${{ github.event.inputs.config-name }} | sed "s/:/\//")/
