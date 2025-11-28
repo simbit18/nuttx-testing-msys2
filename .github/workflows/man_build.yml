@@ -12,7 +12,7 @@ on:
         required: true
 
       repo-nuttx:
-        description: choose which target arch to be built for
+        description: choose which repository nuttx
         type: choice
         options:
           - apache/nuttx
@@ -38,7 +38,7 @@ on:
           - master
 
       log-level:
-        description: choose a log-level
+        description: choose a log-level (Make)
         type: choice
         options:
           - 0
