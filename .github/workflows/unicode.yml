@@ -10,7 +10,7 @@ jobs:
   test-only:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Test  🛎
         run: |
           echo 'Test unicode'
@@ -20,7 +20,8 @@ jobs:
           cd test-uni
           ls -a
           ./test.sh
-
+      - uses: actions/checkout@v6
       - name: Build
         run: |
-          echo 'ok'
+          echo 'ok' \
+          &&  git clone https://github.com/espressif/esp32-wifi-lib.git
