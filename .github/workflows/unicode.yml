@@ -24,4 +24,5 @@ jobs:
       - name: Build
         run: |
           echo 'ok' \
-          &&  git clone https://github.com/espressif/esp32-wifi-lib.git
+          && git clone https://github.com/espressif/esp32-wifi-lib.git \
+          && ls -la
