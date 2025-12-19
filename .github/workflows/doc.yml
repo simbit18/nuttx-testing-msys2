@@ -27,14 +27,15 @@ jobs:
         fetch-depth: 0
         ref: master
         path: nuttx
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
-        python-version: '>=3.9 <3.10'
+        python-version: '3.10'
     - name: Build docs
       run: |
         echo "======================================================="
         echo " Install Pipenv"
         echo "======================================================="
+        pip3 install setuptools
 
         pip3 install --user pipenv
 
