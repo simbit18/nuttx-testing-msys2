@@ -78,6 +78,7 @@ jobs:
           # pipenv --clear install
           pip3 install pipenv
           pipenv install
+          pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
             OUTDIR="$DOCDIR/latest"
@@ -114,8 +115,8 @@ jobs:
           echo " ====> PIPENV CLEANUP."
 
           # Uninstall pipenv packages (cached packages are preserved).
-          # pipenv uninstall --all
-          pipenv --rm
+          pipenv uninstall --all
+          #pipenv --rm
 
         done
 
