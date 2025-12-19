@@ -38,7 +38,9 @@ jobs:
 
         # pip3 install setuptools
 
-        pip3 --python 3.10 install --user pipenv
+        pip3 install --user pipenv
+
+        pip3 install setuptools
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
