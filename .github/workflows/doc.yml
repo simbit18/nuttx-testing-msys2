@@ -38,9 +38,12 @@ jobs:
 
         # pip3 install setuptools
 
-        pip3 install --user pipenv
+        # pip3 install --user pipenv
 
-        pip3 install setuptools
+        python3 -m venv .venv
+        source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+        pip3 install pipenv
+        pipenv install
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
