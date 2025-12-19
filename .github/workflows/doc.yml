@@ -111,7 +111,7 @@ jobs:
           echo " ====> PIPENV CLEANUP."
 
           # Uninstall pipenv packages (cached packages are preserved).
-          pipenv uninstall --all
+          # pipenv uninstall --all
           # Clear caches (pipenv, pip)
           pipenv --clear install
 
