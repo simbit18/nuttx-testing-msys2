@@ -42,8 +42,8 @@ jobs:
 
         python3 -m venv .venv
         source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-        pip3 install pipenv
-        pipenv install
+        # pip3 install pipenv
+        # pipenv install
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
@@ -114,7 +114,8 @@ jobs:
           echo " ====> PIPENV CLEANUP."
 
           # Uninstall pipenv packages (cached packages are preserved).
-          pipenv uninstall --all
+          # pipenv uninstall --all
+          pipenv --rm
 
         done
 
