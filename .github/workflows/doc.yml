@@ -75,7 +75,7 @@ jobs:
           # Manage Python packages with PipEnv per release deinfed in Pipfile.
           echo " ====> PIPENV INSTALL."
           # pipenv --python 3.10 --clear install
-          # pipenv --clear install
+          pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
             OUTDIR="$DOCDIR/latest"
