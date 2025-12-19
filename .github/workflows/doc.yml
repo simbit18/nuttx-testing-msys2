@@ -27,18 +27,14 @@ jobs:
         fetch-depth: 0
         ref: master
         path: nuttx
-    - uses: actions/setup-python@v5
+    - uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.8'
     - name: Build docs
       run: |
         echo "======================================================="
         echo " Install Pipenv"
         echo "======================================================="
-
-        # pip3 install setuptools
-
-        # pip3 install --user pipenv
 
         python3 -m venv .venv
         source .venv/bin/activate  # On Windows: .venv\Scripts\activate
@@ -64,7 +60,6 @@ jobs:
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
         echo " ==> BUILD NUTTX DOCUMENTATION FOR: $NUTTX_VERSIONS (and master)."
-        # pipenv --clear install
 
         for nuttx_version in $NUTTX_TAGS master; do
 
@@ -80,7 +75,6 @@ jobs:
           # pipenv --clear install
           pip3 install pipenv
           pipenv install
-          # pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
             OUTDIR="$DOCDIR/latest"
@@ -117,9 +111,9 @@ jobs:
           echo " ====> PIPENV CLEANUP."
 
           # Uninstall pipenv packages (cached packages are preserved).
-          # pipenv uninstall --all
+          pipenv uninstall --all
+          # Clear caches (pipenv, pip)
           pipenv --clear install
-          # pipenv --rm
 
         done
 
