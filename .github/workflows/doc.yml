@@ -64,7 +64,7 @@ jobs:
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
         echo " ==> BUILD NUTTX DOCUMENTATION FOR: $NUTTX_VERSIONS (and master)."
-        pipenv --clear install
+        # pipenv --clear install
 
         for nuttx_version in $NUTTX_TAGS master; do
 
