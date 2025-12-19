@@ -42,8 +42,9 @@ jobs:
 
         python3 -m venv .venv
         source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-        pip3 install pipenv
-        pipenv install
+        export PIPENV_IGNORE_VIRTUALENVS=1
+        #pip3 install pipenv
+        #pipenv install
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
@@ -76,8 +77,8 @@ jobs:
           echo " ====> PIPENV INSTALL."
           # pipenv --python 3.10 --clear install
           # pipenv --clear install
-          # pip3 install pipenv
-          # pipenv install
+          pip3 install pipenv
+          pipenv install
           # pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
@@ -116,7 +117,8 @@ jobs:
 
           # Uninstall pipenv packages (cached packages are preserved).
           # pipenv uninstall --all
-          pipenv --rm
+          pipenv --clear install
+          # pipenv --rm
 
         done
 
