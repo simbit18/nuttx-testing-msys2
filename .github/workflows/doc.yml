@@ -43,8 +43,8 @@ jobs:
         python3 -m venv .venv
         source .venv/bin/activate  # On Windows: .venv\Scripts\activate
         export PIPENV_IGNORE_VIRTUALENVS=1
-        #pip3 install pipenv
-        #pipenv install
+        pip3 install pipenv
+        pipenv install
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
@@ -64,6 +64,7 @@ jobs:
         export NUTTX_VERSIONS=$(echo -n "$NUTTX_TAGS" | sed -r 's|^nuttx-||g' | tr '\n' ',')
         
         echo " ==> BUILD NUTTX DOCUMENTATION FOR: $NUTTX_VERSIONS (and master)."
+        pipenv --clear install
 
         for nuttx_version in $NUTTX_TAGS master; do
 
@@ -76,9 +77,9 @@ jobs:
           # Manage Python packages with PipEnv per release deinfed in Pipfile.
           echo " ====> PIPENV INSTALL."
           # pipenv --python 3.10 --clear install
-          pipenv --clear install
-          #pip3 install pipenv
-          #pipenv install
+          # pipenv --clear install
+          pip3 install pipenv
+          pipenv install
           # pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
