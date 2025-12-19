@@ -35,9 +35,10 @@ jobs:
         echo "======================================================="
         echo " Install Pipenv"
         echo "======================================================="
-        pip3 install setuptools
 
-        pip3 install --user pipenv
+        # pip3 install setuptools
+
+        pip3 --python 3.10 install --user pipenv
 
         echo "======================================================="
         echo " Setup nuttx/Documentation"
@@ -68,7 +69,7 @@ jobs:
           # Sphinx may have different dependencies for different NuttX release.
           # Manage Python packages with PipEnv per release deinfed in Pipfile.
           echo " ====> PIPENV INSTALL."
-
+          # pipenv --python 3.10 --clear install
           pipenv --clear install
 
           if [ "$nuttx_version" = "master" ]; then
