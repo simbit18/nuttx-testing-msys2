@@ -39,7 +39,7 @@ jobs:
         python3 -m venv .venv
         source .venv/bin/activate  # On Windows: .venv\Scripts\activate
         export PIPENV_VERBOSITY=-1
-        #pip3 install pipenv
+        pip3 install pipenv
         #pipenv install
 
         echo "======================================================="
@@ -73,7 +73,7 @@ jobs:
           echo " ====> PIPENV INSTALL."
           # pipenv --python 3.10 --clear install
           # pipenv --clear install
-          pip3 install pipenv
+          # pip3 install pipenv
           pipenv install
 
           if [ "$nuttx_version" = "master" ]; then
@@ -111,9 +111,9 @@ jobs:
           echo " ====> PIPENV CLEANUP."
 
           # Uninstall pipenv packages (cached packages are preserved).
-          # pipenv uninstall --all
+          pipenv uninstall --all
           # Clear caches (pipenv, pip)
-          pipenv --clear install
+          # pipenv --clear install
 
         done
 
