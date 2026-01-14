@@ -21,7 +21,7 @@ on:
       - '.github/workflows/docker_bump.yml'
 
 jobs:
-  build_docker_speed:
+  build_docker_bump:
     container: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +43,7 @@ jobs:
           avr32-gcc --version
       - uses: actions/checkout@v6
       - name: Python Setup
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: 3.10
       - name: Install Dependencies
