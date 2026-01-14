@@ -23,12 +23,12 @@ on:
 jobs:
   build_docker_bump:
     container: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       matrix:
         boards:
          [
-          "arm-01", "sim-01"
+          "arm-01", "arm-02"
          ]
     steps:
       - name: System Information
