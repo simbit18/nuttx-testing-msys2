@@ -24,6 +24,12 @@ jobs:
   build_docker_bump:
     container: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        boards:
+         [
+          "arm-01", "sim-01"
+         ]
     steps:
       - name: System Information
         run: |
@@ -41,16 +47,17 @@ jobs:
           arm-none-eabi-gcc --version
           aarch64-none-elf-gcc --version
           avr32-gcc --version
-      - uses: actions/checkout@v6
-      - name: Python Setup
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.10'
+      # - uses: actions/checkout@v6
+      # - name: Python Setup
+        # uses: actions/setup-python@v6
+        # with:
+          # python-version: '3.10'
       - name: Install Dependencies
              # --lhelper will eliminate a warning with arm64 and libusb
         run: bash --version
       - name: Run builds
         run: |
+          export ARTIFACTDIR=`pwd`/buildartifacts
           echo 'Checkout Source Files'
           mkdir nuttxspace
           ## ls -a
@@ -59,12 +66,26 @@ jobs:
           # git clone --depth 1 --single-branch --branch simbit18-speed https://github.com/simbit18/nuttx-apps.git apps
           git clone --depth 1 https://github.com/apache/nuttx.git nuttx
           git clone --depth 1 https://github.com/apache/nuttx-apps.git apps
-          cd nuttx
           ## ls -a
           ## git config --global --add safe.directory /github/workspace/sources/nuttx
           ## git config --global --add safe.directory /github/workspace/sources/apps
-          ## cd sources/nuttx/tools/ci
+          ## single board
+          # cd nuttx
           ## Configure the build
-          ./tools/configure.sh -l esp32-wrover-kit:lvgl
+          # ./tools/configure.sh -l esp32-wrover-kit:lvgl
           ## Run the build
-          make V=1
+          # make V=1
+          ## ci
+          cd nuttx/tools/ci
+          ( sleep 7200 ; echo Killing pytest after timeout... ; pkill -f pytest )&
+          ./cibuild.sh -c -A -N -R -S testlist/${{matrix.boards}}.dat
+      - name: Post-build Disk Space
+        if: always()
+        run: df -h
+
+      - uses: actions/upload-artifact@v6
+        if: ${{ always() }}
+        with:
+          name: linux-${{matrix.boards}}-builds
+          path: buildartifacts/
+        continue-on-error: true
