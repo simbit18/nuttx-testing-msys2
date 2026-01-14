@@ -23,7 +23,7 @@ on:
 jobs:
   build_docker_bump:
     container: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         boards:
