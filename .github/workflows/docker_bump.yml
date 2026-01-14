@@ -28,7 +28,7 @@ jobs:
       matrix:
         boards:
          [
-          "arm-01", "arm-02"
+          "arm-03", "arm-04", "xtensa-01"
          ]
     steps:
       - name: System Information
