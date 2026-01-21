@@ -21,10 +21,11 @@ on:
       - '.github/workflows/docker_bump.yml'
 
 jobs:
-  build_docker_bump:
+  Linux:
     container: ghcr.io/simbit18/nuttx-testing-ci/apache-nuttx-ci-linux:latest
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         boards:
          [
