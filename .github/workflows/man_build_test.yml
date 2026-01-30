@@ -96,7 +96,7 @@ jobs:
 
   LinuxMake:
     needs: Fetch-Source
-    if: ${{ inputs.matrix != true }}
+    if: ${{ inputs.matrix != false }}
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
