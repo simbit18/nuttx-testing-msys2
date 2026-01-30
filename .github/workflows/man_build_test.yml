@@ -1,4 +1,4 @@
-name: manually build NuttX for docker
+name: Manually build NuttX for test
 
 permissions:
   contents: read
