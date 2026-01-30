@@ -96,7 +96,7 @@ jobs:
 
   LinuxMake:
     needs: Fetch-Source
-    if: ${{ inputs.matrix != false }}
+    if: ${{ inputs.matrix != true }}
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
@@ -158,7 +158,7 @@ jobs:
 
   LinuxCMake:
     needs: Fetch-Source
-    if: ${{ inputs.matrix != '1' }}
+    if: ${{ inputs.matrix != true }}
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
