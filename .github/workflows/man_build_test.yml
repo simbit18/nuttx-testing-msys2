@@ -53,6 +53,12 @@ jobs:
   Fetch-Source:
     runs-on: ubuntu-latest
     steps:
+      - name: Inputs
+        shell: bash
+        run: |
+          echo "Apps: ${{ inputs.branch-apps }}"
+          echo "Matrix: ${{ inputs.matrix }}"
+          echo "Config: ${{ inputs.config-name }}"
       - name: Determine Target Branches
         id: gittargets
         shell: bash
