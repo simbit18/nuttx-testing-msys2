@@ -8,44 +8,44 @@ on:
     inputs:
 
       repo-nuttx:
-        description: input the repository nuttx
+        description: Input the repository nuttx
         required: true
         type: string
 
       branch-nuttx:
-        description: input the nuttx branch
+        description: Input the nuttx branch
         required: true
         type: string
 
       repo-apps:
-        description: input the repository nuttx-apps
+        description: Input the repository nuttx-apps
         required: true
         type: string
 
       branch-apps:
-        description: input the nuttx-apps branch
+        description: Input the nuttx-apps branch
         required: true
         type: string
 
       matrix:
-        description: 'True to print to STDOUT'
+        description: 'True to Matrix'
         required: true
         type: boolean
 
       config-name:
-        description: input the config name to be built
+        description: Input the config name to be built
         required: true
         type: string
 
       log-level:
-        description: choose a log-level (Make)
+        description: Choose a log-level (Make)
         type: choice
         options:
           - 0
           - 1
 
       artifact:
-        description: create artifact
+        description: Create artifact
         type: boolean
         default: false
 
@@ -90,7 +90,7 @@ jobs:
 
   LinuxMake:
     needs: Fetch-Source
-    if: ${{ inputs.matrix != '1' }}
+    if: ${{ inputs.matrix != true }}
     runs-on: ubuntu-latest
     env:
       DOCKER_BUILDKIT: 1
