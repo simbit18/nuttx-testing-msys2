@@ -243,7 +243,7 @@ jobs:
   # Run the selected msys2 Builds
   msys2:
     # if: ${{ needs.msys2-Arch.outputs.skip_all_builds != '1' }}
-    if: "${{ inputs.host-platform == "msys2" || inputs.host-platform == "all" }}
+    if: ${{ inputs.host-platform == "msys2" || inputs.host-platform == "all" }}
     needs: Fetch-Source
     runs-on: windows-latest
     strategy:
