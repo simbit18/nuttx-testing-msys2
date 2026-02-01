@@ -322,8 +322,8 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        boards: |
-          ["windows"]
+        boards: ["windows"]
+
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
