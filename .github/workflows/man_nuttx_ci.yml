@@ -236,7 +236,6 @@ jobs:
 
   # Run the selected msys2 Builds
   msys2:
-    needs: msys2-Arch
     # if: ${{ needs.msys2-Arch.outputs.skip_all_builds != '1' }}
     runs-on: windows-latest
     strategy:
