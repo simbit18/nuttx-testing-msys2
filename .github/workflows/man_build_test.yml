@@ -8,22 +8,22 @@ on:
     inputs:
 
       repo-nuttx:
-        description: Input the repository nuttx
+        description: What's the name of the repository nuttx?
         required: true
         type: string
 
       branch-nuttx:
-        description: Input the nuttx branch
+        description: What's the name of the nuttx branch?
         required: true
         type: string
 
       repo-apps:
-        description: Input the repository nuttx-apps
+        description: What's the name of the repository nuttx-apps?
         required: true
         type: string
 
       branch-apps:
-        description: Input the nuttx-apps branch
+        description: What's the name nuttx-apps branch?
         required: true
         type: string
 
@@ -46,7 +46,7 @@ on:
         default: all
 
       config-name:
-        description: Input the config name to be built
+        description: Input the config name to be built (e.g. sim:nsh)
         required: true
         type: string
 
