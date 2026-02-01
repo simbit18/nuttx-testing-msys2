@@ -51,9 +51,6 @@ env:
    REF_APPS_NAME: ${{ inputs.branch-apps }}
    IMAGE_NAME: apache/nuttx
 
-permissions:
-  contents: read
-
 concurrency:
   group: build-docker-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -253,8 +250,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        boards: |
-          ["msys2"]
+        boards: ["msys2"]
 
     defaults:
       run:
