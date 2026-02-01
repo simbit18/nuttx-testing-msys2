@@ -39,13 +39,18 @@ on:
         required: true
         type: string
 
-      artifact:
-        description: Create artifact
-        type: boolean
-        default: false
+      host-platform:
+        description: Choose a host platform
+        type: choice
+        options:
+          - linux
+          - msys2
+          - msvc
+          - all
+        default: all
 
 concurrency:
-  group: build-docker-${{ github.event.pull_request.number || github.ref }}
+  group: build-man-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -90,6 +95,7 @@ jobs:
           path: sources.tar.gz
 
   Linux:
+    if: "${{ inputs.host-platform }}" == "linux" || "${{ inputs.host-platform }}" == "all"
     needs: Fetch-Source
     runs-on: ubuntu-latest
     env:
@@ -237,6 +243,7 @@ jobs:
   # Run the selected msys2 Builds
   msys2:
     # if: ${{ needs.msys2-Arch.outputs.skip_all_builds != '1' }}
+    if: "${{ inputs.host-platform }}" == "msys2" || "${{ inputs.host-platform }}" == "all"
     needs: Fetch-Source
     runs-on: windows-latest
     strategy:
@@ -311,6 +318,7 @@ jobs:
   # Build with MSVC in Windows native
   msvc:
     # if: ${{ needs.msvc-Arch.outputs.skip_all_builds != '1' }}
+    if: "${{ inputs.host-platform }}" == "msvc" || "${{ inputs.host-platform }}" == "all"
     needs: Fetch-Source
     strategy:
       fail-fast: false
