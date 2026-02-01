@@ -8,22 +8,22 @@ on:
     inputs:
 
       repo-nuttx:
-        description: What's the name of the repository nuttx?
+        description: What's the name of the repository nuttx (e.g. usernuttx/nuttx)?
         required: true
         type: string
 
       branch-nuttx:
-        description: What's the name of the nuttx branch?
+        description: What's the name of the nuttx branch (e.g. fix-nuttx)?
         required: true
         type: string
 
       repo-apps:
-        description: What's the name of the repository nuttx-apps?
+        description: What's the name of the repository nuttx-apps (e.g. usernuttx/nuttx-apps)?
         required: true
         type: string
 
       branch-apps:
-        description: What's the name nuttx-apps branch?
+        description: What's the name nuttx-apps branch (e.g. fix-apps)?
         required: true
         type: string
 
