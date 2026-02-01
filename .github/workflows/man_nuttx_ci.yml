@@ -95,7 +95,7 @@ jobs:
           path: sources.tar.gz
 
   Linux:
-    if: "${{ inputs.host-platform }}" == "linux" || "${{ inputs.host-platform }}" == "all"
+    if: ${{ inputs.host-platform  == "linux" ||  inputs.host-platform == "all" }}
     needs: Fetch-Source
     runs-on: ubuntu-latest
     env:
