@@ -35,7 +35,7 @@ on:
 
       arch:
         description: Choose a arch
-        type: multi-choice
+        type: multiple
         options:
           - arm
           - arm64
