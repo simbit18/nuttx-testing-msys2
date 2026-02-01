@@ -44,13 +44,6 @@ on:
         type: boolean
         default: false
 
-env:
-   REPO_NUTTX_NAME: ${{ inputs.repo-nuttx }}
-   REF_NUTTX_NAME: ${{ inputs.branch-nuttx }}
-   REPO_APPS_NAME: ${{ inputs.repo-apps }}
-   REF_APPS_NAME: ${{ inputs.branch-apps }}
-   IMAGE_NAME: apache/nuttx
-
 concurrency:
   group: build-docker-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -71,8 +64,8 @@ jobs:
       - name: Checkout nuttx repo
         uses: actions/checkout@v6
         with:
-          repository: ${{ env.REPO_NUTTX_NAME }}
-          ref: ${{ env.REF_NUTTX_NAME }}
+          repository: ${{ inputs.repo-nuttx }}
+          ref: ${{ inputs.branch-nuttx }}
           path: sources/nuttx
           fetch-depth: 1
 
@@ -82,8 +75,8 @@ jobs:
       - name: Checkout apps repo
         uses: actions/checkout@v6
         with:
-          repository: ${{ env.REPO_APPS_NAME }}
-          ref: ${{ env.REF_APPS_NAME }}
+          repository: ${{ inputs.repo-apps }}
+          ref: ${{ inputs.branch-apps }}
           path: sources/apps
           fetch-depth: 1
 
@@ -143,7 +136,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Pull
-        run: docker pull ghcr.io/${{ env.IMAGE_NAME }}/apache-nuttx-ci-linux:latest
+        run: docker pull ghcr.io/apache/nuttx/apache-nuttx-ci-linux:latest
 
       - name: Install NTFC
         uses: ./sources/nuttx/.github/actions/ci-container
