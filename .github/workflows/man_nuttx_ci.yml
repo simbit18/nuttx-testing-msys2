@@ -237,6 +237,7 @@ jobs:
   # Run the selected msys2 Builds
   msys2:
     # if: ${{ needs.msys2-Arch.outputs.skip_all_builds != '1' }}
+    needs: Fetch-Source
     runs-on: windows-latest
     strategy:
       fail-fast: false
@@ -310,6 +311,7 @@ jobs:
   # Build with MSVC in Windows native
   msvc:
     # if: ${{ needs.msvc-Arch.outputs.skip_all_builds != '1' }}
+    needs: Fetch-Source
     strategy:
       fail-fast: false
       max-parallel: 1
