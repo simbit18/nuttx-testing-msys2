@@ -328,15 +328,15 @@ jobs:
           git config --global --add safe.directory ${{github.workspace}}\sources\nuttx
           git config --global --add safe.directory ${{github.workspace}}\sources\apps
           cd sources\nuttx\tools\ci
-          .\cibuild.ps1 -n -i -A -C -N testlist\${{matrix.boards}}.dat
+          :: .\cibuild.ps1 -n -i -A -C -N testlist\${{matrix.boards}}.dat
           cd sources/nuttx
           cmake -B build -DBOARD_CONFIG=${{ github.event.inputs.config-name }} -GNinja
           cmake --build build
-          artifactconfigdir=$ARTIFACTDIR\$(echo ${{ github.event.inputs.config-name }} | sed "s/:/\//")/
-          echo "artifactconfigdir: $artifactconfigdir"
-          mkdir $artifactconfigdir
-          cd build
-          xargs -I "{}" cp "{}" $artifactconfigdir < $sourceworkspace/nuttx/build/nuttx.manifest
+          :: artifactconfigdir=$ARTIFACTDIR\$(echo ${{ github.event.inputs.config-name }} | sed "s/:/\//")/
+          :: echo "artifactconfigdir: $artifactconfigdir"
+          :: mkdir $artifactconfigdir
+          :: cd build
+          :: xargs -I "{}" cp "{}" $artifactconfigdir < $sourceworkspace/nuttx/build/nuttx.manifest
 
       - uses: actions/upload-artifact@v6
         with:
