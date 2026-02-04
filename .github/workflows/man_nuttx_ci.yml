@@ -58,6 +58,15 @@ jobs:
   Fetch-Source:
     runs-on: ubuntu-latest
     steps:
+      - name: View input parameters
+        shell: bash
+        run: |
+          echo "Nuttx repository: ${{ inputs.repo-nuttx }}"
+          echo "    Nuttx branch: ${{ inputs.branch-nuttx }}"
+          echo " Apps repository: ${{ inputs.repo-apps }}"
+          echo "     Apps branch: ${{ inputs.branch-apps }}"
+          echo "   Host platform: ${{ inputs.host-platform }}"
+
       - name: Determine Target Branches
         id: gittargets
         shell: bash
