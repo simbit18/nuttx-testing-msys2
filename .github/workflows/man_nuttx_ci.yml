@@ -20,7 +20,7 @@ on:
     inputs:
 
       repo-nuttx:
-        description: What's the name of the repository nuttx (e.g. usernuttx/nuttx)?
+        description: What's the name of the repository nuttx (e.g. userGH/nuttx)?
         required: true
         type: string
 
@@ -30,7 +30,7 @@ on:
         type: string
 
       repo-apps:
-        description: What's the name of the repository nuttx-apps (e.g. usernuttx/nuttx-apps)?
+        description: What's the name of the repository nuttx-apps (e.g. userGH/nuttx-apps)?
         required: true
         type: string
 
