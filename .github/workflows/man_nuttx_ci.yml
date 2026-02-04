@@ -192,7 +192,7 @@ jobs:
       - uses: actions/upload-artifact@v6
         if: ${{ always() }}
         with:
-          name: linux-${{matrix.boards}}-builds
+          name: ${{ github.job }}-${{matrix.boards}}-builds
           path: buildartifacts/
         continue-on-error: true
 
@@ -237,7 +237,7 @@ jobs:
       - uses: actions/upload-artifact@v6
         if: ${{ always() }}
         with:
-          name: oot-build-artifacts
+          name: ${{ github.job }}-artifacts
           path: sources/apps/testing/cxx-oot-build
         continue-on-error: true
 
@@ -247,7 +247,7 @@ jobs:
     needs: Fetch-Source
     runs-on: macos-15-intel
     strategy:
-      max-parallel: 2
+      fail-fast: false
       matrix:
         boards: ["macos", "sim-01", "sim-02", "sim-03"]
     steps:
@@ -264,10 +264,10 @@ jobs:
         id: cache-tools
         uses: actions/cache@v5
         env:
-          cache-name: ${{ runner.os }}-cache-tools
+          cache-name: ${{ github.job }}-cache-tools
         with:
           path: ./sources/tools
-          key: ${{ runner.os }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/platforms/darwin.sh') }}
+          key: ${{ github.job }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/platforms/darwin.sh') }}
 
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
@@ -286,19 +286,17 @@ jobs:
 
       - uses: actions/upload-artifact@v6
         with:
-          name: macos-${{matrix.boards}}-builds
+          name: ${{ github.job }}-${{matrix.boards}}-builds
           path: buildartifacts/
         continue-on-error: true
 
   # Run the selected msys2 Builds
   msys2:
-    # if: ${{ needs.msys2-Arch.outputs.skip_all_builds != '1' }}
     if: ${{ inputs.host-platform == 'msys2' || inputs.host-platform == 'all' }}
     needs: Fetch-Source
     runs-on: windows-latest
     strategy:
       fail-fast: false
-      max-parallel: 1
       matrix:
         boards: ["msys2"]
 
@@ -350,10 +348,10 @@ jobs:
         id: cache-tools
         uses: actions/cache@v5
         env:
-          cache-name: ${{ runner.os }}-cache-tools
+          cache-name: ${{ github.job }}-cache-tools
         with:
           path: ./sources/tools
-          key: ${{ runner.os }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/platforms/msys2.sh') }}
+          key: ${{ github.job }}-tools-${{ hashFiles('./sources/nuttx/tools/ci/platforms/msys2.sh') }}
 
       - name: Export NuttX Repo SHA
         run: echo "nuttx_sha=`git -C sources/nuttx rev-parse HEAD`" >> $GITHUB_ENV
@@ -369,25 +367,22 @@ jobs:
 
       - uses: actions/upload-artifact@v6
         with:
-          name: msys2-${{matrix.boards}}-builds
+          name: ${{ github.job }}-${{matrix.boards}}-builds
           path: buildartifacts/
         continue-on-error: true
 
   # Build with MSVC in Windows native
   msvc:
-    # if: ${{ needs.msvc-Arch.outputs.skip_all_builds != '1' }}
     if: ${{ inputs.host-platform == 'msvc' || inputs.host-platform == 'all' }}
     needs: Fetch-Source
     strategy:
       fail-fast: false
-      max-parallel: 1
       matrix:
         boards: ["windows"]
 
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
-      # Set up Python environment and install kconfiglib
       - name: Set up Python and install kconfiglib
         uses: actions/setup-python@v6
         with:
@@ -419,6 +414,6 @@ jobs:
 
       - uses: actions/upload-artifact@v6
         with:
-          name: msvc-builds
+          name: ${{ github.job }}-${{matrix.boards}}-builds
           path: ./sources/buildartifacts/
         continue-on-error: true
