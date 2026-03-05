@@ -36,11 +36,15 @@ jobs:
     steps:
       - name: Checkout NuttX
         uses: actions/checkout@v6
-        with:
-          repository: apache/nuttx
-          ref: releases/v${{ env.NUTTX_VERSION }}
-          path: nuttx
-
+        # with:
+          # repository: apache/nuttx
+          # ref: releases/v${{ env.NUTTX_VERSION }}
+          # path: nuttx
+        run: |
+          curl -L https://www.apache.org/dyn/closer.lua/nuttx/${{ env.NUTTX_VERSION }}/apache-nuttx-${{ env.NUTTX_VERSION }}.tar.gz?action=download -o nuttx.tar.gz
+          curl -L https://www.apache.org/dyn/closer.lua/nuttx/${{ env.NUTTX_VERSION }}/apache-nuttx-apps-${{ env.NUTTX_VERSION }}.tar.gz?action=download -o apps.tar.gz
+          tar zxf nuttx.tar.gz --one-top-level=nuttx --strip-components 1
+          tar zxf apps.tar.gz --one-top-level=apps --strip-components 1
       - name: Generate matrix
         id: set-matrix
         run: |
