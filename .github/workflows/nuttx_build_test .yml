@@ -35,7 +35,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout NuttX
-        uses: actions/checkout@v6
+        # uses: actions/checkout@v6
         # with:
           # repository: apache/nuttx
           # ref: releases/v${{ env.NUTTX_VERSION }}
