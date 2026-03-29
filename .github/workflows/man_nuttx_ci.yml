@@ -105,7 +105,7 @@ jobs:
       - name: Find matching items
         id: set-matrix
         run: |
-          FILE="data/items.json"
+          FILE="sources/items.json"
           KEY="${{ github.event.inputs.jobs-arch || 'all' }}"
           echo "Total items: $(jq 'length' "$FILE")"
           echo "🔍 Searching for: $KEY"
