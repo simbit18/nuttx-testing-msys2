@@ -39,6 +39,20 @@ on:
         required: true
         type: string
 
+      jobs-arch:
+        description: Make a choice
+        type: choice
+        options:
+          - arm
+          - arm64
+          - other
+          - risc-v
+          - sim
+          - x86_64
+          - xtensa
+          - all
+        default: all
+
       host-platform:
         description: Choose a host platform
         type: choice
@@ -57,6 +71,8 @@ concurrency:
 jobs:
   Fetch-Source:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: View input parameters
         shell: bash
@@ -66,6 +82,55 @@ jobs:
           echo " Apps repository: ${{ inputs.repo-apps }}"
           echo "     Apps branch: ${{ inputs.branch-apps }}"
           echo "   Host platform: ${{ inputs.host-platform }}"
+      # ── 1. Checkout repo ───────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          path: sources
+ 
+      - name: Create JSON file items.json
+        run: |
+          cat > sources/items.json << 'EOF'
+          [
+            "arm-01", "risc-v-01", "sim-01", "xtensa-01", "arm64-01", "x86_64-01", "other",
+            "arm-02", "risc-v-02", "sim-02", "xtensa-02",
+            "arm-03", "risc-v-03", "sim-03", "xtensa-03",
+            "arm-04", "risc-v-04",
+            "arm-05", "risc-v-05",
+            "arm-06", "risc-v-06",
+            "arm-07", "arm-08", "arm-09", "arm-10", "arm-11", "arm-12", "arm-13", "arm-14"
+          ]
+          EOF
+          echo "Total items: $(jq 'length' "$FILE")"
+      - name: Find matching items
+        id: set-matrix
+        run: |
+          FILE="data/items.json"
+          KEY="${{ github.event.inputs.jobs-arch || 'all' }}"
+          echo "Total items: $(jq 'length' "$FILE")"
+          echo "🔍 Searching for: $KEY"
+          echo $(jq '.' "$FILE")
+
+          COUNT=$(echo "$MATCHES" | jq 'length')
+          
+          case "${{ github.event.inputs.jobs-arch }}" in
+            all)
+              MATCHES=$(jq '[.[]]' "$FILE")
+              ;;
+            arm)
+              MATCHES=$(jq '[.[] | select(test("${{ github.event.inputs.jobs-arch }}-"))]' "$FILE")
+              ;;
+            *)
+              MATCHES=$(jq '[.[] | select(test("${{ github.event.inputs.jobs-arch }}"))]' "$FILE")
+              ;;
+          esac
+
+          echo "Found $COUNT match(es):"
+          MATRIX=$(echo "$MATCHES" | jq -rc .)
+          # echo "$MATCHES" | jq '.'
+          echo "$MATRIX" | jq -rc '.'
+          # Export for downstream steps
+          echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
       - name: Determine Target Branches
         id: gittargets
@@ -83,9 +148,6 @@ jobs:
           ref: ${{ inputs.branch-nuttx }}
           path: sources/nuttx
           fetch-depth: 1
-
-      - name: Checkout nuttx repo tags
-        run: git -C sources/nuttx fetch --tags
 
       - name: Checkout apps repo
         uses: actions/checkout@v6
@@ -114,16 +176,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        boards:
-         [
-          "arm-01", "risc-v-01", "sim-01", "xtensa-01", "arm64-01", "x86_64-01", "other",
-          "arm-02", "risc-v-02", "sim-02", "xtensa-02",
-          "arm-03", "risc-v-03", "sim-03",
-          "arm-04", "risc-v-04",
-          "arm-05", "risc-v-05",
-          "arm-06", "risc-v-06",
-          "arm-07", "arm-08", "arm-09", "arm-10", "arm-11", "arm-12", "arm-13", "arm-14"
-         ]
+        boards: ${{ fromJSON(needs.find-item.outputs.matrix) }}
     steps:
       - name: Show Disk Space
         run: df -h
@@ -145,7 +198,7 @@ jobs:
         run: tar zxf sources.tar.gz
 
       - name: Docker Login
-        uses: docker/login-action@v4
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -154,42 +207,26 @@ jobs:
       - name: Docker Pull
         run: docker pull ghcr.io/apache/nuttx/apache-nuttx-ci-linux:latest
 
-      - name: Install NTFC
-        uses: ./sources/nuttx/.github/actions/ci-container
-        env:
-          BLOBDIR: /tools/blobs
-        with:
-          run: |
-            # install python venv
-            apt-get update
-            apt-get install -y python3 python3-dev python3-venv
-
-            # get NTFC sources
-            git clone -b release-0.0.1 https://github.com/szafonimateusz-mi/nuttx-ntfc
-            cd /github/workspace/nuttx-ntfc
-
-            # install NTFC with venv
-            python3 -m venv /github/workspace/nuttx-ntfc/venv
-            source /github/workspace/nuttx-ntfc/venv/bin/activate
-            pip3 install .
-            deactivate
-
-            # get NTFC test cases
-            cd external
-            git clone -b release-0.0.1 https://github.com/szafonimateusz-mi/nuttx-testing
-
       - name: Run builds
         uses: ./sources/nuttx/.github/actions/ci-container
         env:
           BLOBDIR: /tools/blobs
         with:
           run: |
+            pip install ntfc==0.0.1
+            mkdir /github/workspace/nuttx-ntfc
+            mkdir /github/workspace/nuttx-ntfc/external
+            cd /github/workspace/nuttx-ntfc
+            # get NTFC test cases
+            cd external
+            git clone -b release-0.0.1 https://github.com/szafonimateusz-mi/nuttx-testing
+            
             echo "::add-matcher::sources/nuttx/.github/gcc.json"
             export ARTIFACTDIR=`pwd`/buildartifacts
             export NTFCDIR=/github/workspace/nuttx-ntfc
             git config --global --add safe.directory /github/workspace/sources/nuttx
             git config --global --add safe.directory /github/workspace/sources/apps
-            cd sources/nuttx/tools/ci
+            cd /github/workspace/sources/nuttx/tools/ci
             ( sleep 7200 ; echo Killing pytest after timeout... ; pkill -f pytest )&
             ./cibuild.sh -c -A -N -R -S testlist/${{matrix.boards}}.dat
 
@@ -221,7 +258,7 @@ jobs:
         run: tar zxf sources.tar.gz
 
       - name: Docker Login
-        uses: docker/login-action@v4
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
