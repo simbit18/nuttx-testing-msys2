@@ -176,7 +176,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        boards: ${{ fromJSON(needs.find-item.outputs.matrix) }}
+        boards: ${{ fromJSON(needs.Fetch-Source.outputs.matrix) }}
     steps:
       - name: Show Disk Space
         run: df -h
