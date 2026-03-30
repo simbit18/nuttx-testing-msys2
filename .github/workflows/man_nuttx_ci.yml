@@ -40,7 +40,7 @@ on:
         type: string
 
       jobs-arch:
-        description: Make a choice
+        description: Choose an architecture
         type: choice
         options:
           - arm
@@ -81,14 +81,15 @@ jobs:
           echo "    Nuttx branch: ${{ inputs.branch-nuttx }}"
           echo " Apps repository: ${{ inputs.repo-apps }}"
           echo "     Apps branch: ${{ inputs.branch-apps }}"
+          echo "    Architecture: ${{ inputs.jobs-arch }}"
           echo "   Host platform: ${{ inputs.host-platform }}"
-      # ── 1. Checkout repo ───────────────────────────────────────────────────
+
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           path: sources
  
-      - name: Create JSON file items.json
+      - name: Create JSON file -> items.json
         run: |
           cat > sources/items.json << 'EOF'
           [
@@ -102,6 +103,7 @@ jobs:
           ]
           EOF
           echo "Total items: $(jq 'length' "$FILE")"
+
       - name: Find matching items
         id: set-matrix
         run: |
@@ -111,7 +113,6 @@ jobs:
           echo "🔍 Searching for: $KEY"
           echo $(jq '.' "$FILE")
 
-          COUNT=$(echo "$MATCHES" | jq 'length')
           
           case "${{ github.event.inputs.jobs-arch }}" in
             all)
@@ -124,12 +125,12 @@ jobs:
               MATCHES=$(jq '[.[] | select(test("${{ github.event.inputs.jobs-arch }}"))]' "$FILE")
               ;;
           esac
-
+          COUNT=$(echo "$MATCHES" | jq 'length')
           echo "Found $COUNT match(es):"
           MATRIX=$(echo "$MATCHES" | jq -rc .)
           # echo "$MATCHES" | jq '.'
           echo "$MATRIX" | jq -rc '.'
-          # Export for downstream steps
+          # Export for Linux job
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
       - name: Determine Target Branches
