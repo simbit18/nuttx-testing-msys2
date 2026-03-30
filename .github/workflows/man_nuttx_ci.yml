@@ -89,7 +89,7 @@ jobs:
         with:
           path: sources
  
-      - name: Create JSON file -> items.json
+      - name: Create JSON file
         run: |
           cat > sources/items.json << 'EOF'
           [
@@ -102,7 +102,6 @@ jobs:
             "arm-07", "arm-08", "arm-09", "arm-10", "arm-11", "arm-12", "arm-13", "arm-14"
           ]
           EOF
-          echo "Total items: $(jq 'length' "$FILE")"
 
       - name: Find matching items
         id: set-matrix
@@ -110,10 +109,9 @@ jobs:
           FILE="sources/items.json"
           KEY="${{ github.event.inputs.jobs-arch || 'all' }}"
           echo "Total items: $(jq 'length' "$FILE")"
-          echo "🔍 Searching for: $KEY"
           echo $(jq '.' "$FILE")
+          echo "🔍 Searching for: $KEY"
 
-          
           case "${{ github.event.inputs.jobs-arch }}" in
             all)
               MATCHES=$(jq '[.[]]' "$FILE")
@@ -125,12 +123,12 @@ jobs:
               MATCHES=$(jq '[.[] | select(test("${{ github.event.inputs.jobs-arch }}"))]' "$FILE")
               ;;
           esac
+
           COUNT=$(echo "$MATCHES" | jq 'length')
           echo "Found $COUNT match(es):"
           MATRIX=$(echo "$MATCHES" | jq -rc .)
-          # echo "$MATCHES" | jq '.'
           echo "$MATRIX" | jq -rc '.'
-          # Export for Linux job
+          # Export matrix for multiple jobs on Linux
           echo "matrix=$MATRIX" >> "$GITHUB_OUTPUT"
 
       - name: Determine Target Branches
