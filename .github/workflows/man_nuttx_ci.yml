@@ -40,7 +40,7 @@ on:
         type: string
 
       jobs-arch:
-        description: Choose an architecture
+        description: Choose an architecture (Linux only)
         type: choice
         options:
           - arm
@@ -435,7 +435,7 @@ jobs:
         run: |
           pip install kconfiglib
 
-      - run: git config --global core.autocrlf false
+      # - run: git config --global core.autocrlf false
 
       - name: Download Source Artifact
         uses: actions/download-artifact@v8
@@ -451,6 +451,8 @@ jobs:
       - name: Run Builds
         run: |
           "ARTIFACTDIR=${{github.workspace}}\sources\buildartifacts" >> $env:GITHUB_ENV
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
           git config --global --add safe.directory ${{github.workspace}}\sources\nuttx
           git config --global --add safe.directory ${{github.workspace}}\sources\apps
           cd sources\nuttx\tools\ci
