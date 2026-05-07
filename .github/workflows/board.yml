@@ -81,7 +81,7 @@ jobs:
           echo "Working with ref: $REF"
 
       - name: Checkout nuttx repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           repository: ${{ inputs.repo-nuttx }}
           ref: ${{ inputs.branch-nuttx }}
@@ -89,7 +89,7 @@ jobs:
           fetch-depth: 1
 
       - name: Checkout apps repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           repository: ${{ inputs.repo-apps }}
           ref: ${{ inputs.branch-apps }}
@@ -100,7 +100,7 @@ jobs:
         run: tar zcf sources.tar.gz sources
 
       - name: Archive Source Bundle
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: source-bundle
           path: sources.tar.gz
@@ -126,7 +126,7 @@ jobs:
         run: tar zxf sources.tar.gz
 
       - name: Docker Login
-        uses: docker/login-action@v4
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -147,17 +147,21 @@ jobs:
             git config --global --add safe.directory /github/workspace/sources/apps
             cd sources/nuttx
             ./tools/configure.sh -l ${{ github.event.inputs.board-config }}
-            make V=1
+            make V=1 -Wno-cpp -Werror -j
             artifactconfigdir=$ARTIFACTDIR/$(echo ${{ github.event.inputs.board-config }} | sed "s/:/\//")/
             echo "artifactconfigdir: $artifactconfigdir"
             mkdir -p $artifactconfigdir
             xargs -I "{}" cp "{}" $artifactconfigdir < nuttx.manifest
+            # Ensure defconfig in the canonical form
+            if ! ./tools/refresh.sh --silent $config; then
+              return 1
+            fi
 
       - name: Post-build Disk Space
         if: always()
         run: df -h
 
-      - uses: actions/upload-artifact@v7.0.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         if: ${{ always() }}
         with:
           name: ${{ github.job }}-builds
@@ -185,7 +189,7 @@ jobs:
         run: tar zxf sources.tar.gz
 
       - name: Docker Login
-        uses: docker/login-action@v4
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -213,12 +217,16 @@ jobs:
             mkdir -p $artifactconfigdir
             cd build
             xargs -I "{}" cp "{}" $artifactconfigdir < $sourceworkspace/nuttx/build/nuttx.manifest
-
+            cd ..
+            if ! cmake --build build -t refreshsilent 1>/dev/null; then
+              cmake --build build -t refreshsilent
+              return 1
+            fi
       - name: Post-build Disk Space
         if: always()
         run: df -h
 
-      - uses: actions/upload-artifact@v7.0.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         if: ${{ always() }}
         with:
           name: ${{ github.job }}-builds
