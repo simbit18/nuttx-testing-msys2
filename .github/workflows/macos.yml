@@ -92,6 +92,8 @@ jobs:
           gperf --version
           brew install gperf
           gperf --version
+          brew install flock
+          flock -V
           brew install binutils
           # objcopy --version
           pwd objcopy
