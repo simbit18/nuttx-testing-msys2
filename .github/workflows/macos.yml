@@ -43,6 +43,8 @@ jobs:
           gperf --version
           brew install gperf
           gperf --version
+          brew install flock
+          flock -V
           brew install binutils
           pwd objcopy
           ls -a /usr/local/opt/binutils/bin
