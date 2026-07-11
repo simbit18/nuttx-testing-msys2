@@ -50,7 +50,7 @@ jobs:
           ###### REF="refs/heads/main"
           echo "Working with ref: $REF"
       - name: Checkout nuttx repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: simbit18/nuttx
           ref: ${{ inputs.base_ref }}
@@ -62,7 +62,7 @@ jobs:
         run: git -C sources/nuttx fetch --tags
 
       - name: Checkout apps repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: simbit18/nuttx-apps
           # ref: simbit18-platforms
@@ -77,7 +77,7 @@ jobs:
         run: tar zcf sources.tar.gz sources
 
       - name: Archive Source Bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.1
         with:
           name: source-bundle
           path: sources.tar.gz

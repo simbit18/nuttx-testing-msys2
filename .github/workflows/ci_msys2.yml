@@ -36,7 +36,7 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MSYS
@@ -69,7 +69,7 @@ jobs:
           
       - run: git config --global core.autocrlf false
       - name: Download Source Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: source-bundle
           path: .
@@ -79,7 +79,7 @@ jobs:
 
       - name: Restore Tools Cache
         id: cache-tools
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         env:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
@@ -104,7 +104,7 @@ jobs:
           cd sources/nuttx/tools/ci
           ## ./cibuild.sh -g -d -i -c -A -N -R testlist/${{matrix.boards}}.dat
           ./cibuild.sh -g -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: ${{ env.namejob }}-${{matrix.boards}}-builds
           path: buildartifacts/

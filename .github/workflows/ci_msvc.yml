@@ -33,7 +33,7 @@ jobs:
       matrix:
         boards: ${{ fromJson(inputs.testlist_names) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # Set up Python environment and install kconfiglib
       - name: Set up Python and install kconfiglib
         uses: actions/setup-python@v6
@@ -45,7 +45,7 @@ jobs:
 
       - run: git config --global core.autocrlf false
       - name: Download Source Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: source-bundle
           path: .
@@ -63,7 +63,7 @@ jobs:
           cd sources\nuttx\tools\ci
           .\cibuild.ps1 -n -i -A -C -N testlist\${{matrix.boards}}.dat
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: msvc-builds
           path: ./sources/buildartifacts/

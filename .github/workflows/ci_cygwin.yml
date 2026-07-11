@@ -44,7 +44,7 @@ jobs:
           git config --global core.autocrlf input
         shell: pwsh
       - name: Checkout from git
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       # install cygwin and build tools
       - name: Install Cygwin
         uses: cygwin/cygwin-install-action@master
@@ -89,7 +89,7 @@ jobs:
           
       - run: git config --global core.autocrlf false
       - name: Download Source Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: source-bundle
           path: .
@@ -99,7 +99,7 @@ jobs:
 
       - name: Restore Tools Cache
         id: cache-tools
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         env:
           cache-name: ${{ env.namejob }}-cache-tools
         with:
@@ -137,7 +137,7 @@ jobs:
           ## ./cibuild.sh -g -d -i -c -A -R testlist/${{matrix.boards}}.dat
           ./cibuild.sh -c -i -c -A -C -N -R testlist/${{matrix.boards}}.dat
         shell: C:\cygwin\bin\bash.exe '{0}'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.1
         with:
           name: ${{ env.namejob }}-${{matrix.boards}}-builds
           path: buildartifacts/
