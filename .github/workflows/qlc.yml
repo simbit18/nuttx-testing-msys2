@@ -223,13 +223,13 @@ jobs:
         shell: msys2 {0}
         run: |
           sed -i "s/\(#define APPVERSION \".*\)\"/\1 ${{env.GIT_REV}}\"/" engine/src/qlcconfig.h
-          cd build
+          cd sources/qlc/build
           ninja
 
       - name: Install on Windows
         shell: msys2 {0}
         run: |
-          cd build
+          cd sources/qlc/build
           ninja install
 
       - name: Set APPVERSION
