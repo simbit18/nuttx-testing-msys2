@@ -207,12 +207,16 @@ jobs:
         shell: msys2 {0}
         if: ${{ matrix.task == 'build-v4' }}
         run: |
+          cd sources/qlc
+          ls
           cmake -S . -B build -DCMAKE_PREFIX_PATH="${{ env.QTDIR }}/lib/cmake" -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 
       - name: Configure v5 build for Windows
         shell: msys2 {0}
         if: ${{ matrix.task == 'build-v5' }}
         run: |
+          cd sources/qlc
+          ls
           cmake -S . -B build -DCMAKE_PREFIX_PATH="${{ env.QTDIR }}/lib/cmake" -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -Dqmlui=ON
 
       - name: Build for Windows
