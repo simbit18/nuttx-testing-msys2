@@ -235,6 +235,7 @@ jobs:
       - name: Set APPVERSION
         shell: msys2 {0}
         run: |
+          cd sources/qlc
           APPVERSION=$(awk -F\" '/^#define APPVERSION/ {gsub(/ /,"-",$2); print $2}' engine/src/qlcconfig.h)
           echo "APPVERSION=$APPVERSION" >> $GITHUB_ENV
 
