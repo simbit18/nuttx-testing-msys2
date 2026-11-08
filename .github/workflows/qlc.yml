@@ -244,6 +244,7 @@ jobs:
         shell: msys2 {0}
         if: ${{ matrix.task == 'build-v4' }}
         run: |-
+          cd sources/qlc
           ./translate.sh release ui
           cp *.qm /c/qlcplus
           cd /c/qlcplus
@@ -253,6 +254,7 @@ jobs:
         shell: msys2 {0}
         if: ${{ matrix.task == 'build-v5' }}
         run: |-
+          cd sources/qlc
           SRC_DIR=$PWD
           ./translate.sh release qmlui
           cp *.qm /c/qlcplus
