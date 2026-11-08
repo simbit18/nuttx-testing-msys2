@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
     inputs:
 
-      repo-nuttx:
+      repo-qlc:
         description: What's the name of the repository ?
         required: true
         type: string
 
-      branch-nuttx:
+      branch-qlc:
         description: What's the name of the branch ?
         required: true
         type: string
@@ -28,8 +28,8 @@ jobs:
       - name: View input parameters
         shell: bash
         run: |
-          echo "Repository: ${{ inputs.repo-nuttx }}"
-          echo "    Branch: ${{ inputs.branch-nuttx }}"
+          echo "Repository: ${{ inputs.repo-qlc }}"
+          echo "    Branch: ${{ inputs.branch-qlc }}"
 
       - name: Determine Target Branches
         id: gittargets
@@ -43,8 +43,8 @@ jobs:
       - name: Checkout nuttx repo
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
-          repository: ${{ inputs.repo-nuttx }}
-          ref: ${{ inputs.branch-nuttx }}
+          repository: ${{ inputs.repo-qlc }}
+          ref: ${{ inputs.branch-qlc }}
           path: sources/qlc
           fetch-depth: 1
 
@@ -222,8 +222,9 @@ jobs:
       - name: Build for Windows
         shell: msys2 {0}
         run: |
+          cd sources/qlc
           sed -i "s/\(#define APPVERSION \".*\)\"/\1 ${{env.GIT_REV}}\"/" engine/src/qlcconfig.h
-          cd sources/qlc/build
+          cd build
           ninja
 
       - name: Install on Windows
